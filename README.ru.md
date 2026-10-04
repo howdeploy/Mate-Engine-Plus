@@ -1,7 +1,7 @@
-<p align="center"><img src="docs/banner.svg" alt="Meta Engine Plus — a desktop companion for ShojiWM" width="880"></p>
+<p align="center"><img src="docs/banner.svg" alt="Mate Engine Plus — a desktop companion for ShojiWM" width="880"></p>
 <p align="center"><a href="README.md">English</a> · <a href="README.ru.md"><strong>Русский</strong></a> · <a href="README.zh-CN.md">简体中文</a></p>
 
-# Meta Engine Plus
+# Mate Engine Plus
 
 <table><tr><td><strong>Персонаж, который понимает твой рабочий стол.</strong><br>
 Неофициальное продолжение Linux-порта MateEngine. Собрано из исходников и

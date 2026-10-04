@@ -922,7 +922,7 @@
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarMinecraftMessages.cs",
-      "sha256": "3c2d4728671d962bdfa4b510fd5398293e54e1fd46e336e24335fc987b418c6b"
+      "sha256": "729eabe2d908af5267d1abc93f084ec3086c80c148c295bf8b424c77ddda5655"
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarMouseTracking.cs",
@@ -1317,6 +1317,42 @@
       "sha256": "31485991b6af03ffbc5f33557034b2891c99ec398c7c3cbb6dd74b9fa2739644"
     },
     {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.Biomes.cs",
+      "sha256": "a6b4a5d7fa0d05d3db97c24c7cc1ef8591d52e29209f2833eea23455f6609c59"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.Chests.cs",
+      "sha256": "37c049d3f8b18535988d3ebf09a51cf2c5dadd80021ab8912e892afa97eba00f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.EquipmentBlocks.cs",
+      "sha256": "c3a3adf7b82f24ea77aea64f4cbecf09beb4e30e58242cf0e6b5f05391b04c01"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.Mobs.cs",
+      "sha256": "850e70ebc7e2e8dde66b97f5782360a157194f0739cd4d56e61cfc726dd5d60b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.NewMobs.cs",
+      "sha256": "21da3ffa5dc71a609666d231c69679f1703ebf4545ab4c813d427e142cd8dc32"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.Structures.cs",
+      "sha256": "a9c0945a0fe7ba9b077367f037ae0efb0549901faa5398aaea6c2abde4b1703f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.Underground.cs",
+      "sha256": "9b64abb1d3bde995a70fa1d9450859507051a8948df3d29cb98103d12990e7ef"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.Water.cs",
+      "sha256": "897bf3b2f9b0a9b94d651c2606e4cb9f147afb450e608b8129ac1f1ea4a41563"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MinecraftDialogue.cs",
+      "sha256": "b120d10b495075d4f2b66ce6944b58243060f472baae0c6a69fa5c7201e41f02"
+    },
+    {
       "path": "Assets/Scripts/Assembly-CSharp/ModRemoveButton.cs",
       "sha256": "4489bb812dcb4e9332d16035c4d7e7c28f86ca71d5db1b0558f24f574f274dab"
     },
@@ -1478,7 +1514,7 @@
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/SwingController.cs",
-      "sha256": "d4dab1aaef384ab7a807376588a8969e0b36486dd1629ce09cda9ebf491616b5"
+      "sha256": "9c4d006dba0509b176b4fb30574c18061e6f0adbb7bdfdcbc285d79f3873c519"
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/SwingFollowEntry.cs",

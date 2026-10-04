@@ -28,7 +28,13 @@ public class AvatarMinecraftMessages : MonoBehaviour
 		Crafting = 9,
 		Eat = 10,
 		KillConfirm = 11,
-		BiomeDiscovery = 12
+		BiomeDiscovery = 12,
+		EquipmentDurability = 13,
+		BlockSighting = 14,
+		ExperienceFarm = 15,
+		FarmActivity = 16,
+		StructureSighting = 17,
+		ChestContents = 18
 	}
 
 	[Serializable]
@@ -43,7 +49,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 	}
 
 	[Serializable]
-	private class ProxEvent
+	public class ProxEvent
 	{
 		public string type;
 
@@ -62,6 +68,52 @@ public class AvatarMinecraftMessages : MonoBehaviour
 		public string player;
 
 		public string biome;
+
+		public string biome_id;
+
+		public string biome_view;
+
+		public string language;
+
+		public string movement;
+
+		public string dimension;
+
+		public string mob_state;
+
+		public string item_id;
+
+		public string item_name;
+
+		public string equipment_kind;
+
+		public string equipment_slot;
+
+		public int durability_remaining;
+
+		public int durability_max;
+
+		public int durability_threshold;
+
+		public string block_id;
+
+		public string block_name;
+
+		public string activity;
+
+		public string structure_hint;
+
+		public string chest_context;
+
+		public string chest_reaction;
+
+		public int chest_slots;
+
+		public int chest_occupied;
+
+		public int chest_types;
+
+		public int chest_mergeable_slots;
 	}
 
 	[Header("Toggle")]
@@ -104,6 +156,9 @@ public class AvatarMinecraftMessages : MonoBehaviour
 
 	public float bubbleSpacing = 10f;
 
+	[Tooltip("Extra space to the left of the head, in canvas units.")]
+	public float headClearance = 90f;
+
 	[Range(5f, 100f)]
 	public int streamSpeed = 35;
 
@@ -135,6 +190,8 @@ public class AvatarMinecraftMessages : MonoBehaviour
 	private readonly ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
 
 	private System.Random rng = new System.Random();
+
+	private readonly MinecraftDialogue dialogue = new MinecraftDialogue();
 
 	private void Start()
 	{
@@ -248,7 +305,9 @@ public class AvatarMinecraftMessages : MonoBehaviour
 			{
 				continue;
 			}
-			ProxEvent proxEvent = JsonUtility.FromJson<ProxEvent>(result);
+			ProxEvent proxEvent;
+			try { proxEvent = JsonUtility.FromJson<ProxEvent>(result); }
+			catch (ArgumentException) { continue; }
 			if (proxEvent == null)
 			{
 				continue;
@@ -262,7 +321,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 					{
 						Debug.Log("[AvatarMinecraftMessages] Event: " + text);
 					}
-					ShowEvent(McEventType.Entity, text);
+					ShowEvent(McEventType.Entity, text, context: proxEvent);
 				}
 			}
 			else if (proxEvent.type == "day_start" || proxEvent.type == "time_day")
@@ -271,7 +330,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: day_start");
 				}
-				ShowEvent(McEventType.DayStart, "");
+				ShowEvent(McEventType.DayStart, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "night_start" || proxEvent.type == "time_night")
 			{
@@ -279,7 +338,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: night_start");
 				}
-				ShowEvent(McEventType.NightStart, "");
+				ShowEvent(McEventType.NightStart, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "low_health")
 			{
@@ -287,7 +346,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: low_health");
 				}
-				ShowEvent(McEventType.LowHealth, "");
+				ShowEvent(McEventType.LowHealth, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "low_hunger")
 			{
@@ -295,7 +354,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: low_hunger");
 				}
-				ShowEvent(McEventType.LowHunger, "");
+				ShowEvent(McEventType.LowHunger, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "death" || proxEvent.type == "player_death" || proxEvent.type == "you_died")
 			{
@@ -303,7 +362,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: death");
 				}
-				ShowEvent(McEventType.Death, "");
+				ShowEvent(McEventType.Death, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "rain_start" || proxEvent.type == "weather_rain_start" || proxEvent.type == "rain")
 			{
@@ -311,7 +370,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: rain_start");
 				}
-				ShowEvent(McEventType.RainStart, "");
+				ShowEvent(McEventType.RainStart, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "drowning" || proxEvent.type == "low_air" || proxEvent.type == "air_low")
 			{
@@ -319,7 +378,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: drowning");
 				}
-				ShowEvent(McEventType.Drowning, "");
+				ShowEvent(McEventType.Drowning, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "sleep" || proxEvent.type == "sleep_start" || proxEvent.type == "player_sleep")
 			{
@@ -327,7 +386,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: sleep");
 				}
-				ShowEvent(McEventType.Sleep, "");
+				ShowEvent(McEventType.Sleep, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "crafting" || proxEvent.type == "crafted" || proxEvent.type == "crafted_item")
 			{
@@ -337,7 +396,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 					{
 						Debug.Log("[AvatarMinecraftMessages] Event: crafting");
 					}
-					ShowEvent(McEventType.Crafting, "");
+					ShowEvent(McEventType.Crafting, "", context: proxEvent);
 				}
 			}
 			else if (proxEvent.type == "eat")
@@ -346,7 +405,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: eat");
 				}
-				ShowEvent(McEventType.Eat, "");
+				ShowEvent(McEventType.Eat, "", context: proxEvent);
 			}
 			else if (proxEvent.type == "kill_confirm")
 			{
@@ -355,7 +414,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: kill_confirm " + text2);
 				}
-				ShowEvent(McEventType.KillConfirm, text2);
+				ShowEvent(McEventType.KillConfirm, text2, context: proxEvent);
 			}
 			else if (proxEvent.type == "biome_discovery")
 			{
@@ -364,7 +423,44 @@ public class AvatarMinecraftMessages : MonoBehaviour
 				{
 					Debug.Log("[AvatarMinecraftMessages] Event: biome_discovery " + text3);
 				}
-				ShowEvent(McEventType.BiomeDiscovery, "", text3);
+				ShowEvent(McEventType.BiomeDiscovery, "", text3, proxEvent);
+			}
+			else if (proxEvent.type == "equipment_durability"
+				&& (proxEvent.durability_threshold == 20 || proxEvent.durability_threshold == 3)
+				&& proxEvent.durability_max > 0 && proxEvent.durability_remaining >= 0
+				&& proxEvent.durability_remaining <= proxEvent.durability_max)
+			{
+				if (debugLog) Debug.Log("[AvatarMinecraftMessages] Event: equipment_durability " + proxEvent.item_id);
+				ShowEvent(McEventType.EquipmentDurability, "", context: proxEvent);
+			}
+			else if (proxEvent.type == "block_sighting" && !string.IsNullOrEmpty(proxEvent.block_id))
+			{
+				if (debugLog) Debug.Log("[AvatarMinecraftMessages] Event: block_sighting " + proxEvent.block_id);
+				ShowEvent(McEventType.BlockSighting, "", context: proxEvent);
+			}
+			else if (proxEvent.type == "xp_farm")
+			{
+				if (debugLog) Debug.Log("[AvatarMinecraftMessages] Event: xp_farm");
+				ShowEvent(McEventType.ExperienceFarm, "", context: proxEvent);
+			}
+			else if (proxEvent.type == "farm_activity" && (proxEvent.activity == "crops" || proxEvent.activity == "wood"))
+			{
+				if (debugLog) Debug.Log("[AvatarMinecraftMessages] Event: farm_activity " + proxEvent.activity);
+				ShowEvent(McEventType.FarmActivity, "", context: proxEvent);
+			}
+			else if (proxEvent.type == "structure_sighting" && !string.IsNullOrEmpty(proxEvent.structure_hint))
+			{
+				if (debugLog) Debug.Log("[AvatarMinecraftMessages] Event: structure_sighting " + proxEvent.structure_hint);
+				ShowEvent(McEventType.StructureSighting, "", context: proxEvent);
+			}
+			else if (proxEvent.type == "chest_contents"
+				&& (proxEvent.chest_slots == 27 || proxEvent.chest_slots == 54)
+				&& proxEvent.chest_occupied >= 0 && proxEvent.chest_occupied <= proxEvent.chest_slots
+				&& proxEvent.chest_types >= 0 && proxEvent.chest_types <= proxEvent.chest_occupied
+				&& proxEvent.chest_mergeable_slots >= 0 && proxEvent.chest_mergeable_slots <= proxEvent.chest_occupied)
+			{
+				if (debugLog) Debug.Log("[AvatarMinecraftMessages] Event: chest_contents " + proxEvent.chest_reaction);
+				ShowEvent(McEventType.ChestContents, "", context: proxEvent);
 			}
 		}
 	}
@@ -374,7 +470,7 @@ public class AvatarMinecraftMessages : MonoBehaviour
 		ShowEvent(McEventType.Entity, entityDisplayName);
 	}
 
-	private void ShowEvent(McEventType type, string entityDisplayName, string biomeName = "")
+	private void ShowEvent(McEventType type, string entityDisplayName, string biomeName = "", ProxEvent context = null)
 	{
 		if (!enableMinecraftMessages)
 		{
@@ -404,23 +500,18 @@ public class AvatarMinecraftMessages : MonoBehaviour
 			}
 			return;
 		}
-		string text = PickTextFor(type);
-		if (string.IsNullOrEmpty(text))
+		string language = LocalizationSettings.SelectedLocale?.Identifier.Code ?? "en";
+		string text2 = dialogue.Pick(type, context ?? new ProxEvent { name = entityDisplayName, biome = biomeName }, language);
+		if (string.IsNullOrEmpty(text2))
 		{
-			AvatarMessage msg = null;
-			if (messages != null && messages.Count > 0)
-			{
-				msg = messages[0];
-			}
-			text = ResolveText(msg);
+			string text = PickTextFor(type);
 			if (string.IsNullOrEmpty(text))
 			{
-				text = "there's a <entity> nearby... take care!";
+				text = ResolveText(messages != null && messages.Count > 0 ? messages[0] : null);
 			}
+			if (string.IsNullOrEmpty(text)) return;
+			text2 = InjectBiome(InjectEntity(text, entityDisplayName), biomeName);
 		}
-		string text2 = text;
-		text2 = InjectEntity(text2, entityDisplayName);
-		text2 = InjectBiome(text2, biomeName);
 		RemoveBubble();
 		BubbleUI ui = new BubbleUI
 		{
