@@ -1,0 +1,13 @@
+using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: AssemblyCompany("Unity Technologies")]
+[assembly: InternalsVisibleTo("Unity.ResourceManager.Tests")]
+[assembly: InternalsVisibleTo("Unity.Addressables.Editor.Tests")]
+[assembly: InternalsVisibleTo("Unity.Addressables.Runtime.Tests")]
+[assembly: InternalsVisibleTo("Unity.Addressables")]
+[assembly: InternalsVisibleTo("Unity.Addressables.Android")]
+[assembly: InternalsVisibleTo("Unity.Localization")]
+#if UNITY_EDITOR
+[assembly: InternalsVisibleTo("Unity.Addressables.Editor")]
+#endif

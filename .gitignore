@@ -166,3 +166,18 @@ Assets/MATE\ ENGINE\ -\ Packages/StandaloneFileBrowser/Plugins/Linux/x86_64.meta
 Assets/MATE\ ENGINE\ -\ Packages/StandaloneFileBrowser/Plugins/Linux/x86_64.meta
 
 _build
+
+# Private inputs and generated outputs for the source-only X3.4 migration
+/Linux/project/
+/Linux/steam-source/
+/Linux/recovered/
+/Linux/inspection/
+/Linux/baseline/
+/Linux/user-profile/
+/Linux/linux-upstream/
+/Linux/tools/reader-venv/
+/Linux/tools/postprocessing-3.5.1/
+/Linux/tools/unity-*/
+__pycache__/
+*.pyc
+SteamDRM.token

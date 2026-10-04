@@ -1,0 +1,2456 @@
+{
+  "files": [
+    {
+      "path": "Assets/ComputeShader/AutoExposure.compute",
+      "sha256": "7b78066b8e6b35928513879277916cc41c962928ca612b7af5f48d94e48ac4c5"
+    },
+    {
+      "path": "Assets/ComputeShader/ExposureHistogram.compute",
+      "sha256": "f83647743c2de5fd579bc1daeb1f2b403263199273ac909fbeeb554e6f6af708"
+    },
+    {
+      "path": "Assets/ComputeShader/GaussianDownsample.compute",
+      "sha256": "0c1353a686e8c78d023cc96c4343dcafaaaa9b25e4aaba3684761cbf16fde1ac"
+    },
+    {
+      "path": "Assets/ComputeShader/Histogram.compute",
+      "sha256": "6c6565460dfd556d2c1fd9e83b16e49a7d50f92afb3ab942371514ae90e5cd25"
+    },
+    {
+      "path": "Assets/ComputeShader/Lut3DBaker.compute",
+      "sha256": "4064d82e0307873742689de71c6df3523b2322b2ed1d1658e634cd99e46e5adc"
+    },
+    {
+      "path": "Assets/ComputeShader/MultiScaleVODownsample1.compute",
+      "sha256": "3e15e570dc1ce94700c4f831ddfe650ab870fe4df508657a35eacb7da77e9f44"
+    },
+    {
+      "path": "Assets/ComputeShader/MultiScaleVODownsample2.compute",
+      "sha256": "178cb365b83506f5b4857a8358590519342b00094295d9d0f468f3c8edf5cf3a"
+    },
+    {
+      "path": "Assets/ComputeShader/MultiScaleVORender.compute",
+      "sha256": "5b3998b73d5066c2dbb563b3cd292f47624d9eab2a42b0e0f2e05b5759e90973"
+    },
+    {
+      "path": "Assets/ComputeShader/MultiScaleVOUpsample.compute",
+      "sha256": "dfed9336a21f1a4fa487116cc57be4d1909011481241bd95116b458c44cc47b2"
+    },
+    {
+      "path": "Assets/ComputeShader/Texture3DLerp.compute",
+      "sha256": "e0fe1eeb2bce3402a9315e7d8b933f06b67262c10aff737009faa451f3032ab0"
+    },
+    {
+      "path": "Assets/ComputeShader/Vectorscope.compute",
+      "sha256": "39dad49dc7e485657a23ebdfb8d936191c80d419fa579f0db118180cdb1dc5dd"
+    },
+    {
+      "path": "Assets/ComputeShader/Waveform.compute",
+      "sha256": "86ea38ca2adb1b3c4db6529ec193695be52b15bfca17cdab89a5a5239662c7c4"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/TextMesh Pro/Shaders/SDFFunctions.hlsl",
+      "sha256": "88cf0f62e4000b71750c059d0886b19504cd1cf10f39bb61ddc11b77a882d417"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/TextMesh Pro/Shaders/TMPro.cginc",
+      "sha256": "14edb7d7b88caf2b82cae68200abe895e5b5b3474c3fffbf0e9b4b09a4e2467e"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/TextMesh Pro/Shaders/TMPro_Mobile.cginc",
+      "sha256": "24a47b3d35253f527ebb2401abb6546e5f1ca0b406590bcaf79795d1f3507c49"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/TextMesh Pro/Shaders/TMPro_Properties.cginc",
+      "sha256": "66db1f03e8d7a413eba79bcb6602fdb2de710b586f34a6f2584ed6f68f028e90"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/TextMesh Pro/Shaders/TMPro_Surface.cginc",
+      "sha256": "244b442520282a66363d121c8d2aeeb30bb1e72cbbadbf41ce68d9100322ade5"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/Tess/UCTS_DoubleShadeWithFeather_tess.cginc",
+      "sha256": "81a3b3d03782f11e03a53ce865d54862fdaa9e10e0697b70ba758a6fe7768a62"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/Tess/UCTS_Outline_Tess.cginc",
+      "sha256": "0d4c73413db9d22bdd435f765b276af31727af67a7a859ca727abe9dd7a25559"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/Tess/UCTS_ShadingGradeMap_tess.cginc",
+      "sha256": "e4a5776656ae9c01e763e2f22d68eb251e53ac1cd33a766cd761dae73fa162b8"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/Tess/UCTS_ShadowCaster_Tess.cginc",
+      "sha256": "fdf67d39b8e259789bc03511c8adb2d0dbf3631ff928a1dda3c435f767579ea4"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/Tess/UCTS_Tess.cginc",
+      "sha256": "da6a13ec0b11844f384934009606912807be98e0ba11bf5c6f1a32d8972d5a25"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/UCTS_DoubleShadeWithFeather.cginc",
+      "sha256": "b4c10d8995fddf68aff43b1b3e11b868b7635c654021d55df9a9761b65f27edb"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/UCTS_Outline.cginc",
+      "sha256": "6b867e4c1efb8abaf9596cdedcabc76c3f33a8d1a54755e3960b53abe5f79044"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/UCTS_ShadingGradeMap.cginc",
+      "sha256": "3749896016b5eec7a94d2e583c12ba77be36310ec943da04179dfb6279a2e0d9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/Toon/Shader/UCTS_ShadowCaster.cginc",
+      "sha256": "36c88ced6880692d1a325fd9a9bd691654f0b6acd9d645a84583cee3bce7c883"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM/MToon/Shaders/MToonCore.cginc",
+      "sha256": "b623d50bdfd64d808ba789d528b9d8ce7b8f55633af073962b50fd0a05f43fd9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM/MToon/Shaders/MToonSM3.cginc",
+      "sha256": "07abf28828f2e43d99a288f656f1c10948e1dc4591bc7d14299c900c562d54bf"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM/MToon/Shaders/MToonSM4.cginc",
+      "sha256": "389be8e014a52b7f1f9e5095a7d78ed21505ae53b079b3d9300d6f51fc48875f"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_attribute.hlsl",
+      "sha256": "15b68cc4989f8faf8fcb6cac619742cd6d6c1b758c293592fd69c0a14c9d4d8c"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_define.hlsl",
+      "sha256": "4e6658788728ded1df9804fceba73c7ed481479ceabaf938deaf80e364f82c82"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_depthnormals_fragment.hlsl",
+      "sha256": "bb8207f07a33338b4e31c90869174a2836003a9a5b752cfa7172966d6acee761"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_depthnormals_vertex.hlsl",
+      "sha256": "30458a9c5ffe691411aa939b254f02ce37ee25d5f2461c46fba9233714369a61"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_depthonly_fragment.hlsl",
+      "sha256": "97d60eb28d3c658e82e01a544c420be6d86b910cf0ae30f871354db60a013a93"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_depthonly_vertex.hlsl",
+      "sha256": "796d481fc241237f2c160f13e5667c74c83fac193f522587734b9993f9f1250b"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_forward_fragment.hlsl",
+      "sha256": "1d67e42db29481b992e14502b9e59ef188b8862c9006c3f2b442bcaf613d43d9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_forward_vertex.hlsl",
+      "sha256": "3ba51fcba786b0b9afe3ffc8f5c158acac921bee7dab188770e34cc7166a0002"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_geometry_alpha.hlsl",
+      "sha256": "063178dd895cc0e2c9654db5272f8cfb1df79ab16525d6a1fcc8f73191833de4"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_geometry_normal.hlsl",
+      "sha256": "c5cdc8e58470ba8bf9fe9d34d0d08700ce764aacb8bf3dbe96923c4172dc29b9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_geometry_uv.hlsl",
+      "sha256": "8a3e1ce645bf9a097a3f753132abce2c5df931e89c40dcf9add9d0bd6a1ea09a"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_geometry_vertex.hlsl",
+      "sha256": "5aa2616b59d1b557f2cffd469b2669dced61448aae01bdd13cbba8f4a9e2198e"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_input.hlsl",
+      "sha256": "876e4dc8775d9d6c4c0a159bc73691ba1917d10dbf8e45e291d5f1b456a14c99"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_lighting_mtoon.hlsl",
+      "sha256": "e868cd972f293ba75c0293b2ced505177fc117fb863d89f48c49a683f958d92c"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_lighting_unity.hlsl",
+      "sha256": "0d14fcdbc6689d18919218372fd12e196349627a757057911fec6aa094887af9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_render_pipeline.hlsl",
+      "sha256": "e2df9f6ba1e72087b0e6217f451e5c7a10f13f2fcb977f715e33472b73853a13"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_shadowcaster_fragment.hlsl",
+      "sha256": "068dfd12ae38e3c7606ccd6aa186690e8e7981f438516ee294f80331a05fff93"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_shadowcaster_vertex.hlsl",
+      "sha256": "8f3e44d35be7e40d5ad026ff895d581ed3a394f65b11b57fc0a9c35fde1d078d"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Packages/VRM10/MToon10/Shaders/vrmc_materials_mtoon_utility.hlsl",
+      "sha256": "e1552d9f22962802f3cf85b84edd216468396be10aa8e0e4c3e731b1b9f5746d"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_FunctionsArtistic.cginc",
+      "sha256": "f3a4f470c2a45f007cc2c8c74655720a6c4b66437d6d00d1d519513b761c3bb9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiAlphaToCoverage.cginc",
+      "sha256": "d153f42318f91ffebc5625d0857d3c3b1fc6ddbd1515d2a1553f7d790c9d0142"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiAudioLink.cginc",
+      "sha256": "59f3e48c1afb58640186c6b638b15e52bb226efb3767495416471e956f966f5d"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiBRDF.cginc",
+      "sha256": "7c04ce49a354bf64df57b84404585f9c8ac16e72a89fc2d3702ba6c4ac3378ac"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiBackFace.cginc",
+      "sha256": "fe848779a08e54d45491c62cc720b8b27808d0d79fb951a9999a82d552052b31"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiBlackLight.cginc",
+      "sha256": "048ccc8f8b348ed1b1eb5a360a69b7705feb88d00c410caff540156c6965f8f9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiBlending.cginc",
+      "sha256": "4802f245cebe597d8a2e2dce7614d6d5e8befc90b4c07414010eef98a66796e9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiBulge.cginc",
+      "sha256": "ff5b2c6065d91ee7708e0c54b28f73a4526556512f4de9fc97890ffe904296fe"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiClearCoat.cginc",
+      "sha256": "11dd9e7695aadf8fd49f1d88134000d9164f345ddc65c54d4f4585deb66bdabe"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiData.cginc",
+      "sha256": "d7b85284532225534eec54b1ea58d2b566c8c2e96688e3bd124af647e50f3349"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiDebug.cginc",
+      "sha256": "f58f524466a8ff13b5654a8c12925a21f0589355d1b8ded66bcf1d49400f93d3"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiDecal.cginc",
+      "sha256": "3939c89b6a00301959aa3647e265197dbfa61c91028b2358ee7c01e46c23e612"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiDefines.cginc",
+      "sha256": "343b29c317d3d61350bc4d2adc34dde86865034fb175afcaf75870f4e60c7169"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiDepthColor.cginc",
+      "sha256": "07cf50bcd75c17dc2f60ef66cfd5f833bd62470c9e603f58bb40af23ab43c98c"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiDissolve.cginc",
+      "sha256": "93a762babf4139df2cb81dc9a9dc459f40aa5a272542183114d3bee40a10432e"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiDithering.cginc",
+      "sha256": "24baa2d4fa423af69a4af386223ab44b2d7f5ae251816002c947012844debe15"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiEmission.cginc",
+      "sha256": "f6a08e6ac3bca6fdb74e9c1372358f99a317b8eb6c9101e81c5e7bfaddc1c0f3"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiEnvironmentalRimLighting.cginc",
+      "sha256": "6539488c3c1bee0b32316a27996a86ee2be532e5b344528373135a47307fdef5"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiFlipbook.cginc",
+      "sha256": "42d09af11ea68dc651befd4373f89925b0e36f7c7f54911daf71fdca81bd8507"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiFrag.cginc",
+      "sha256": "d77362aff40b1561d5e1d93404e7cc1f57c20b913dcc3cc71d9b9e07f2f433f3"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiGlitter.cginc",
+      "sha256": "e87a6a30d1b7e577358606b2b6143ecf65ac32f37fd23b34741cd74053a40276"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiGrab.cginc",
+      "sha256": "87f9aaa53573b4f51320ffd5d32e2a89aa544e14fe2ecc1696163829f72a1f00"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiHelpers.cginc",
+      "sha256": "6c9019fad037f5f8348fbb2a6f16053d1bc4948a5d7a605414cf24e53d344c6d"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiHologram.cginc",
+      "sha256": "313f9ee5580a1c41eb4c8fa3222870ed1419c8b64c7e733bacb21426a4b67ee0"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiIridescence.cginc",
+      "sha256": "26b9736610939f309af36233f872c433ce6702e5308b673b74efbc8f698e2ce7"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiLighting.cginc",
+      "sha256": "9de461553d1a5a046be9bc7d19450342f93299b249d82ddd27660a9dbeabad6a"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMSDF.cginc",
+      "sha256": "1670213a051bbf91be352a164566bcd88f2a06fc80ba9789603805b9079aecd5"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMacros.cginc",
+      "sha256": "2c6099cdaf24a5b2938418f61a1a07063622f690869fb83b3c85f54633b882c6"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMainTex.cginc",
+      "sha256": "e57c3b882cd4a96be1b161c479ebae111ecd39698331ae4478a3e5300541870a"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMatcap.cginc",
+      "sha256": "7519ee181c6abdd237a096d98361a6ad84bf7b2cd59bbf1e69ff4326535ca297"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMath.cginc",
+      "sha256": "b8c406cd82817d0b84d6524c33c55240281759a96719bcb7644b8fdfb8d4f894"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMetal.cginc",
+      "sha256": "43bd3ffbde417b12d26a5c00702551f53819357301326e3a9c697ad41a627ad9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiMirror.cginc",
+      "sha256": "5737d833a1628101c3eb34b6c9edaeba8a0ecd2e95c1c08931baa08eca8a9443"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiOutlineFrag.cginc",
+      "sha256": "5d5ece56ce08576413211523ba8be7c99664941657df9c353cdf01a93da99a75"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiOutlineVert.cginc",
+      "sha256": "19a3b848e3d98d34c3e70dd509dee37dfa8b2da944695d423f80d08c5a029b30"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiPanosphere.cginc",
+      "sha256": "16616455e3f1c1ee9ed6b8da3888d2a596556f0036edfd88c71bf1aec1c70b0f"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiParallax.cginc",
+      "sha256": "8ea733477eddf379ecfee3171de81651d9e0f0131a8ab7c2158b697efdffd0b8"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiPass.cginc",
+      "sha256": "747ed0641acf36c03876f73a711855fed2ea0d9a90b5ba1ab54ff0b17ca3c8a8"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiPassOutline.cginc",
+      "sha256": "644f8b22ac33c5a0c7e52cf74c6c4380ff899664fe237a71bc233ad98094f105"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiPassShadow.cginc",
+      "sha256": "20f5730cc24257b2ab9b45d8059e9219ada35f0e074b303241eb085221ff0b03"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiPathing.cginc",
+      "sha256": "578012a149248f56d862584bdb34f1a6498a772be88b1669c967e8c52672eeb6"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiPenetration.cginc",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiRGBMask.cginc",
+      "sha256": "7f6c68c6acfd432dfce1fdc1862799269da17780d954200b63743e40de217116"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiRandom.cginc",
+      "sha256": "042041246a3c7703200e980da98a401d316f0c5f56fedea5f2f5ec960ca08760"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiRimLighting.cginc",
+      "sha256": "d2ef1bb6b38021aa35ad78da9ba5cb7c6c17a9abfa5ad7feadc0c9c794cc2842"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiShadowFrag.cginc",
+      "sha256": "21bb335a70459af630894f4117ce31706d9e226e860691872cbdfa3cc794e7c2"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiShadowIncludes.cginc",
+      "sha256": "683a43f44fc3a63d4ff95beeca169d446e64236128427e218a170f7edcb04fba"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiShadowVert.cginc",
+      "sha256": "f8bc6452fd2da97b3d5695206be44eb2232653e0a1f33d89fa812e1873276c1b"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiSpawnInFrag.cginc",
+      "sha256": "4f9ec82d3acf585c2f6a2c7bdd5c37746b0cda2eb319c8b47a095ec5cb210eaf"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiSpawnInVert.cginc",
+      "sha256": "b6dc67d69807c083113168b396fc3795c2437808ee054bfc009975b46a1fa381"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiSpecular.cginc",
+      "sha256": "bdd3a02dc9e6a7a4c8f595db40a9da3aba521e5f6ea6423c5e584a0ca1224092"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiSubsurfaceScattering.cginc",
+      "sha256": "29c67f7c070d0cbc844bdc6b9897c11859472d0a4fffba0e05b4491f821249f6"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiTessellation.cginc",
+      "sha256": "e810b7be04d9b146cee0dbf6a8bb265c3a2fba5632d2968dd2139b7d4d8641a9"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiUVDistortion.cginc",
+      "sha256": "730e78c9a996d7db6a974b5883f638e1e7a474d325ed8d02efbf290f9bf0aaaa"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiV2F.cginc",
+      "sha256": "d9f2d1a56087b834dc8933c587f3b6c4b2e403cbd3e1afe92a14eca374855eaa"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiVert.cginc",
+      "sha256": "0d48de90ee814ce7a4cb20e6e910ef281f961e88f9ef6466b461f9fd3ff1aef1"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiVertexManipulations.cginc",
+      "sha256": "29988f5fff45a795c48cda103bffad32aadde6cba50d60bde41671827ab81c33"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiVideo.cginc",
+      "sha256": "1133e7a0f838ddcc1cf2df1440ee258d5c20eb8f1df15235631457aa3155af1b"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiVoronoi.cginc",
+      "sha256": "0a7e9e34b03311e22590e0e9796f37331b78593337c6e4b80f12c462cf5ee7f5"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_PoiWireframe.cginc",
+      "sha256": "799d3294935af6db83572a5a921f7870c6f522a2269dfedd7709da7db493ce40"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/com.poiyomi.toon-9.2.79/_PoiyomiShaders/Shaders/7.3/Pro/Includes/CGI_Poicludes.cginc",
+      "sha256": "eb1bbc51fb37a8df57d0b70d5c96735e902199038fd2a8200551ef33d1ea50e1"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/GTModelDecode.cginc",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common.hlsl",
+      "sha256": "53b67e8a1b5ae868d188c0d3ffc74344ce837f5d44ae1adfee845bd261a2a2ae"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_appdata.hlsl",
+      "sha256": "7f4201b1ae42348ce86eb7f7dd47740dc5a00c0bcd78fcde0b8d38e9161e8edd"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_frag.hlsl",
+      "sha256": "02431bcadd9a14e0ec72fad0affa8aa2012dae716cde1d0356c1ec9e2cd26361"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_frag_alpha.hlsl",
+      "sha256": "a9dfad250f2e21b9142297d261c1ad75391632139667f9a0859a202c85b13572"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_functions.hlsl",
+      "sha256": "5aa51967797233042a8197f73ab39063d4fdc03c57d9427b0ae1cc0c53ee9f54"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_functions_thirdparty.hlsl",
+      "sha256": "5e1f3c3a3f4c5d9173d8b768e0231cafae4bfd24fe076b1b1c5c639ddbac1d68"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_input.hlsl",
+      "sha256": "5971229edab4c27ef6e2f40696f64e64703256166775ee670a4d59cf7da33cab"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_input_base.hlsl",
+      "sha256": "f6aec56f886aaafa2667ea88b0f29067ea1880522885927034ba22c3db469bfa"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_input_opt.hlsl",
+      "sha256": "f6aec56f886aaafa2667ea88b0f29067ea1880522885927034ba22c3db469bfa"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_macro.hlsl",
+      "sha256": "8f6e1349a51ea16fed953db74f30a268b05bf54ce6034ac12f657d45c8003161"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_vert.hlsl",
+      "sha256": "40681473f06eb0de6fc61555e7fe755475592cf362380c86e3683ee12c78bf58"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_vert_fur.hlsl",
+      "sha256": "939a17810a69651854be7e32510dae9bf3c1fcddfd9ae414a64b48d4e5286330"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_common_vert_fur_thirdparty.hlsl",
+      "sha256": "c9c6edbf522ec827a4157a9f6de0bea012aaa1f36fde577856939f5b8c3aa092"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_depthnormals.hlsl",
+      "sha256": "f3f7744874eb6b7341d453fc627dd5e5a7970696749fe91458770c2ea4cd97d8"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_depthonly.hlsl",
+      "sha256": "2a1163c5b2251270f2a1d99be968987106b61d77a5a8cd675f016a42540488ae"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward.hlsl",
+      "sha256": "8db0d597e7d9d50c50e7e1813ffc6871179a7b35752acf1c2dbf07641b939bdb"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward_fakeshadow.hlsl",
+      "sha256": "90fcb13b90fc3c0c390a689674805c8bc3ef3efe810d5f7a2fcfd57133c5d748"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward_fur.hlsl",
+      "sha256": "04d0c2144d49ef66477b794c8846d2fc6f3280f3e166a808250aa2b912d204d8"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward_gem.hlsl",
+      "sha256": "f4af681807acb4eb8047d3048e0ae633ef32de62208c34b75553e6cf0aad548c"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward_lite.hlsl",
+      "sha256": "96b4098c235af0925b5611417060b16e7fb60d09775a9a1edf2882662008330e"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward_normal.hlsl",
+      "sha256": "aa2d0ddfb9d112717b691be30c872a7cca3bee363e94383c8152a8399f363e2a"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_forward_refblur.hlsl",
+      "sha256": "2bf386ddeee7a5d16d72f06b11d8c728c7b96e42df2878b05d98cfec0d21b57f"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_meta.hlsl",
+      "sha256": "5cb2b1f4abf040f10a2dbcf0f9266b7445d8fc27d7f4ce373cbcc013a9daab44"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_motionvectors.hlsl",
+      "sha256": "5d920c30a11a3d375c214c64ffd3b885f9086e0ae3131d00cc2fe27d5622bf2c"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_shadowcaster.hlsl",
+      "sha256": "f80253bd403729d881f77dc916df77c19dcbdf3d08837117dd8eb174ee46a14b"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pass_universal2d.hlsl",
+      "sha256": "24efe3e09f0d50511aa649aa094332a1ab79e6f90cc70aa11b3cfdf29db27796"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pipeline_brp.hlsl",
+      "sha256": "ed5648fe86d62d62d9da4b430eb88ccfa9b7d29a40ff156e53b771c29bf65dfc"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pipeline_hdrp.hlsl",
+      "sha256": "2b41b3fe64fc668b87251bcce7f18139f461d6b22773955650c5442a890a460b"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pipeline_lwrp.hlsl",
+      "sha256": "d38bca53cb59faa1cb08ca7148dc7102dd33c078d387cfccca18b301fe948b57"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_pipeline_urp.hlsl",
+      "sha256": "5fdf50042fea43d5602c2b839824cbe5b3df4b767fb68bbf174d90b8987bb333"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_replace_keywords.hlsl",
+      "sha256": "9ea2c20ad7f62d89978c1be637946bf956d7491b0076bf2c33881a1a4beeea3d"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_tessellation.hlsl",
+      "sha256": "0d41001d255d9ea00a60e1dfb186c682a8939b755eef5b1f32738a05c52f9aae"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_vert_audiolink.hlsl",
+      "sha256": "77d558dda325ac969c05128f79b8f7a294fbe462c51c4bf86d1ad0e3430968d6"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_vert_encryption.hlsl",
+      "sha256": "35165a7503128d4c37c8730b2fb12681c43f5a27db3bc21121b6a36eaf7c6180"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/lil_vert_outline.hlsl",
+      "sha256": "22dc47faeb9bccbf3cc1529701d8947b0b47a31697600bcd9e27edade0d0248d"
+    },
+    {
+      "path": "Assets/MATE ENGINE - Shaders/jp.lilxyzw.liltoon-1.8.5/Shader/Includes/openlit_core.hlsl",
+      "sha256": "6ae5c068b527ee49f574011149f7c079f63bb23937b8273f4a4ec21e7be8394b"
+    },
+    {
+      "path": "Assets/Mochie/Common/Color.cginc",
+      "sha256": "9c61192fa0f3262db823495980ec8e0a885e793166f69a9199efbb32439ab2ec"
+    },
+    {
+      "path": "Assets/Mochie/Common/Noise.cginc",
+      "sha256": "a7958a40952f4f9c3422958af4fb2df2c70e636b97c37f6e058a3fd1aa0b9dae"
+    },
+    {
+      "path": "Assets/Mochie/Common/Sampling.cginc",
+      "sha256": "ebde1c7d0997eb1b1dc9b35ba4484854445658480d0070591ede7acc7f906af0"
+    },
+    {
+      "path": "Assets/Mochie/Common/Utilities.cginc",
+      "sha256": "b0f9de4d6391656c395ce0c4481ec5bdb5991c99910b7bab344214471f5c1915"
+    },
+    {
+      "path": "Assets/Mochie/Glass Shader/GlassDefines.cginc",
+      "sha256": "e4eb16aa297d109988fb0023de41a28cad8827773922f9cdec67eb87e3c51cb0"
+    },
+    {
+      "path": "Assets/Mochie/Glass Shader/GlassFunctions.cginc",
+      "sha256": "2a80ef1301fbf9ced21e4bdd73815ec037c4f74438c9eda1f580837cabb7bd5b"
+    },
+    {
+      "path": "Assets/Mochie/Glass Shader/GlassKernels.cginc",
+      "sha256": "ef5e5e0ad885183b072fa5d0d3f0ef097859e5e151f18c0ca2e5e5adf49fd161"
+    },
+    {
+      "path": "Assets/Mochie/Glass Shader/GlassPass.cginc",
+      "sha256": "344b5231c2c4b09dee6ecd6d24bec3a9632a56ea7f806648709d4e364d0fc934"
+    },
+    {
+      "path": "Assets/Mochie/LED Shader/RGBSubPixel.cginc",
+      "sha256": "fb3069e8cdf042eade759f264dee0ae937c3d308b6e2a56f43a2c5dbb6a5a26b"
+    },
+    {
+      "path": "Assets/Mochie/Particle Shader/PSDefines.cginc",
+      "sha256": "975a4042f6db864e3b894967900932f4e92513b7008b7fcaebf284196681861f"
+    },
+    {
+      "path": "Assets/Mochie/Particle Shader/PSFunctions.cginc",
+      "sha256": "abfbe58f6229448dcdcc512af18c79b5b20224f22ca62842b1090a769518d498"
+    },
+    {
+      "path": "Assets/Mochie/Particle Shader/PSKeyDefines.cginc",
+      "sha256": "08e8397833114460e1eac81ec1adc0d617ec0a6b53873c7748ef904bd50219a8"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXBlur.cginc",
+      "sha256": "816d3b3ecabc5a7ef51ffbb0e8208afd578a44f970864d9a8e69ace1cb848f51"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXDefines.cginc",
+      "sha256": "3e3bfaeeac9cd3a8408d4d8a36490a96f999687ea7643136025f40709ab1eb44"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXFunctions.cginc",
+      "sha256": "9c960989a1e933f705ab0e293fe6394a3fcea7a1f027edf98356de0e7486d656"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXKernel.cginc",
+      "sha256": "510f1de296007b250091213b5c44fe71fcca03acca38f5ba8e5ba70210873eb4"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXKeyDefines.cginc",
+      "sha256": "02a05c5d126500c4bad1bd2b2f0a3eb357935fdfefd4dc8d699946d8f6827511"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXPass.cginc",
+      "sha256": "e30380a6d0e86c0efb8839adb1f70abe0563d9a479747b8e09a97da13083a167"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXXFeatures.cginc",
+      "sha256": "6d3f2c3859facc52f886330867f024b271e2df790139cd2e234ec70f7d14d30e"
+    },
+    {
+      "path": "Assets/Mochie/ScreenFX Shader/SFXXPasses.cginc",
+      "sha256": "6d3f2c3859facc52f886330867f024b271e2df790139cd2e234ec70f7d14d30e"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardBRDF.cginc",
+      "sha256": "4e5ab7a6502ab6ea5b4219c84f58c365b38b8d4260c3a172bb1c47ba78c12aed"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardBakery.cginc",
+      "sha256": "9d1142ac5e0d7415e5b6c869ef7d54863845280ae168f44a56bf2c75f5402bda"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardDefines.cginc",
+      "sha256": "512db5e8fe4078a2f29aa49b76fc39aaa6e0fd1e9ff59032baf53122d8dab24f"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardFrag.cginc",
+      "sha256": "282f028f24489fb4f16e6a9a735b896c894ffc6570951eba91c28b1a3ff89378"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardInput.cginc",
+      "sha256": "a3ebda40f6a52a7a66fd997cb01537d9938af7463c4bb2f4608d38adbcd0d941"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardLighting.cginc",
+      "sha256": "a4ee42126a55696ed0df331e0a581bde0d7812feeece431ee25118187636731b"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardMeta.cginc",
+      "sha256": "73ebd6973bc9662d011ec02f95303ed4cac90e723b3d50201210df5b7ebb341f"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardParallax.cginc",
+      "sha256": "dba4feef1c9d143e5d687c036767cd265fb8b5f1b38b086a0a39a61cd6895219"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardRain.cginc",
+      "sha256": "d03dcf714081039994479bb36ac94de0fe8a4eed5df00738a1dd0bd6977eb747"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardSSR.cginc",
+      "sha256": "1dacc7cf92da1c016e6b0d6f73e6b06ffa700bcb54f7217c4bef13b01fff7b23"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardShadow.cginc",
+      "sha256": "a5f83bca17a835193d95ca70a33755f6049e726c761cc8e9135f338522eb92ca"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardThirdParty.cginc",
+      "sha256": "ca6e43f54bc6d9fda1a60c3b8b09443fb84391c254e0c884e07c676e4d476b02"
+    },
+    {
+      "path": "Assets/Mochie/Standard Shader/StandardVert.cginc",
+      "sha256": "8a219c32185e8dfaf43dfc2369544952fc5e9832b566ba687b90b46b7120a604"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USAudioLink.cginc",
+      "sha256": "431e225d33d05e2626f633ca41407e4b130e51b16bf33ea30fe2d9f32f8167c5"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USBRDF.cginc",
+      "sha256": "326b4a8f5235fbd3f89b26725033a8ce6d83bf4ed53faadf6d23eb7a6f0cbcf1"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USDefines.cginc",
+      "sha256": "0c1b0ba9d3801c0f86e82ea177fc30294d4ad279d5858492cb81b2ac42b76621"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USFunctions.cginc",
+      "sha256": "731d82e469401f7bbdf1c4df36fb0e9118862b97d2b1ffbcbfe3072441eb3da5"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USKeyDefines.cginc",
+      "sha256": "84395b11fbca909f8c30e986d2124c1c23fbc6b35a61bfe665d5aa392b5298ba"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USLighting.cginc",
+      "sha256": "ce76076d3e1df6134a0ed7f85bffd08547b1ddd43b917185733a0117733c7f0d"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USPass.cginc",
+      "sha256": "9c1af2afca1cf50b783dd7c77d402873ff96caf88bc2234d50eaa861c7b51d9c"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USSSR.cginc",
+      "sha256": "c740e67d7bb225637ea72e4dd96e1681a6117de3b6eabba7f5041334a9c228d1"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USXFeatures.cginc",
+      "sha256": "6d3f2c3859facc52f886330867f024b271e2df790139cd2e234ec70f7d14d30e"
+    },
+    {
+      "path": "Assets/Mochie/Uber Shader/USXGeom.cginc",
+      "sha256": "6d3f2c3859facc52f886330867f024b271e2df790139cd2e234ec70f7d14d30e"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterAudioLink.cginc",
+      "sha256": "383cda6f04427301440311ee0a8929aefe143be96d6d21685b4711c09cc2c215"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterBlurKernels.cginc",
+      "sha256": "e53372c11eb351cd3dca2628892cb985f23da29f0ddf5ecfc26cb533fb4d9dfb"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterDefines.cginc",
+      "sha256": "af769e8341e744fa6273c03fc9547db2fb5e4a20293a6cc9295602d07d733e09"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterFrag.cginc",
+      "sha256": "b62393bd079d35fe42e75be1389df1073e1d6f875b408cb3c21dbcd03bde24f6"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterFunctions.cginc",
+      "sha256": "f358e919edf20ac4b7351d6e2288d573a1def5a0028401ef2247397bd2abf147"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterIndirect.cginc",
+      "sha256": "58df4e549d8426aa362adbf4581f5f982f8925d84d08292aa93e644cc7b8e8ec"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterMeta.cginc",
+      "sha256": "4c5e61343776392e51968437f37ee5a8149965e971c62da2bb06e6d2c344aa3b"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterSSR.cginc",
+      "sha256": "c75ce18b1887eaaffc9cad9aaf33e395457cc7ef44f7961bce9bac0e91578708"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterTess.cginc",
+      "sha256": "6d3f2c3859facc52f886330867f024b271e2df790139cd2e234ec70f7d14d30e"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterThirdParty.cginc",
+      "sha256": "7aff6b3dafece4f2a329e94be51ab51e2cf2b350eaa6f739ce17ef79a3a57688"
+    },
+    {
+      "path": "Assets/Mochie/Water Shader/WaterVert.cginc",
+      "sha256": "f20100386400026393c8565ed0ed9d4661a1f1b9b63af7ef99922fc060bf7f88"
+    },
+    {
+      "path": "Assets/Resources/poi/poitexturepacker.shader",
+      "sha256": "5487a669545e12191948398d2fc9e9cc971c9743ffc29e486e6902a13e37853d"
+    },
+    {
+      "path": "Assets/Resources/poi/poitextureunpacker.shader",
+      "sha256": "fb42ea58e5a0134dd3baa4fd8c37d8aef93ebcad5d1e5df7278275e7297f3d02"
+    },
+    {
+      "path": "Assets/Resources/poitexturepacker.shader",
+      "sha256": "ba136e9c036d8cff5beea4bf10092897e2b4778b1cb3b3b4b2b9bf029398d7c4"
+    },
+    {
+      "path": "Assets/Resources/poitexturepackernoalpha.shader",
+      "sha256": "ba136e9c036d8cff5beea4bf10092897e2b4778b1cb3b3b4b2b9bf029398d7c4"
+    },
+    {
+      "path": "Assets/Resources/poitextureunpacker.shader",
+      "sha256": "da06e744c238069cdf8a4817847c1b6be701abf55d91d36badf51a049950372f"
+    },
+    {
+      "path": "Assets/Resources/unigltf/normalmapexporter.shader",
+      "sha256": "855b62d070746def2afd3fb22f9de0df768d7dff2438dc2ab7800a55acc84f88"
+    },
+    {
+      "path": "Assets/Resources/unigltf/standardmapexporter.shader",
+      "sha256": "08e9f2ef6b856473142e8181a779bf89eec514a421f9914bb20203f4af5ab363"
+    },
+    {
+      "path": "Assets/Resources/unigltf/standardmapimporter.shader",
+      "sha256": "7b49a299ad60031031cc57bda781a937dacd742a6ba4bf308a57a5f6bc5e2e16"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AISystemPromptBinder.cs",
+      "sha256": "2086969d234c31c05d9a5493de0b5179b0f370245fb45152db587dba5487f32a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AccessoiresHandler.cs",
+      "sha256": "1cf8bf6c4711352edf8c4b7eb50e8e5bf04750471ae0ad4e54b7215e919d573f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AllowedAppsManager.cs",
+      "sha256": "60f54f8d70769a473976591723c3ed2abf96fe5da10fa79f5b8238bb7b20d148"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AnimatorExtensions.cs",
+      "sha256": "dfa39043dccf739da0529f75e5a59119ced62376d0f248dd47e7545082bcbde2"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AnimatorParameterHelper.cs",
+      "sha256": "57a42c398544edcced375e41d52805e90c7f11a33c4892c29043935390b0bf77"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarAnimatorController.cs",
+      "sha256": "01bde6b9f25ca5260dd51fd0af4e85e2059a2a0a7dd89cb5d26cb35798da89df"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarAnimatorReceiver.cs",
+      "sha256": "324e28a23f85cf1c01d33c3979f2cc4ca8da7b6ec0190cad8ddad63bbff0ce0e"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenHandler.cs",
+      "sha256": "8d49ea57c896b02a32ad476ad9066dd28feecade7704967b9f89dc6da495faea"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenScreenSaver.cs",
+      "sha256": "e1594174bad4f8531318ad11ae5bc37354073110aef0990912592d1f3a7a9833"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenTimer.cs",
+      "sha256": "e1bbf9625b315c1e5ab422a43ef480a124c170f6347f3821d1b971322a9b3d8b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenToggleHandler.cs",
+      "sha256": "26bc3c39a5c07344e828310d476f6f3510a25d48e4f01f2ed9d30281c662ffbb"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenTouchHandler.cs",
+      "sha256": "091a2c1f30bbe64e052b9a5fe93681b540c761771d124cdec8aa093efe2695df"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarBubbleHandler.cs",
+      "sha256": "c61350aab41abe2cec68c63c9656d6a6b04cf9d2475058907b49b332c7dec853"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarClothesHandler.cs",
+      "sha256": "0292193046f98675efaf31a472f1af287c00c3c21034daef9a4aafa9afbaf017"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarDanceSafetyZone.cs",
+      "sha256": "c37fb1e3647f463ed517f6c59d064a4aa6b18f96fb42df7633a9fd77d0538d03"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarDragSoundHandler.cs",
+      "sha256": "feb5c34ffe44f1593f92d70a638c4c5ab3b593ed601693ce7dfeeb6103d85224"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarFoodController.cs",
+      "sha256": "b6243d5872e5b972fa19d7272da9355c57b24fa7ca127a6df5a4330dfecd0c13"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarGravityController.cs",
+      "sha256": "5d121af134b57cbc256d16183272a5c0e29b14eb1148e8f723431b2e7b9edc49"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarHideHandler.cs",
+      "sha256": "9001b3ec845e231216ad62aa54e645a2bcf4542ea03fef2dae12b537bb327aaf"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarLibraryMenu.cs",
+      "sha256": "6dca908ecdfb596978eb80b6f37c908d3ef939019038b1409ec2f165eb5a2561"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarLocomotionController.cs",
+      "sha256": "f6e5cdb0b4c7ba2f18a7e20b54aed1c9fe04e59465c7da3ecf62b8cb36fafb23"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarMessage.cs",
+      "sha256": "577c8d605c0f1e784507b8ead2d9de6b7edadf5aa905d40486735615cd842f9c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarMinecraftMessages.cs",
+      "sha256": "3c2d4728671d962bdfa4b510fd5398293e54e1fd46e336e24335fc987b418c6b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarMouseTracking.cs",
+      "sha256": "9d440902e0ff7a5a8a88e4b5871561c092bad277293e4dc66547d575d112b229"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarParticleHandler.cs",
+      "sha256": "e63d8c08fca3718b9273abbab430d6dcea50071216f04f1e245cc61b8449e7c3"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarRandomMessages.cs",
+      "sha256": "b2d2983181fd554a41b1c1fa188f578fcd419eabdba66f417f7ef624cfd5f17a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarRebindHandler.cs",
+      "sha256": "d25a7733ab1d29b9218f81716f6f96311a8dba3affc2cb9db66c6a8631750254"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarScaleController.cs",
+      "sha256": "ad1788014971abb26486445560b24a33ce7715b7ecc4052d727a334fae57c528"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarSleepController.cs",
+      "sha256": "81ac046b2d3d20fb44cb9cb34f2c666d35d7fc350c104fc6376ea8eec2af3312"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarStateObjector.cs",
+      "sha256": "39fdfa74a24297feb93a505901a76609b4fea407004f0302143cb7c3e0a6edaa"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarSwayController.cs",
+      "sha256": "94e204fe1a7e105c260de58c742da3d2799e488f56d4fb2616741e9920a0f644"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarTaskbarController.cs",
+      "sha256": "7d5aa075c935bbdc4d76bda51ee9329bc39ceccdf2c5ec96d5a617e1bbdab308"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/AvatarWindowHandler.cs",
+      "sha256": "ad267a69e02a698c2542cdfbda32a3a110be2acbfd8f8e1283d5b36ca1450cf4"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/BasicSample.cs",
+      "sha256": "25f6de13fd9e533e74edc0e869f0fdc2d3d3f525b8f0369756fbf518a2b2b32c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/BigScreenToggleSetting.cs",
+      "sha256": "6afe2f36330c53aaada420067ded6db5a8597b7a7738e53be78b54f11b3d1a35"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/BlendTreeLooper.cs",
+      "sha256": "48a9de71a719c4cb6512559f03ae7155d56e4e2ef11beba30c22615fe05c41db"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/BlendshapeManager.cs",
+      "sha256": "784fee92351bcc8f398fddaab014dfa100f61c9dcca722dc3f9194dfa6bd195d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/BlendshapeUIBlock.cs",
+      "sha256": "b76475dff86ea81f32f550bdb5979a5205fcd3740cf51a704f4578631124f9cc"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ButtonLinker.cs",
+      "sha256": "094dd5a7b7dc2634809022d1c41796a7c099940dbbc65c06528f88d8a4e03ba9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CanvasSampleOpenFileImage.cs",
+      "sha256": "35ffcd294a40d84c3da5fa23da13c3f9eab46490b9a7dda9d517d64d26c3b046"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CanvasSampleOpenFileText.cs",
+      "sha256": "8f423bb78c3a4cd080be6ee038882090433af6b6e8ef064221b7181c869242a0"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CanvasSampleOpenFileTextMultiple.cs",
+      "sha256": "df52bd130605f3ca8ffa4f770cd8115289165b888fa185ad6a641e604b1e4fcc"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CanvasSampleSaveFileImage.cs",
+      "sha256": "324d2a265458a88044c4c48cc94347223c0360028f2b3a3f61d1acaf1f153664"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CanvasSampleSaveFileText.cs",
+      "sha256": "ef87dd5b4e24c05c957b9470db336b5cd6d4aadee647a4f04adb6125c56640bc"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ChibiSettingsData.cs",
+      "sha256": "05395763a9b5f0cf52c21d99f02b00c8e431dc34a5e0eb5eba5917daedc5b382"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ChibiToggle.cs",
+      "sha256": "c4d91c550582ce020cce81e22a7e5cfae40daa34c7f180d9370f2304005da7ff"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CoffeMug.cs",
+      "sha256": "ff614d37c162ae25aed7ff86365b9de4142ce74855ce4a38faa334dc8c7f919c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ColorController.cs",
+      "sha256": "20a4a4b0960dda6cf78cf935c086ca6f8431b64903c518b3b1a862258471ca70"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CustomAvatarSettings.cs",
+      "sha256": "db2e5be74bc04083af5859cb2db2181b4e786e678e5790dd2e2e9ded6859b757"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CustomDancePlayer/AvatarDanceHandler.cs",
+      "sha256": "da46bb1304008a2b35f8fd120a19585d422188c86898312869fbe86463cf1212"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CustomDancePlayer/AvatarDancePlayerTools.cs",
+      "sha256": "65eebdc5487354cff04a72665d3b2357fe6c8b6c96986e3525c8808c7045b48f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CustomDancePlayer/AvatarDancePlayerUtils.cs",
+      "sha256": "25da9e7970d05cb0bb747d4f92793f919fcdbe3df97a0b073f8797d6b9f394ea"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CustomDancePlayer/AvatarDanceShapeConverter.cs",
+      "sha256": "7772fe4d52f512e6907eadeac85ee5e936e0529d0fcfbd25fb9385b21dabe8f0"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/CustomDancePlayer/AvatarSyncDanceTools.cs",
+      "sha256": "436ebcd844b7c4e97cc3ad246e2268428f1cd6cea948f9e253fdbdce1c75ab30"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DeleteAIHistory.cs",
+      "sha256": "e8d384ec68dec99fec60b3cd3d018a8428e224025951d5d669c2c0ef55fa6bdb"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DeleteButtonHoldHandler.cs",
+      "sha256": "8ed4393031123c4e13059b515e520093cd9079c3862601657578904ef2fbc26c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DeselectOnClick.cs",
+      "sha256": "dc04a21b1df88526d1d233d62523c4847f2b228c845203e101069048e396bd5b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DesktopAmbientProbe.cs",
+      "sha256": "468180d50845af532affe6c765e6dd781ec411e2e70cd0fc12e94ed3a8b8fd06"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DiscordPresence.cs",
+      "sha256": "e97cc7576ccc7a00ad7f3746acf19ee206574ecf7134e011e1223be0e297c64e"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DynamicBone.cs",
+      "sha256": "f92fa16c64c8c0a068f1047a79560410417c6b74dc7b726cfc0b27d65292b1a5"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DynamicBoneCollider.cs",
+      "sha256": "defe5854487d5c174827ad0da2a8e32918b453a79d8f989782c91fd2e279dbb6"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DynamicBoneColliderBase.cs",
+      "sha256": "5c3fd0cd2d24efbae63915a51e230b62b4a16c2e2171bd4bf571f13aa52beafa"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/DynamicBonePlaneCollider.cs",
+      "sha256": "a7807f70d2d74dc0405bd9b01a36337f960b0beab2125eb496d20de60f5f697a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/FPSLimiter.cs",
+      "sha256": "8ac69abf9497701e5cbada220ffa2975b1b003ffb71721a312ec073eefcd4761"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/FixedPosition.cs",
+      "sha256": "597d6a6c7c1c804db80368179917b95007947b4e204c116bcdba3feaefb2a02c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/FoodEntry.cs",
+      "sha256": "3b3b2b10d47cfb1cef145663d2cc7d8dde10502dd72f1e348bd831dacc591794"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/GCCollect.cs",
+      "sha256": "ec4ac982d8544ee04df38324a0ab717b11835b5e3f3c9bdae43b161ee28562b9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/GltfInstanceDisposer.cs",
+      "sha256": "b9663d27807e15d329e7fa249e1bf00e8d11abcfd5f47be45e3f70c026fa9e29"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/HandHolder.cs",
+      "sha256": "767003a496e78942fc08da8ca0946d80e89ede30c52d66a4c71bc51d224b2678"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/IKFix.cs",
+      "sha256": "f6a21b4438cc1dda7db05f72bd45d008194893501f736f8aa47c44892fcff9fc"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ImageSizeFixer.cs",
+      "sha256": "6e7e4876ff13e69a51dcfa460f8f1218249eabcdcc7bf6cb2f920de04521067d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/InstanceEntry.cs",
+      "sha256": "4cf213e17aa5896d5aa62888dc6edef6a9da95381d42f68b2551df6d6a9c265a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Interactor.cs",
+      "sha256": "27d38d3c0719b4012bddc486cdcdb55a25a93ec59de29b4335cf5d318f48d5ce"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/KeyBindHandler.cs",
+      "sha256": "5cb2037c040488a25dfd3aacee8b62c364feecd540061ad972a9af67fd269ea1"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/AutoRotator.cs",
+      "sha256": "574940905609b3387ea89fd2e7b384cb955b9a7f185ebb406b02263a5d673c46"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/DwmApi.cs",
+      "sha256": "52a2eccc8d8a80ffe807aee2ce6b8800d98d702a1d68ebeb026dc51141fda4b9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/FileDialogSample.cs",
+      "sha256": "ec097c28535076bb24bc7c906960a478ba5c743152c17e0899e54d09e0cb88ed"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/FullscreenSample.cs",
+      "sha256": "b8fa6c0aa3714e9666d1372509bfc13ed61948da6b7c0788804817f569d4d2f1"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/InputModuleProxy.cs",
+      "sha256": "46bdfc5e882c4537896792550e9225d19103b6424446370dfb2194ba67a66d76"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/InputProxy.cs",
+      "sha256": "2a4ddc0a3e00bd13a9fcd578a5a14313973b077e89da595df3701c438e476d9d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/ModelController.cs",
+      "sha256": "08a6e69f4ee2a3f281ef15f1921d5205766978b012bede3c7a309ca164f00168"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/SampleManager.cs",
+      "sha256": "e31eaa8f9bb070ba271c8baa4773ac09a0b8abc2a1d5b6c749706110141852ab"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/UiSampleController.cs",
+      "sha256": "4f61df1f773246ee60b3e1dcf0304c995cb906a52054618de30a2902c45ede3a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Kirurobo/WinApi.cs",
+      "sha256": "a5ce59fa56ee0ea7b26f1c8c78a2970e03cf47d4a757f5f171b4aee8a50a2a6e"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/Bubble.cs",
+      "sha256": "23f54d5d2e14d7a18605eac02bd87b936dbdaccd381c2b925d9bfbc74864e2e4"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/BubbleUI.cs",
+      "sha256": "cabe552fb3aa5d57f6d1a76b55db2c9c9918e19ed9980663814d5acb7edb0bac"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/ChatBot.cs",
+      "sha256": "97ec2bec39adb25445cefa8b17ba6f5d1940a9b03a70d6641faf76c34f7fe55a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/FunctionCalling.cs",
+      "sha256": "299535c5920d7aeb37c64f5d352e7e0e9ca11c73757c4e994e00b85a5fd63fae"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/Functions.cs",
+      "sha256": "221566b590b313631319dabd0e7d81093ad836de28106f7863a4d57add81204a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/InputBubble.cs",
+      "sha256": "df7e2cc44a05286801ab3e71704f9672c7e03f207da7324e7d5312a9cd288023"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/KnowledgeBaseGame.cs",
+      "sha256": "dcaed7cd731331775373a17234373b55243e36204f48c13c763f1eb07d28aeb8"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/KnowledgeBaseGameUI.cs",
+      "sha256": "df3c644c78c903717b01ce1f50d36bb5fe441cf86b05c6cea6a51d9183b226b7"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/MobileDemo.cs",
+      "sha256": "63ba65aeb10fc18e969ad526c99be4118de3e90542ee937c9058f883ff64ccd9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/MultipleCharacters.cs",
+      "sha256": "aaf31a0233bcbf82628c594d0eaa84db63951b3ff66fb518877eb1cdcecdfb0a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/MultipleCharactersInteraction.cs",
+      "sha256": "b0a9d83b57fb364731dbe8517965c360730aeb48ee0ea539dd1b96fe27528b56"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/RAGAndLLMSample.cs",
+      "sha256": "423c6635984cfe912dd331f542a37b28396a5e0be908a456ac92ee4767e7ad98"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/RAGSample.cs",
+      "sha256": "88bc0e2c2c6aa70d9c28b635d15418f857bfc536a6626f5ae709fff2ba35562b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/RAGUtils.cs",
+      "sha256": "f659822f084b7371bb5125061a6a771732f86515501ff90e5098d7e3e97b24f9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/RectTransformResizeHandler.cs",
+      "sha256": "acb48f27b291526a887144a2133348abdc900cefde4b09915d26be791018ee02"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LLMUnitySamples/SimpleInteraction.cs",
+      "sha256": "e08c210bf119e27295e8833c07226d4c47f79a51a0e3f3a1e4031f7c565044ae"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LanguageDropdownHandler.cs",
+      "sha256": "97a8226c6581e94274b02319fd147c5b2166fa063bcdc9021183764c8de29402"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LaunchMateEngineInstance.cs",
+      "sha256": "914ca17dee3ca9bb988656f5b21acef6c451e427da4fec81e87def65166e13a9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/LaunchMateEngineInstances.cs",
+      "sha256": "6e51f2efbe3da15c5c680082ba6b9e7e03a8911e007b0de1740f946f8db1b854"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEClothes.cs",
+      "sha256": "6db5e12c551aa9fef024579c6acb55cde6636c825329175624dc7aef20cefe87"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEDanceModCreator.cs",
+      "sha256": "a2d370d65c83b9b40d35a518090f3f65e6e8b0e0bc01fb945e97397c54156edd"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEManipulator.cs",
+      "sha256": "aba171b9323764acde587b777bcc878a96a990e9781e5d08fe00d92fbe6368f8"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEModHandler.cs",
+      "sha256": "ce05f0d810271c08e757059504cdb8b12a38bc4911fc4c8fb0b2f54053d93c40"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEModLoader.cs",
+      "sha256": "dbbdc5521eff2fc943f639df0d8410cbea4d132c9f225a94d5acecfd990cfe81"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEReceiver.cs",
+      "sha256": "a50476961d324862d437a6f151f121bb1ce785ac5d5ed137a58c4d63ba7785ca"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MERemover.cs",
+      "sha256": "bbde18009e72bf0e45e38e3943c7e192f757df64799667f3c4c53aed586d44ea"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEValueChanger.cs",
+      "sha256": "a5e67de8836cb972a7b9b91349ed7eeee8c34067eb2c9e8c46ce0a0c94a420af"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEValueRuntimeEntry.cs",
+      "sha256": "f469c0bcf073447c83ef41edde9a02e474f39e573088a90e8ea7b1e8c41b501c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MEVoicePack.cs",
+      "sha256": "c5a81bbe47a9c0c7ceae15733aa6cd9aa1d2f99028942b114566a5df6f607ba3"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MarkdownTextAutoConverter.cs",
+      "sha256": "3d8e1c12124e391083ae8230a9a7925e6ad973e05811de512260356d15682381"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MateScreenshotHandler.cs",
+      "sha256": "013300852ab5e3171df04515f9a11b4d95706bb169de44c67df841c45a2ab05d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MemberEntry.cs",
+      "sha256": "864dcfb8dba145b1ef5d03084defdd4fcff6ee7364c806cedfd5bd1c5468f45c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MemberKV.cs",
+      "sha256": "0c95cd19f52765b593f085c557a84003d624d74efd64307e282060b7e41e2b4c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MemoryTrim.cs",
+      "sha256": "d53396fc7fb6bd9af24ee2466fb1eac7df8d4284e6565b472ffb5a80480491ec"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MenuActions.cs",
+      "sha256": "4f39bd2c81629556a041819f3cb33cbe2bf51d5746fd474c1ea27a41499e49ec"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MenuAudioHandler.cs",
+      "sha256": "9c4e3900ec99be967d8f53696dffdccf2be5fa0755c137ba4d64537417becb95"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MenuEntry.cs",
+      "sha256": "31485991b6af03ffbc5f33557034b2891c99ec398c7c3cbb6dd74b9fa2739644"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ModRemoveButton.cs",
+      "sha256": "4489bb812dcb4e9332d16035c4d7e7c28f86ca71d5db1b0558f24f574f274dab"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ModUploadButton.cs",
+      "sha256": "b0616e27c623c6f4eb6bedd41683f317ccac093843df37a81913c6454d9337f4"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ModUploadHoldHandler.cs",
+      "sha256": "fb92e4752e3f4038eddbbcbef7fae40480be141e93caf0528caec0a57e381fb2"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MonitorHelper.cs",
+      "sha256": "467563857430fc62d14022473eda784848f31b9535056f57ad87a1a35f4dab5c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/MoveToPrimaryScreen.cs",
+      "sha256": "6e19a8ab65e0e38bb9cbccd913baec38e4ce763028f9d88fc41e6243031d7178"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/OculusVRTracking.cs",
+      "sha256": "643268c399d3663f8042b11588ebaeee769d58041ea5a6df80ea40885c17b3d9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/PerTarget.cs",
+      "sha256": "973dfc3778c7f8a0f74c541d68fb836c57448c7de9790ba90f563cd041955415"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/PetVoiceReactionHandler.cs",
+      "sha256": "456663fc7bedb9a2cdbe58966a15947d0fd16add5ff3dcd7636e4ee00c20da51"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ProfileFile.cs",
+      "sha256": "3377cfcc67ac9af323dec23b1fcb43d4e7b479f1d12b8fac0ea9c87e74b5beb0"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Properties/AssemblyInfo.cs",
+      "sha256": "d22a60bf5ec1732d361798e77474f1fe3a190c6d75fbf587c6ca31b6c1bad488"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/RemoveTaskbarApp.cs",
+      "sha256": "90afd280f4600683a887b6543a6a6a50d1b17bf3892cd9c7c033f7fc49b168a2"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ResetPosition.cs",
+      "sha256": "9ffd2e90500ed82557e70a1423acb98a86dc175e47e4e049a987b245877c3d49"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Rotate.cs",
+      "sha256": "2b5a6c1e5cc6ddd693599e43b26664f6fa400e09214e5317a0c87cf8e6f3bc58"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/RuntimeModelStats.cs",
+      "sha256": "115529ed8b6d43ffa8fa827168ce6a051bfcddf7456a6b0a86cf8e4941736e05"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/ExtensionFilter.cs",
+      "sha256": "2a5ad3870f6d930630849bfe4895e6eeac0b8e73a43329e305deb962bf2f6be1"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/IStandaloneFileBrowser.cs",
+      "sha256": "8e5794c3e1ac7749a7626e3c56df91f0bebda3f94c566dc7fe3fd6d555d4f881"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/StandaloneFileBrowser.cs",
+      "sha256": "b0eea8fe2796cfba9f66b2ae9396e430ad6cf04edb424013bb1ba1acf3ca5abf"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/StandaloneFileBrowserEditor.cs",
+      "sha256": "7041e68d88501ea3cb59a9f33d0777dee6239fd56c5d40c7131826d618dc9de2"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/StandaloneFileBrowserLinux.cs",
+      "sha256": "055430c6b41d0a388b883419299ab5cd597337d07d3b088996fafe45dd933ebb"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/StandaloneFileBrowserWindows.cs",
+      "sha256": "e608f80122b80555f5d0841d8535cd5c6316edbed8adcb0bce60114920db158b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SFB/WindowWrapper.cs",
+      "sha256": "06084e8e283af7784985e97e633934e87c7119a52ce3ee55255193c572b0dc53"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SaveLoadHandler.cs",
+      "sha256": "0693dda32be174b06916ad146a155dcdfb05f2e244bad1a9883b59f6968505e4"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ScrollHelper.cs",
+      "sha256": "dcf7e060198de1555aeee32ae5ef4d745a26b71ad7425c2b40d8a65553840456"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsData.cs",
+      "sha256": "33448fe0ee2149b29ae506a9adcb30c3903af16269847313f1703368034c4656"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerAccessory.cs",
+      "sha256": "5666509baaa629dfde7eef7e04ec2e36a17988f132b3d0df5f639c47c399470a"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerAudio.cs",
+      "sha256": "38d84c865ded05886d0e51fdd24846eced069130b6511be07a1716601568cd0f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerBigScreen.cs",
+      "sha256": "5ef064ff47ad73006b62e7f64d6715e6a86435143abda788c2c9a67655476b30"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerButtons.cs",
+      "sha256": "a4be459e370870274671f45b2c2dc15cca6a254e15c162fac3b1c50f775e7bd8"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerDropdowns.cs",
+      "sha256": "2e3f73baa2b3bfc6d32dfb9afa38c0b53afd50853ef9386ead5676866c0c68b0"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerLights.cs",
+      "sha256": "39f79fbcfae1dc525f575900a7c2bacd958edefc2e42203531dbd7a0f0ed7451"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerSliders.cs",
+      "sha256": "fc4f8ab211888c5fa7c102cd3bc6bb32b3f5d4712b58f1eac1ce9fff4b936ace"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerToggles.cs",
+      "sha256": "95ce93bb6fd0b1f87243dc5a36eb3a33f8094f59557d042c587f68e166e9fbb0"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsHandlerUtility.cs",
+      "sha256": "7e401ae4593069763c87030437b436bec77f36e66ef370b34891da01d4d7387b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SettingsMenuPosition.cs",
+      "sha256": "55176160aa7aaff3d81d5e255d7d17804011656a560ae4d68ea340d581ee8ea6"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SteamDRM.cs",
+      "sha256": "be8ce0a1893cb7a53c6f4f9054ac1b93eed4ca367729b2ceb959fff5eea07e31"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SteamManager.cs",
+      "sha256": "35bbe0c885ace61764310a0d5d444748d6f9e58d292c8a6e794949a29b879afe"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SteamVersionObjects.cs",
+      "sha256": "118cd8fd739b44d9c1bccf7ef15ae1e59e2ede60f29c53ce13d8305bc75485c1"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SteamWorkshopAutoLoader.cs",
+      "sha256": "043da23c09759b9b168fe5c83c58cda126158b367a4a8d54d94f62aed30389d9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SteamWorkshopHandler.cs",
+      "sha256": "18febee4c14f9cc032a94996ced4e088178b95bf081e68cbd134fd717062e9b7"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/StickyAutoScroll.cs",
+      "sha256": "a7908e5f1af29baaddb4519ca9747090ef998289ac57d7230b9fa6fecacd4800"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SwingController.cs",
+      "sha256": "d4dab1aaef384ab7a807376588a8969e0b36486dd1629ce09cda9ebf491616b5"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SwingFollowEntry.cs",
+      "sha256": "8c3ec31a96e9f4d0acaacdcbb97904cdea7e004091f2c282d44c890c0cd3933e"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Switch.cs",
+      "sha256": "3900c8efee7b0d26c1cf918fb988839819349210ec21eefa646d4792514d795d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SystemStartHandler.cs",
+      "sha256": "8b8488f662ce45ebe96c580996975d6323f1f6c3e28e1938f2bd3e32960cf18b"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/SystemTray.cs",
+      "sha256": "03787cfcab835357a3bf1a79292c480edc8ac39bfb3bb49234d112935a42bfc6"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/ThemeManager.cs",
+      "sha256": "248c875cb05e8e3b74fed841f48b553b5a37366d0d0d2c35d478743b4ca31b9f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/TouchInteractor.cs",
+      "sha256": "3a31d3c6842c65fcb47f5fd933a1d7243b733bcfe203a711c39468c5d79768f7"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/TrackingPermission.cs",
+      "sha256": "a358afaba0adc652afc3743ed1a1f80e744eb9a7f7a483324b40f01803f7bf7d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/TutorialMenu.cs",
+      "sha256": "1e595668da04b5f5659ce48b9638408ca3c50610b480540ec9ddbbc2b8701fac"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/UISetOnOff.cs",
+      "sha256": "f165cb66c745768bdb2b5c52eb27c2176391607f22808d73f0f1880d7c347c10"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/UIThemeApplier.cs",
+      "sha256": "7e6a257f33c201b783e731e5c1416ade20da6a02fb0203a869bd82dc8b89fb25"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/UiTooltip.cs",
+      "sha256": "ba03a3486b2633fdf99b6bcdf1269940877faa3f2c7a0df03e6004942bbf2939"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/UnityMainThreadDispatcher.cs",
+      "sha256": "5ffbef382b31b628765fe8ac571a4881c45e88683154fb3235c2481de9e0d7fd"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/UniversalBlendshapes.cs",
+      "sha256": "d86abc52be4507d5b43d2594d5653d381178538ed98d54595a75021543429c8c"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/UploadButtonHoldHandler.cs",
+      "sha256": "f5224a34a2eb8611c0a5239777c54a515945b8abd19d343dc4f61779ec0fb80d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Utils/TrayIcon.cs",
+      "sha256": "15f78018f755e5a995b2bb117190a132819cc30c3ccafa5d37869ff6801fdb8d"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/VRMLoader.cs",
+      "sha256": "3aa4850e98f0f1b751d22fd308d6524d161827e99daa9b433973f6bed69bcce9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Xamin/Button.cs",
+      "sha256": "02b042877a11e80d3983612f143e06b82fceeeb68b58d6a4891c616939a54c34"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Xamin/CircleSelector.cs",
+      "sha256": "54edbc9e970979380c1512f25bc93fcc092428603e89d2ef6dd992f211d236f9"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/Xamin/Demo/MouseLook.cs",
+      "sha256": "e730103f3a2ae3cf7494908261194188910fedd74f862715d3bd83766f7292fd"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/textfixer.cs",
+      "sha256": "e9d34b7949ede12ecd1da56932f92a6b19255d288d7669411952f9d2e78dfbe7"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcChildWindowExample.cs",
+      "sha256": "9067edecdf1c3a1dadd6e86a30a42f53edf12c1746f1e324bc49841b5418140f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcDesktopLayouter.cs",
+      "sha256": "39f96c4fbfe71c28fad7d958db31ca17353cb758939e4c91137525ca375e1183"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcGetBufferExample.cs",
+      "sha256": "1ad861bfce5905bc102cacf16f482a4d7f60e2ca02d4dd37c46b3712a6c845d2"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcGetPixelExample.cs",
+      "sha256": "c482baae358eb909461cad54abf78091af40a16c95f6ea3ce41b210346f8a185"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcGetPixelsExample.cs",
+      "sha256": "d7a8c68cce41d671891d18d52d2c0e6e0342309b818246fc0fb19597f1fae47f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcHorizontalLayouter.cs",
+      "sha256": "d6cc3572d7a3968361f4ebd494a194c6648fe691b1ac29b144ade1f07368a7d6"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcNewWindowExample.cs",
+      "sha256": "250828d80bfcaf880237b4dbd3f2285717b70de54fa47b488b1e3740dac81d1f"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcRayCastExample.cs",
+      "sha256": "91e1f5cd5c4bec11c8fe00fa255d546e0016fbc321800fc0787b7ae6508da087"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcWindowList.cs",
+      "sha256": "46b0131ffdd3af9d0c6d048de5b473f9bf6eec2327fb837046d71c9e6e45c0eb"
+    },
+    {
+      "path": "Assets/Scripts/Assembly-CSharp/uWindowCapture/UwcWindowListItem.cs",
+      "sha256": "549a94c214b494d64bd5ac10df0a0e82640287984cf6f99af7312b8385c92693"
+    },
+    {
+      "path": "Assets/Shader/@Xxuebi_Particle_Add.shader",
+      "sha256": "02e5364ab7bf2ff9c77e667938e4022c25fecd39ae7ce75df777193355eeea73"
+    },
+    {
+      "path": "Assets/Shader/CloverUI_OverlayGizmo.shader",
+      "sha256": "d92bbb94831c9e513d3cea7d1ec0579260ecb11005c497c84947ee51329a101a"
+    },
+    {
+      "path": "Assets/Shader/CooGee_Add_CenterGlow.shader",
+      "sha256": "d14062343a76c50435b0fcd778959a0990a7e30a405dcdfe304ecb715ad6838d"
+    },
+    {
+      "path": "Assets/Shader/Custom_TransparentShadow.shader",
+      "sha256": "546a75d7278aa632b1db0bb546e8a2b10b5e01b7eda3ff46f83e369115d84e81"
+    },
+    {
+      "path": "Assets/Shader/Hidden_LilBugShader_Refraction.shader",
+      "sha256": "ab79fd3996533c1cf5b88d192df04a891583c1598e8aef87463d173988b5ae5a"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_057e5871d886550468f65da5a6cbc68b.shader",
+      "sha256": "d416353762ff445469515957f4c6593b43471a75e4c2eef0f3ffb7da44157740"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_1fca1b962391ce9429ab6ff2c92881aa.shader",
+      "sha256": "a8b352799b2c0c3abb7485ceb6b4745213ba232159631d447da157b2e48ee2d7"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_216c996b194dbd64ba9d3b38d3908720.shader",
+      "sha256": "615f185bb4d3784cb77c25faca4c1601c5447c7d76459336e3e8f55f0b53b84c"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_235e22e86b4a1b04cb9b0e6d70c076e1.shader",
+      "sha256": "7ec4419652f482219f8101e46f2d449b81443021a1b1e5ade1cb507c634e6343"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_4fbee05036f51974a9699ba58acc3a9c.shader",
+      "sha256": "ef86f3a4c966b824f92d99cd4cf3f8aa0a13d7004b595b158a6bda9e054a8f95"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_61100bfcce9b86440a912488042a5821.shader",
+      "sha256": "c600f1797a267d72973c420695bcdc5f385d6318ae98923b1c65d4360dfd4221"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_79f3a5d126683cc43bafbf473b70f99b.shader",
+      "sha256": "348fa22495fc7d6921b5ed209a21b2087306903797737a6e6082b7b4b4610cae"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_81998fa68b7eaf643abf25d4ffe67900.shader",
+      "sha256": "701a783aa6080ca65d1e764c323b8693a4d70c645cd97e8aec2ff7532b6facc0"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_90f8dd8896966124dbcfefc2e1f149f6.shader",
+      "sha256": "9c2cae5fc2d755c9d9c2958e45e61d5d1f0088de89e4ae44770cef74ed3f7f2a"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_a45586b33d4f81348b105e38056fdca9.shader",
+      "sha256": "4b343f21d3fed24705c0dc36bedcdc3b3bf1497a9486481178fb5805ad98d04e"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_b92a1cd32e6098b4b83d3efe936e8bf8.shader",
+      "sha256": "ac0c2e45b839fc5eba15298f47e54a276dbf8e120a9be6f51b02badf66cb3410"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_bd5c517a458b5e449bba5384a119a34e.shader",
+      "sha256": "3f9e54d0556ea30912f1369b7bbf1dc0e2e43c923f7e07ad1a81b5b513c4f81c"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_c2a16f8fa3298eb4ba2beef450353efa.shader",
+      "sha256": "f63788b060d5f3fc895eee6d67de30ffbdb896bf3e30986e0b191356fe25e262"
+    },
+    {
+      "path": "Assets/Shader/Hidden_Locked_.poiyomi_Poiyomi Toon_f57d736661976ed49b5e5a5c717e48eb.shader",
+      "sha256": "445e4d7b0372d273c348d17c172ecde83d5b14febf8ea6f8fcae88aee31fde38"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Bloom.shader",
+      "sha256": "94567cb2f391acd6d8ef9d2143c6603b4c7bb72a52d40218ea5ef3a22a4f1277"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Copy.shader",
+      "sha256": "df754946fd4e6a831e44e22a0aeea21e6cd27dc81956beda3f7dcf91293a058c"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_CopyStd.shader",
+      "sha256": "8833bbdcee7c6a2bcf98e35be0e63792c0bdf16171a93040a62bde4c6be990a6"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_CopyStdFromDoubleWide.shader",
+      "sha256": "292f86c9be837aa111d0273f910ed26606ed9d29fc7e714784326ac5a7998b5e"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_CopyStdFromTexArray.shader",
+      "sha256": "8e2f86ac48c36207efa9c56bc64659895e6a90f27e91a99babf15a5a2570be99"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Debug_Histogram.shader",
+      "sha256": "36321d449d3e5bb467dc1f411f5034ebe90aea8d0ed40cd1c30b7b7ab45c824d"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Debug_LightMeter.shader",
+      "sha256": "2f5c7e1a2403b98e4e2c447990b7653003a4dd0f2abb9c8ef1fcd72061708d44"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Debug_Overlays.shader",
+      "sha256": "502079965b7aa204bd88edb74f37c96c5e97e0c6c3247ecc7eb22c4d7b963bfb"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Debug_Vectorscope.shader",
+      "sha256": "51a64dcc5942257e4c3cb84fdaf0baeadd6b918c489f821f150391fa3df0161a"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Debug_Waveform.shader",
+      "sha256": "fe1355c989b074856cfc56efbc8985676b718d9491e4915f564d315999235597"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_DeferredFog.shader",
+      "sha256": "4c7c8a4e643b5aa088b17e260d50569ee8b75d71afedab2c86bb83acb1418d31"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_DepthOfField.shader",
+      "sha256": "b1b257c9d7b2df95f6abeba436a9635582d8a6994626c5da3f8f1fa34703bf5b"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_DiscardAlpha.shader",
+      "sha256": "1033372809740932f7649c56cb91b44f5d99fec7ab0bd208d5c409fbc1c5be8c"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_FinalPass.shader",
+      "sha256": "7cc127e1f28880371fb5f7ffd1b1d57437a085cc6cb052f9834d4c417acda4e2"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_GrainBaker.shader",
+      "sha256": "566b080087cf4d38db16b85c685dd95f6d00e0e9c831526f335292b56a8eae3e"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Lut2DBaker.shader",
+      "sha256": "7ac1601803ba03bda99d64b22441e36eb052c6960f1b5c1c61a7d752b19321f1"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_MotionBlur.shader",
+      "sha256": "31c0de37f3e182a5d84df631a0a03626e073f282cbe0acc10ef6c3a7a9b6daf7"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_MultiScaleVO.shader",
+      "sha256": "758dd65ba6ccb6d9b548056d2925569c90dd68c83a0e167b202106e6334f36eb"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_ScalableAO.shader",
+      "sha256": "87d22e3f839c58edce5d6015740cc6107082604bf4a403aa202b13c1e6400d8b"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_ScreenSpaceReflections.shader",
+      "sha256": "5ec2b03a044baa6f7606351f8f25390c906ac41a7f2d051c0c9d46758915038b"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_SubpixelMorphologicalAntialiasing.shader",
+      "sha256": "600d52dfe4a7c81769e566d85fbff8aaa1922122bd250839865720eebc69ff66"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_TemporalAntialiasing.shader",
+      "sha256": "c0b913fb4ecacfda3918cfc0cfe0c324b76e5d501c6888911921e7671e1a657d"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Texture2DLerp.shader",
+      "sha256": "1a43666e27ece6c5bbc0c9d9168626f10a7cf2b52d3fb04cbd454a251b56d588"
+    },
+    {
+      "path": "Assets/Shader/Hidden_PostProcessing_Uber.shader",
+      "sha256": "5547897239b0ab254ac29fe97c850e0de9f339ccb6debdaf8418b16fe8ca4f86"
+    },
+    {
+      "path": "Assets/Shader/Hidden_lilToonOutline.shader",
+      "sha256": "0762b855a7aa53fa86b9b8b367a53734d05024abaa042de1f4462422bba6c14c"
+    },
+    {
+      "path": "Assets/Shader/Hidden_lilToonTransparent.shader",
+      "sha256": "de0fc4af3076b315f8f3daf423e2df1575178584ddaa2a10921784865968a994"
+    },
+    {
+      "path": "Assets/Shader/Hidden_ltspass_opaque.shader",
+      "sha256": "e3181ddf8e3e23a893513210161b6652dfe006bdeb99110c954b4f4820b7ad87"
+    },
+    {
+      "path": "Assets/Shader/Hidden_ltspass_transparent.shader",
+      "sha256": "03657d65203fbd39be0138d50f3b7b63018e9a1c9790c41559069102e1a96975"
+    },
+    {
+      "path": "Assets/Shader/TextMeshPro_Distance Field.shader",
+      "sha256": "417f99889dab8809d4b0213fad057021c6cce6df529161e7322cb02cb17d6955"
+    },
+    {
+      "path": "Assets/Shader/TextMeshPro_Mobile_Distance Field.shader",
+      "sha256": "ded6f2ee52ed708dab4b26a8abcd30f04672888e4ba441827d314f6a5ec35eb0"
+    },
+    {
+      "path": "Assets/Shader/TextMeshPro_Sprite.shader",
+      "sha256": "af669bb9ae136c8099f8e0a94a6933fd2f1e1fb0a6842129939a319fab4b8dbb"
+    },
+    {
+      "path": "Assets/Shader/UI_GlowShader.shader",
+      "sha256": "47032b320fba5ae5f5d04894767c9713addd8ce390d9dcdee89b9bc8acb0661d"
+    },
+    {
+      "path": "Assets/Shader/UI_LegacyTextShaderFade2WayOverlayCrossfadeHue.shader",
+      "sha256": "3a79f549dfc2fc2369738a0fcb9b87cc5f9a0ed8e72763319b7ea2e690fd8e92"
+    },
+    {
+      "path": "Assets/Shader/UI_LegacyTextShaderFade2WayOverlayCrossfadeHueNoColor.shader",
+      "sha256": "d695a2e070a2db74e635db33e51e3cafa979d58fe8196f16e01e3fbdaf0823f7"
+    },
+    {
+      "path": "Assets/Shader/UniGLTF_UniUnlit.shader",
+      "sha256": "2b54b667afbccd697678fff24e417db9a4594a03fa0817a65a17ca4f266ad034"
+    },
+    {
+      "path": "Assets/Shader/Unlit_TransparencyShader.shader",
+      "sha256": "4f77c199b01f4d8c5aafeb4dc8acc2f1ee3325db8a023cbdbcf094c6efbbfe9d"
+    },
+    {
+      "path": "Assets/Shader/VRM10_MToon10.shader",
+      "sha256": "27e25abdae5dc1cd729f0033b3b004b667e9701cf4a36c769399dcdd879cb577"
+    },
+    {
+      "path": "Assets/Shader/VRM_MToon.shader",
+      "sha256": "a890f099e2a9598f44550fd1a8042914356c35da102e40e2fd3e804bca4faeb9"
+    },
+    {
+      "path": "Assets/Shader/lilToon.shader",
+      "sha256": "6c854f30f5434d84b811c52b6e3d789ec5e5ad01277cf7cbf4d92d2022efc7c9"
+    },
+    {
+      "path": "Assets/Shader/uWindowCapture_Unlit.shader",
+      "sha256": "447699be032e43acaa73bf9a937ab3b7087127f0c32e9c47cf53cc6e18683985"
+    },
+    {
+      "path": "Assets/ShojiLinux/DBusNotificationHelper.cs",
+      "sha256": "b66609ed5f2fbd10ffb1fe2100f0ecffd5ddb442ba0bae6ba1c09c39a6aa0de0"
+    },
+    {
+      "path": "Assets/ShojiLinux/EarlyEnvSet.cs",
+      "sha256": "e2a2d219b6f4662ccd6e33bbb0564024acfbb435e09a4abdc464a310a62cb1b2"
+    },
+    {
+      "path": "Assets/ShojiLinux/Editor/Shoji34Build.cs",
+      "sha256": "a955526a99e939acd2300115b36a57be5ca81ed04d0c7ac387a18943e426d2ed"
+    },
+    {
+      "path": "Assets/ShojiLinux/GtkX11Helper.cs",
+      "sha256": "6b3a695436d8e54a1b7cebe61c50ed4e0924030c8effb82f594c67b2c0b99964"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandDispatcher.cs",
+      "sha256": "523a55872994d7890d7bbab4ed24c2c341b627f49131bb01d4a52cbfb903998d"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandEventNames.cs",
+      "sha256": "f85d8f8bf4fd22ccdef74770ab35479f6e9c0d7b21fe465846294e8f9f32d5cc"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandEventReader.cs",
+      "sha256": "50738ba4ed50ed854e05d0dfbe3208efb1d3588652fd6483186938bd33762d29"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandManager.cs",
+      "sha256": "92c169817d3a82f033df1a3cd2c566cf0d8f005daa7eb1efa0b138c32eea5ab5"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandModels.cs",
+      "sha256": "de943914c459f70e462753f4af05f56d7bf474d856ddd1a99553017c6f376dcf"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandSocketBase.cs",
+      "sha256": "ef1ff41393b27076199ac354b732b09b295cb4af8b03a120937d7ebb279529fc"
+    },
+    {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandUtils.cs",
+      "sha256": "fc0bae6083f1fb6616a7de7d4e2afe813f960fae963959c5e8ab2e4fabc06df7"
+    },
+    {
+      "path": "Assets/ShojiLinux/Interfaces/IWindowManagerImplementation.cs",
+      "sha256": "aee7bca24a69b7bc213b00ccbf0f1af171357ca77329a6517c59c9fe7454a625"
+    },
+    {
+      "path": "Assets/ShojiLinux/KWinManager.cs",
+      "sha256": "8714cd455f76ba41e05d6f8b5a3613fe99e1f02878ce665f8eb44d4f40b73dcc"
+    },
+    {
+      "path": "Assets/ShojiLinux/LinuxWindowDragHandle.cs",
+      "sha256": "e88efbe46082d931ae60f36a4555d084f752e7f2347fa95d2d1b86efba2fcf77"
+    },
+    {
+      "path": "Assets/ShojiLinux/PulseAudioManager.cs",
+      "sha256": "e1c7af11775b865d5efe92580b9abbf350c46db8331e88006dee97c1dbd880fe"
+    },
+    {
+      "path": "Assets/ShojiLinux/Singleton.cs",
+      "sha256": "866c4436df5a82443ceb95a13f952b5bfe02b2feaefda87fa07d9cff71a880c3"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/CallbackDispatcher.cs",
+      "sha256": "39e6f7de9d8af6fb21e6983d73c882aaa826772a610b0942db07e5c49331bbfa"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/CallbackIdentity.cs",
+      "sha256": "26a2b154b7559e068962821ed65cfe335303fe0071af1ecd8d8fa7e630f41cd8"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/ISteamMatchmakingResponses.cs",
+      "sha256": "f330c192abe1687618b7dd244576f327f1d0f9fc34455166cd20a02fd48c0239"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/InteropHelp.cs",
+      "sha256": "a295e53ab8771ca6e10f173e169586c6538f0b73a887dee74c57feca5528abf1"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/Packsize.cs",
+      "sha256": "e691ef37dd99a1a4f61ba315168821f6ce92cf1a5e1dcba25cea46109b9e62c2"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/Steam.cs",
+      "sha256": "a37539438fa233874a615e57e895b931c1e4025a10a5944b006047f7eb30d1ef"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/Version.cs",
+      "sha256": "d2ca1629e87ff8ce5bc5d13c449fa962817af0851ed34e36ed1f4ad45c153f2a"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/NativeMethods.cs",
+      "sha256": "b41ed933b6a4bd66241cebef0007dd4a6e4ea1e49e1c82917ed2d79d7a08f43f"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/SteamCallbacks.cs",
+      "sha256": "002610363cb59af2e0eb18bfd4e66e099b42f147205292bb7bee49055eafdffe"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/SteamConstants.cs",
+      "sha256": "6673c9d2e0e656b146e9acb46f9159c1dde2b19cdbd278a3dec5f3c962442557"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/SteamEnums.cs",
+      "sha256": "dc7a54741bddd3eefd2d12095554b9d7663a8898c1c021e34db526506c271700"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/SteamStructs.cs",
+      "sha256": "9921bac0fcf77e35a55bd92e9abb1503f7c1cbb2afbf5830d2e4f62d095992e6"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamapps.cs",
+      "sha256": "f11e39756ee3e153da01c8ea16adba32bc5b4f55a0c484543fbbf646e72236a5"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamclient.cs",
+      "sha256": "ab7a94e38ae9ab1c3988681885a5ce1e3c7033e426693a28aa7a5aab016cdf7c"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamfriends.cs",
+      "sha256": "8f9bebaf56e62d8c7af2d829d73fcf6b02078e0d216f595770a0b1b596b72a11"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserver.cs",
+      "sha256": "0cd45b745ed9782df53f7d9f66d0f1720580b6809ba6ef776bcb2559e214a04e"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserverclient.cs",
+      "sha256": "01b3f44f5fd8f3b9c6f4eb76fab5518fba247eb7d5cacd74f3cb604562f1bef3"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserverhttp.cs",
+      "sha256": "dde0de68c05af107f9f4da3e637b9f9dd0d1cc72714d30fb0fffd8f488a8703f"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserverinventory.cs",
+      "sha256": "6024bc5f00cabd750c62d3c097a284598b5361fd50914682c6a39bb0e98d7da0"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameservernetworking.cs",
+      "sha256": "1e75679c3f7f6459eb986697e1a8edfc4d56a64af2197bc34c783d642c2058dc"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameservernetworkingmessages.cs",
+      "sha256": "5cf7038bebcf657383b669b09683fd878a2e8da1be3d1dedceefeffcdd7eb1c3"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameservernetworkingsockets.cs",
+      "sha256": "bc1932c0b9fa6308271f669fed2835c05229079e48afee98c8d024b80c12232b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameservernetworkingutils.cs",
+      "sha256": "120be884099ee2f1c9a4e7a4dfd6d2b0f64c810fb74a5641d31114de30565740"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserverstats.cs",
+      "sha256": "973aa67faf5ccb0faf6c7112624488f33c0de65e187dfd231c324edfa37f2a00"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserverugc.cs",
+      "sha256": "97bd3c4c9073406159a8d31db3adc7e8de26d071ad4882c7712f7b05b573a2ba"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamgameserverutils.cs",
+      "sha256": "93fa9185c6855a368bb89ca6c77b311944f61a8adfe8ea9c5f8d7d3b20033250"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamhtmlsurface.cs",
+      "sha256": "757a75d3b3e5355b32a4e13a79309e907925b92a830f72558ee9368520b706f3"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamhttp.cs",
+      "sha256": "4cd90c4626f4865e40132065bc02f9bd54d48a19e042503be35e2d79f94e1f22"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteaminput.cs",
+      "sha256": "d052a316d4e1fa5160e5333c3003f9f9afb0ebc20d08e69c1c519eab193cea91"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteaminventory.cs",
+      "sha256": "2698dfe7e57b5f9acad6396caa2db6816c2e01f8c29f46a16b43a182a56e31cb"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteammatchmaking.cs",
+      "sha256": "7611807dffb06978ef57f8a75f299f0186c132e378e202bd0435736cccb6a2ef"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteammusic.cs",
+      "sha256": "ef0908ca53b8d87a54f9ef879219751b47e65a249b2d954f56b298a6f94bd00a"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteammusicremote.cs",
+      "sha256": "d010848bcd3ac792855f504d38dcd80576ecfd3714dde5ed1b3109b20bce70cb"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamnetworking.cs",
+      "sha256": "c6b13cd6eb8189f50f7fd6fc7ca468af1359cd12a5fd7915fd7e1ff082230c60"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamnetworkingmessages.cs",
+      "sha256": "440637f0d51888e6503ec0bb519b8cfcdad674418626daaa52d36905e0202982"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamnetworkingsockets.cs",
+      "sha256": "37ed4d60ae7e3ab9fa44e7097f609d91c79266ccd07296dd0ff16684e1ac9662"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamnetworkingutils.cs",
+      "sha256": "95f08fdc0f406854c5529a5ad093e0d5836875ceb46a81b43cf1ddcc773dfb14"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamparentalsettings.cs",
+      "sha256": "4e65196f04e877aa7658c4009822860baf4de9cb529c552f4604995673c6247b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamremoteplay.cs",
+      "sha256": "fe05e4b0c1fd5ab11f72f45f70d0775c220fddf43e661231a0438a4f9288773d"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamremotestorage.cs",
+      "sha256": "e2ab1303467f16f7dc5a3d543da9b8519b104cddfa13b409a459832265cbd3db"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamscreenshots.cs",
+      "sha256": "58ae45cb2bbbb707d0155124594dbe8c3c7a7fbbd490aad7a6f9cb76872033be"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamtimeline.cs",
+      "sha256": "0f8f5525c65ca72142517150164f8d7698c2b1b28c32203c3abb19ae4b9467e7"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamugc.cs",
+      "sha256": "73a4c53e9ccaeeb46f2fd13d07450bd6770942f43b03591a67ab065bd4172f7e"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamuser.cs",
+      "sha256": "34663aaca2fd5df24f4c8f55f439d8c01d6a77d0b157c89fc6b48edd29a57c3f"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamuserstats.cs",
+      "sha256": "9d4901c5e14569cc549f69b7cff7cae77591212a73982d745fbb03cc33756ea7"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamutils.cs",
+      "sha256": "2f35ff10bb05d39b601f8cc3cf58f8e3579b6c448024d08270d602f025e7d126"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/autogen/isteamvideo.cs",
+      "sha256": "880e12af7d53a16be417b48aff87d86f4bca371ed98dd61c0465769db3644f4a"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/com.rlabrecque.steamworks.net.asmdef",
+      "sha256": "b935dc15e765895ae8423c8fcfdecfba0b4c69deb9590e2786b301c20a97802c"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/MatchmakingTypes/gameserveritem_t.cs",
+      "sha256": "bbc14696376c501a2665f2fea89ec762d0ad9657e798556c56d1b6b8f33911ab"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/MatchmakingTypes/servernetadr_t.cs",
+      "sha256": "a2829762fb1a8bd47f358f26d2bb4f054b045ebd03e3eddb42f6b8281abfbb2e"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamClient/SteamAPIWarningMessageHook_t.cs",
+      "sha256": "98a2734e6efedcc14534297d22b20cb6f0c0a5419a5a37ca7100fc3d7ec3e334"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamClient/SteamAPI_CheckCallbackRegistered_t.cs",
+      "sha256": "80a9880fd2db314b045b95e1e6d819943acd3e5800e6aacd4a15fb4d139758a3"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamClientPublic/CGameID.cs",
+      "sha256": "5479bc3489b20216044d15fc290853efd58e993deb389087e22ba4eb0fd47031"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamClientPublic/CSteamID.cs",
+      "sha256": "df50c11d8fdc365349caddba1096f853855513144f0d0702e4bc37360a566be8"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamClientPublic/HAuthTicket.cs",
+      "sha256": "1b41c2411ca66dc32bc534a9e55943f5ed65712ee6450dcbefc47d844ee9a18e"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamDatagramTickets/SteamDatagramHostedAddress.cs",
+      "sha256": "71ab5a1d57af1ea4f54fc3d70b6fbb7434fa6c77de13543f2771eed0c053d419"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamDatagramTickets/SteamDatagramRelayAuthTicket.cs",
+      "sha256": "4bfdd2a5492e32bc2271bc71c8b4ec7ddb74d60da60d42bc9aaa9574140b1aad"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamFriends/FriendsGroupID_t.cs",
+      "sha256": "0883e624b712db259dd4f4fef40f6679a23d9ef36eb4915775a2622eafc06da4"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamHTMLSurface/HHTMLBrowser.cs",
+      "sha256": "c5bdf5c538b041dd3ebd3d09a824a630e862a011054a5741dd628bbbff769fd7"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamHTTP/HTTPCookieContainerHandle.cs",
+      "sha256": "2dbda6a281a678285f671d03b629fe16fbb6507e682218d599185822277696a8"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamHTTP/HTTPRequestHandle.cs",
+      "sha256": "e01238986ea7079dbc1965958e59019bfee0805ac4c8fdcadfb7e03605998a1b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInput/InputActionSetHandle_t.cs",
+      "sha256": "bf9432bfb0d15b73716c7bcdb8fa8bf524ad88332b478468aa4a376dcad5272c"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInput/InputAnalogActionHandle_t.cs",
+      "sha256": "a7a6abf08c7da5b281d3e98f5e29157557a584bbd84b999b743d2ec5fe7e9d7b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInput/InputDigitalActionHandle_t.cs",
+      "sha256": "a39f883c7c0038bd61700d7c532cc3835565ca7799b720ce67d0dbaccbd41d00"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInput/InputHandle_t.cs",
+      "sha256": "33db09ce8d99e49241b630175a709ca01e53ce5f2ff7ea62e85ede54358121f2"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInput/SteamInputActionEventCallbackPointer.cs",
+      "sha256": "147f62654d44757e822c4f24e576805cbfbcaca5dd2073fbc1fd6c1cd58960c6"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInput/SteamInputActionEvent_t.cs",
+      "sha256": "13bf94e8364f4f5626132bed713eab18e76352b2a77e2d8fd9619627a920f07a"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInventory/SteamInventoryResult_t.cs",
+      "sha256": "b4ca4c586687e6de1eae6c6d7955d5be7b01b393c36275370d5ff616819eb88b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInventory/SteamInventoryUpdateHandle_t.cs",
+      "sha256": "2960964cad871e3ee72c619a91e5df1c6cc10b7286169e11a65992a75c6df48c"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInventory/SteamItemDef_t.cs",
+      "sha256": "2df0d626b87d1af673b5eb13f8dcbb962d1113431b5003f4c7657698c6405faf"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamInventory/SteamItemInstanceID_t.cs",
+      "sha256": "b4617f4bbb3e9c8bbea9115477f0c5ea67f08795165efe19d1579e1a67ce6540"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamMatchmaking/HServerListRequest.cs",
+      "sha256": "d598432446a0b4bfcfc7a4c80c1d6e74103441c769a61b79c241d9f9108a7fb0"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamMatchmaking/HServerQuery.cs",
+      "sha256": "6d856eae156b6c182de2757944e0c0e4270bddc3833cc84995083e8e7f365283"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworking/SNetListenSocket_t.cs",
+      "sha256": "44125ce0fd946a68b680f42fb0ce16a0e82407d09feebde630290bbea193fa1c"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworking/SNetSocket_t.cs",
+      "sha256": "dc95d6a3073d5396858026a4290649db592942bbd3280b29f826cc18dcca82d7"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingSockets/ISteamNetworkingConnectionSignaling.cs",
+      "sha256": "893b791887d6774e6c0e37368860490990ee69d27965090eea11c8adc5f86ebb"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingSockets/ISteamNetworkingSignalingRecvContext.cs",
+      "sha256": "1dab07958cafd077a6c16ffc7c5181dab77abaeb21a8ff2050dcacf897bc3bc1"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/FSteamNetworkingSocketsDebugOutput.cs",
+      "sha256": "0750832ab9528960ddb91b11d68b6db708ad50e2a7fc99da058cbcf4f5ebced6"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/HSteamListenSocket.cs",
+      "sha256": "17b4fbba6dea4ce4cce818fcb07145a53bb725787cdd325b46345fefa52ab94f"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/HSteamNetConnection.cs",
+      "sha256": "d42817c7dd3c7b7902008f532da375a65edf4869b98235935f6cd5ec70c8e252"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/HSteamNetPollGroup.cs",
+      "sha256": "2ee118921b720170d379eabdd1f565d16ea1b12396554ef31fc75c85426fbce6"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingConfigValue_t.cs",
+      "sha256": "2bdea62a370105f5bcacf1e9f4451059fdba25586ce58cf606667bd5504be1f0"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingErrMsg.cs",
+      "sha256": "9b5a1364933088f69304b338ed1b41a32d39f562e61799525551929f0f96530b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingIPAddr.cs",
+      "sha256": "505f7462bdc06b314c4c7229450a954407103eee52636558a1135b5f8a176d6b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingIdentity.cs",
+      "sha256": "27cc558f40c278065900db5a35c890ab7dc9c635c9037692e22549aeb0e6eded"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingMessage_t.cs",
+      "sha256": "e0f82223f0353ee73c75bbd6b339cb16ef51699e4ac3f818b6fb047ff2205fbb"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingMicroseconds.cs",
+      "sha256": "d607dc1d984789cf864ebde2afab91a6e64419dfef6e00ef466536aaebc0ed37"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamNetworkingTypes/SteamNetworkingPOPID.cs",
+      "sha256": "ec0d9728c46e99967dd1f3e381729e54853f519d91be42c10823f20a3b76ef8c"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamRemotePlay/RemotePlaySessionID_t.cs",
+      "sha256": "7904f8328baf9d7715d6fe3c2659088b829e21bb828df4f98bcdb6ea4e8d4682"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamRemoteStorage/PublishedFileId_t.cs",
+      "sha256": "47eea8351fea355b8d399c2355953ca5c009298626bb7d6e4a8457a0aa5260e1"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamRemoteStorage/PublishedFileUpdateHandle_t.cs",
+      "sha256": "edb77e5a1f1efe9458aaf6fbf5c5c4d67c29fbf54785ba44dd8d9d9baea4a7ec"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamRemoteStorage/UGCFileWriteStreamHandle_t.cs",
+      "sha256": "ed6be035c776b4c3bdb67c7568117332c3bf5061a2cfaddad7fd9c13f13ff18e"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamRemoteStorage/UGCHandle_t.cs",
+      "sha256": "b32c0827a269be4a897db43c5e414144414fb12d697253ccfbca4ee7a301d4c6"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamScreenshots/ScreenshotHandle.cs",
+      "sha256": "9f6b67e8da82445cd6642d479d2317233388779aedc60379a89274005539a968"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/AccountID_t.cs",
+      "sha256": "e2eaf3ac6116b29470347e3a649c6d8f2f0e4af03e79317107827ddaf323586d"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/AppId_t.cs",
+      "sha256": "4ea148db79f75ae7390331695a0e67e217c0058b9c4900b2bf12ef708a4c1a03"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/DepotId_t.cs",
+      "sha256": "b8e12400867dec6027ab8fc939a437dd505af86fe97c022ddc0b3d5b0d0c81bb"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/PartyBeaconID_t.cs",
+      "sha256": "e61801406de50090635c481a759941bbda8486f659c53782d916ea45faa9bd25"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/RTime32.cs",
+      "sha256": "c47722d32194dabcd828290da918ca567e41c72f904713060043a833bc3c75cf"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/SteamAPICall_t.cs",
+      "sha256": "bf989f8617d39bb18a46c1aea27ef8ca3e9e2e7525dd2772ccba4fb5f3a43d3b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamTypes/SteamIPAddress_t.cs",
+      "sha256": "4cedf65c264187b265ee0f22a7033537fc69192da4d7c9ac426c616db80e451a"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamUGC/UGCQueryHandle_t.cs",
+      "sha256": "15b2cbf588fd540fe49cff9c83fe4561e336832153ef7b121e0efaa360a92017"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamUGC/UGCUpdateHandle_t.cs",
+      "sha256": "2c1382ae74960171d901d955138717cdadc1d73ee5116312482c45213856923e"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamUserStats/SteamLeaderboardEntries_t.cs",
+      "sha256": "b95e35ca7259353e49979d32e4a1413b21139de6687e39778b64d966cda54a54"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/SteamUserStats/SteamLeaderboard_t.cs",
+      "sha256": "7f4eba308d278c9dd46f3ff247a18cc40ab5554b39f5722720bc74eabd24be6b"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/Steam_api_common/HSteamPipe.cs",
+      "sha256": "77a3bc88fef65db14b1b4be40e7328ce53bacc93644e0897e9f72951042c03e6"
+    },
+    {
+      "path": "Assets/ShojiLinux/Steamworks/types/Steam_api_common/HSteamUser.cs",
+      "sha256": "978eb67a822665354d910a975c3ea9cff0869d6884967dd6e032ef09b766e068"
+    },
+    {
+      "path": "Assets/ShojiLinux/TrayIndicator.cs",
+      "sha256": "f3fbaf4ac2c820624d31e062c9115b796fc0bf5325ee08c9c1422d58cb8d2a41"
+    },
+    {
+      "path": "Assets/ShojiLinux/WindowManager.cs",
+      "sha256": "fc3cf62d27f437ae5bf96a80f7d77e5d62d77283c333cb7a37c8aafc2eeef9cd"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/ACES.hlsl",
+      "sha256": "ad9a3b33325a28c601f5a81604708d7cfd2bd5875be8c71658cd86d9e1269b7b"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/D3D11.hlsl",
+      "sha256": "8a373b0fe2b066d10b3f0ad924b5e6ebbc27e9e12b8147e7190659cd1551ae49"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/D3D12.hlsl",
+      "sha256": "8a373b0fe2b066d10b3f0ad924b5e6ebbc27e9e12b8147e7190659cd1551ae49"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/D3D9.hlsl",
+      "sha256": "78084c40bf35a9da7f0e368619999d5999e2a90a07f043f5d2633e80702d9420"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/Metal.hlsl",
+      "sha256": "768c23d53af006c9fbe1700b195d41a31c9ca31148e89ee86fbbc6d1bd558257"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/OpenGL.hlsl",
+      "sha256": "64dabcb90c5a830c5dee3dfa22844b050138323060516862391ec038aae1f8ac"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/PSP2.hlsl",
+      "sha256": "3733cb1ac6538ac7c751d6a82a422be26d5d62eebd5a2ab5579bd44894ba1f8a"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/PSSL.hlsl",
+      "sha256": "8a373b0fe2b066d10b3f0ad924b5e6ebbc27e9e12b8147e7190659cd1551ae49"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/Switch.hlsl",
+      "sha256": "14e3dd554a1870a3a082767fd155bcbd9b07495a728fe34e9e480425d94b0693"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/Switch2.hlsl",
+      "sha256": "14e3dd554a1870a3a082767fd155bcbd9b07495a728fe34e9e480425d94b0693"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/Vulkan.hlsl",
+      "sha256": "8a373b0fe2b066d10b3f0ad924b5e6ebbc27e9e12b8147e7190659cd1551ae49"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/WebGPU.hlsl",
+      "sha256": "8a373b0fe2b066d10b3f0ad924b5e6ebbc27e9e12b8147e7190659cd1551ae49"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/API/XboxOne.hlsl",
+      "sha256": "8a373b0fe2b066d10b3f0ad924b5e6ebbc27e9e12b8147e7190659cd1551ae49"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/DepthOfField.hlsl",
+      "sha256": "a95ca6be85a2a0f4ccd03c19b692a6d84fcf1cad3a1f2396c88a5e6bbff59058"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/DiskKernels.hlsl",
+      "sha256": "f35b669516f42229788b2fb79a7df5b524c886e20c8417099283a2a515cc3fe4"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/Distortion.hlsl",
+      "sha256": "21dfd3b59f20fa22582105b04b0d13138907c709153c1c20cc1fb719983127ff"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/Dithering.hlsl",
+      "sha256": "b886a70563aebfbbd90eb22728445dabc7457487eac14e020083bd1e75b347d4"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/ExposureHistogram.hlsl",
+      "sha256": "0fa441376886453747fde2ea98745ad98b0a848fb2fef8805db27d16767684ca"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/FastApproximateAntialiasing.hlsl",
+      "sha256": "7de2158fdbf09f4314db07ebc7181b7dd2e26223234a297b3a412ee1a110b670"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/Fog.hlsl",
+      "sha256": "ae88844c007f64d010de298b7aa67b92c57f4d9e6e8d5d0cc8f6d42de654d4a6"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/ScalableAO.hlsl",
+      "sha256": "eceb49a79938fcd9b78533e3de9be5f111f560d5bd3efad2a8ad58cc22e990f2"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/ScreenSpaceReflections.hlsl",
+      "sha256": "c6a47d9e84bb68582ca5b2afe8dfd4408e54531bd26106ecfe6e8b1a100e6d60"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/SubpixelMorphologicalAntialiasing.hlsl",
+      "sha256": "f1de061374ac22409a230a717b2b4f24cbd405df5e1e03ce32107dc50cae00e7"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Builtins/SubpixelMorphologicalAntialiasingBridge.hlsl",
+      "sha256": "f455e639fc38232217c167ecf8ce96b696d7e147b8f393ddfb2cf9e1b09ea431"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Colors.hlsl",
+      "sha256": "631d5af9b61d55a8b9bb993573689cb3ca6807683afff886b6744457e4f11397"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/Sampling.hlsl",
+      "sha256": "91b99a3daa2ea446e61aff22407fd2bb5ab22647000bc3d9d9115b16eba316ef"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/StdLib.hlsl",
+      "sha256": "5890c5dc5863ac8286a4346856d18ac4affae5e2fef49ff45792b174c576e760"
+    },
+    {
+      "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/xRLib.hlsl",
+      "sha256": "533fbd21290ca53b84967f4cceae7a7affca8e68ef2167e252c25dd11153ec8b"
+    },
+    {
+      "path": "Assets/uWindowCapture/Assets/Shaders/UwcCommon.cginc",
+      "sha256": "0120ee30b577b6895eec7a550098b600e89878f9c818869aee6e7478f383659b"
+    }
+  ]
+}
