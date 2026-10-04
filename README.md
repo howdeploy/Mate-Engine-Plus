@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="MateEngine Linux — a desktop companion for ShojiWM" width="880">
+  <img src="docs/banner.svg" alt="Meta Engine Plus — a desktop companion for ShojiWM" width="880">
 </p>
 
 <p align="center">
@@ -8,11 +8,12 @@
   <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-# MateEngine Linux
+# Meta Engine Plus
 
 <table><tr><td><strong>A desktop companion that knows your desktop.</strong><br>
-An unofficial Linux continuation of MateEngine, built from source and adapted
-for ShojiWM: real window geometry, cursor reactions, dragging between monitors
+An unofficial Linux port of MateEngine with custom features and improvements,
+maintained by <strong>howdeploy</strong>. Built from source and adapted for ShojiWM:
+real window geometry, cursor reactions, dragging between monitors
 and workspaces, window ledges and the bottom dock.</td></tr></table>
 
 **Source-first publication.** The current X3.4 application source and our
@@ -29,6 +30,8 @@ models, music, DLC, Workshop downloads, profiles or extracted Steam resources.
 This is a fork of [Marksonthegamer's Linux port](https://github.com/Marksonthegamer/Mate-Engine-Linux-Port)
 of [shinyflvre's MateEngine](https://github.com/shinyflvre/Mate-Engine).
 It is independent of both authors and is not an official Steam Linux release.
+Previously published as **MateEngine Linux**, this project continues under the
+**Meta Engine Plus** name with its existing history and upstream credits intact.
 
 ## What the integration does
 
@@ -50,6 +53,30 @@ It is independent of both authors and is not an official Steam Linux release.
 Some model-specific poses still need calibration. Native Wayland-wide keyboard
 tracking and multiple simultaneous pets remain limited.
 See [implemented behavior and verification limits](docs/STATUS.md).
+
+## Minecraft integration: Meta Signal plus
+
+**Meta Signal plus**, maintained by **howdeploy**, is our improved continuation
+of the discontinued [MateSignal mod](https://www.curseforge.com/minecraft/mc-mods/matesignal)
+for **Minecraft 26.3 / Fabric**, including Fabric profiles in Lunar Client.
+The port retains all 13 original event types: nearby hostile mobs, low health
+and hunger, death, day/night transitions, rain, drowning, sleep, crafting,
+eating, hostile-mob kills and biome changes.
+
+Improvements include corrected drowning events, removal of the duplicate
+crafting probability filter, more reliable event handling, localized mob/biome
+names, persistent settings, and `/matesignal config` / `/matesignal test`
+commands with Mod Menu support.
+
+Enable Minecraft messages in Meta Engine Plus and run the mod in your Fabric
+client. Events are sent locally to `127.0.0.1:32145`; the companion chooses
+localized phrases and displays speech bubbles. This integration uses predefined
+messages and requires no AI service or server-side mod. The technical mod ID
+remains `matesignal` to preserve existing settings.
+
+The companion mod is maintained separately; its public download is being
+prepared. This repository currently publishes the application source, not the
+Minecraft mod JAR.
 
 ## Build from source
 

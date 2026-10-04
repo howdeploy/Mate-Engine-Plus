@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-04 — Meta Engine Plus and Minecraft integration
+
+- Rename MateEngine Linux to Meta Engine Plus while retaining Git history,
+  upstream attribution and the existing licenses.
+- Describe the unofficial Linux port and its custom improvements under the
+  new project name; update the README titles and banner.
+- Document Meta Signal plus by howdeploy, the Minecraft 26.3 / Fabric
+  continuation of MateSignal, its event fixes and the local companion protocol.
+
 ## 2026-10-04 — Bundled model rendering, physics and edge hiding
 
 - Restore `.me` bundle materials with strongly referenced, player-compiled

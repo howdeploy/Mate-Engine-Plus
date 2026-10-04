@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="220" viewBox="0 0 880 220" role="img" aria-labelledby="title desc">
-  <title id="title">MateEngine Linux</title>
+  <title id="title">Meta Engine Plus</title>
   <desc id="desc">A source-built desktop companion for ShojiWM.</desc>
   <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#15192d"/><stop offset="1" stop-color="#29213c"/></linearGradient></defs>
   <rect width="880" height="220" rx="20" fill="url(#bg)"/>
   <path d="M664 36v148M712 36v148M760 36v148M808 36v148M642 60h188M642 108h188M642 156h188" stroke="#68d5e7" stroke-opacity=".22"/>
   <rect x="60" y="48" width="90" height="115" rx="10" fill="none" stroke="#73dcee" stroke-width="3"/>
   <path d="M76 145h57M83 174h44" stroke="#cbb9fb" stroke-width="4" stroke-linecap="round"/>
-  <text x="184" y="100" fill="#eeeafa" font-family="sans-serif" font-size="39" font-weight="700">MateEngine Linux</text>
+  <text x="184" y="100" fill="#eeeafa" font-family="sans-serif" font-size="39" font-weight="700">Meta Engine Plus</text>
   <text x="186" y="138" fill="#b7aecf" font-family="sans-serif" font-size="18">SOURCE BUILT · SHOJIWM · YOUR DESKTOP</text>
 </svg>
