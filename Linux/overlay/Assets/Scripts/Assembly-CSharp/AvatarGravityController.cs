@@ -40,9 +40,15 @@ public class AvatarGravityController : MonoBehaviour
 
 	private IntPtr unityHWND;
 
+	private AvatarHideHandler hideHandler;
+
+	private AvatarAnimatorController avatarController;
+
 	private void Start()
 	{
 		unityHWND = WindowManager.Instance.UnityWindow;
+		hideHandler = GetComponent<AvatarHideHandler>();
+		avatarController = GetComponent<AvatarAnimatorController>();
 		previousWindowPos = GetWindowPosition();
 		springBones.AddRange(GetComponentsInChildren<VRMSpringBone>(includeInactive: true));
 		springBoneJoints.AddRange(GetComponentsInChildren<VRM10SpringBoneJoint>(includeInactive: true));
@@ -53,7 +59,11 @@ public class AvatarGravityController : MonoBehaviour
 	{
 		Vector2Int windowPosition = GetWindowPosition();
 		Vector2Int vector2Int = windowPosition - previousWindowPos;
-		if (vector2Int != Vector2Int.zero)
+		// The hide loop moves the window to keep its animated hand at the
+		// edge. Those corrections are not user drag impulses for the hair.
+		bool restingAtEdge = hideHandler != null && hideHandler.IsAnchored &&
+			(avatarController == null || !avatarController.isDragging);
+		if (!restingAtEdge && vector2Int != Vector2Int.zero)
 		{
 			Vector3 vector = new Vector3(-vector2Int.x, vector2Int.y, 0f).normalized * impactMultiplier;
 			currentForce = vector;

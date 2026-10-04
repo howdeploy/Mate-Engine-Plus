@@ -92,6 +92,8 @@ public class AvatarHideHandler : MonoBehaviour
 
 	private Side snappedSide;
 
+	public bool IsAnchored => snappedSide != Side.None;
+
 	private int cursorOffsetY;
 
 	private float velX;

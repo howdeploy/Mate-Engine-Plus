@@ -669,12 +669,12 @@ Shader "Hidden/lilToonOutline"
     SubShader
     {
         Tags {"RenderType" = "Opaque" "Queue" = "Geometry"}
-        UsePass "Hidden/ltspass_opaque/FORWARD"
-        UsePass "Hidden/ltspass_opaque/FORWARD_OUTLINE"
-        UsePass "Hidden/ltspass_opaque/FORWARD_ADD"
-        UsePass "Hidden/ltspass_opaque/FORWARD_ADD_OUTLINE"
-        UsePass "Hidden/ltspass_opaque/SHADOW_CASTER_OUTLINE"
-        UsePass "Hidden/ltspass_opaque/META"
+        UsePass "Hidden/ShojiLinux/ltspass_opaque/FORWARD"
+        UsePass "Hidden/ShojiLinux/ltspass_opaque/FORWARD_OUTLINE"
+        UsePass "Hidden/ShojiLinux/ltspass_opaque/FORWARD_ADD"
+        UsePass "Hidden/ShojiLinux/ltspass_opaque/FORWARD_ADD_OUTLINE"
+        UsePass "Hidden/ShojiLinux/ltspass_opaque/SHADOW_CASTER_OUTLINE"
+        UsePass "Hidden/ShojiLinux/ltspass_opaque/META"
         Pass
         {
             Tags { "LightMode" = "Never" }
@@ -750,4 +750,3 @@ Shader "Hidden/lilToonOutline"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

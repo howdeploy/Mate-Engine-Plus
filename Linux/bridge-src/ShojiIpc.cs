@@ -471,7 +471,9 @@ namespace MateEngine.Shoji
             if (TryNumber(pointer, "x", out px) && TryNumber(pointer, "y", out py))
             {
                 snapshot.HasPointer = true;
-                snapshot.Pointer = new Vector2Int(Round(px), Round(py));
+                // ShojiWM confines trailing edges half a pixel inside the
+                // output. Rounding would move that point outside RectInt.
+                snapshot.Pointer = new Vector2Int((int)Math.Floor(px), (int)Math.Floor(py));
             }
             else if (previous != null && previous.HasPointer)
             {

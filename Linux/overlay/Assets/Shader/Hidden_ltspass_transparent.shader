@@ -1,4 +1,4 @@
-Shader "Hidden/ltspass_transparent"
+Shader "Hidden/ShojiLinux/ltspass_transparent"
 {
     Properties
     {
@@ -1158,4 +1158,3 @@ Shader "Hidden/ltspass_transparent"
     }
     Fallback "Unlit/Texture"
 }
-

@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-10-04 — Bundled model rendering, physics and edge hiding
+
+- Restore `.me` bundle materials with strongly referenced, player-compiled
+  shaders while retaining material properties, keywords and author render-queue
+  overrides. Preserve the default queue sentinel instead of pinning the opaque
+  fallback queue, which made blush overlays reveal the desktop.
+- Include the lilToon transparent outline and two-pass variants used by bundled
+  models. Isolate Linux helper pass names from shaders loaded by Windows bundles.
+- Reinitialize VRM0 spring chains after final model placement and settings;
+  remove overlapping roots that would simulate the same bones twice. Preserve
+  authored spring parameters and suppress false window-motion forces while
+  resting in the edge-hide animation.
+- Restore the left hide clip's original humanoid mirror flag during the build.
+  Floor fractional compositor pointer coordinates so the outer right edge
+  remains inside its monitor and can acquire/retain hiding.
+- Validation: local Unity player build, 47-hook finalization, bridge compilation
+  and runtime material/physics logs; the user confirmed the resulting local
+  behavior, including right-edge hiding. A fresh-clone build and arbitrary
+  third-party model compatibility remain unverified. No model bundles, music,
+  DLC, profiles, runtime logs or player binaries are published.
+
 ## 2026-10-04 — Linux X3.4 source publication
 
 - Preserve the Linux port history; publish the current reconstructed X3.4

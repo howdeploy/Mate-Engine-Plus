@@ -1,21 +1,25 @@
 # Source publication status — 2026-10-04
 
-The current Linux X3.4 player was previously built from source with Unity
-6000.2.6f2 and finalized with 43 bridge hooks. The user verified transparency,
-menu clicks and movement during the earlier integration work. Subsequent
-fixes cover localization, model Humanoid tables, acquisition, edge hiding,
-tooltip bounds and UI alpha. The source was collected from that working tree.
+The current local Linux X3.4 player was built from source with Unity
+6000.2.6f2 and finalized with 47 bridge hooks. The user verified transparency,
+menu clicks, movement and cursor reactions during the integration work. This
+source update also contains the locally checked bundled-model shader/queue and
+spring-chain corrections and left/right outer-edge hiding fixes.
 
 This publication performs file selection, provenance and privacy inspection.
 It does not rebuild, reinstall or launch the application. The newly documented
 clean preparation recipe has not been validated with a fresh build. No public
 installer or release binary is included in this stage.
 
-The additional source fixes collected in this commit route head/spine/eye and
-Big Screen touch coordinates through the same compositor snapshot and attach
-the previously absent hide component to the model/template in the builder.
-The patcher now expects 47 hooks. These new fixes have not been compiled or
-applied to the running 43-hook player; runtime recovery is not yet confirmed.
+The head/spine/eye and Big Screen touch hooks use the compositor snapshot; the
+builder attaches the previously absent hide component to the model/template.
+These changes have now been built and run locally. Material inspection confirmed
+that the tested blush overlay uses the replacement shader's default queue rather
+than an opaque fallback override. Runtime logs confirmed spring initialization
+after final placement, and the user confirmed the corrected local behavior,
+including the outer right-edge fix delivered as a bridge-only update. This is
+local verification with the user's models, not a guarantee for every bundle or
+an independently reproduced fresh-clone build.
 
 ## Implemented integration
 
@@ -28,6 +32,8 @@ applied to the running 43-hook player; runtime recovery is not yet confirmed.
 | Menus/tooltips and Big Screen bottom anchoring | bridge, menu application sources |
 | Edge walking/hiding and shared monitor transfer guards | bridge, avatar application sources |
 | Source-built transparent shaders and UI alpha | `overlay/Assets/Shader/`, shader restoration |
+| Bundled-model shader replacement and author render-queue preservation | `LinuxModelShaders.cs`, `VRMLoader.cs`, editor builder |
+| VRM0 spring ownership/initialization and edge-hide motion forces | `VRMLoader.cs`, `AvatarGravityController.cs`, `AvatarHideHandler.cs` |
 | Russian font fallback and localization reconstruction | editor builder and restoration tools |
 | GTK dialogs, tray, PulseAudio, Linux desktop ambient sampling | Linux platform/application sources |
 | Steam ownership, Workshop and purchased DLC | retained Steam source and Steamworks.NET |
@@ -51,3 +57,6 @@ applied to the running 43-hook player; runtime recovery is not yet confirmed.
 - NVIDIA stability and extra ambient/shadow-render cost require measurement on
   each machine. The reference wrapper's environment setting is a workaround.
 - The nearest public Refraction shader may look different from the original.
+- Bundle shader restoration covers the player library's exact supported shader
+  names. Other/custom shaders may still be unsupported; no blanket Windows
+  bundle compatibility is claimed.

@@ -902,11 +902,11 @@
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarGravityController.cs",
-      "sha256": "5d121af134b57cbc256d16183272a5c0e29b14eb1148e8f723431b2e7b9edc49"
+      "sha256": "685f09d09a2a7d30592a8a6f12bc0316b081293228f5ca05e41f38c78a458791"
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarHideHandler.cs",
-      "sha256": "9001b3ec845e231216ad62aa54e645a2bcf4542ea03fef2dae12b537bb327aaf"
+      "sha256": "1826283fdac4646946c21c9fc301a3a719cce704d5752a12fd5c00a5be34abf2"
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarLibraryMenu.cs",
@@ -1542,7 +1542,7 @@
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/VRMLoader.cs",
-      "sha256": "3aa4850e98f0f1b751d22fd308d6524d161827e99daa9b433973f6bed69bcce9"
+      "sha256": "df54081893f6bb938eb0e439aa6d27bf315f1094fc53b05033d426b239f4280e"
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/Xamin/Button.cs",
@@ -1774,19 +1774,31 @@
     },
     {
       "path": "Assets/Shader/Hidden_lilToonOutline.shader",
-      "sha256": "0762b855a7aa53fa86b9b8b367a53734d05024abaa042de1f4462422bba6c14c"
+      "sha256": "0719e36be650c227180d88e77af0f523acb914d6f75e062c4cf328b65febc000"
     },
     {
       "path": "Assets/Shader/Hidden_lilToonTransparent.shader",
-      "sha256": "de0fc4af3076b315f8f3daf423e2df1575178584ddaa2a10921784865968a994"
+      "sha256": "97886f2ce85c1daca44d8ca47967f06cd36ed9f0c4b49f682598d57df677c3cd"
+    },
+    {
+      "path": "Assets/Shader/Hidden_lilToonTransparentOutline.shader",
+      "sha256": "0e7067f579574ac3bb0cc70565db05827adf41528eea43efd33a861a8589d34a"
+    },
+    {
+      "path": "Assets/Shader/Hidden_lilToonTwoPassTransparent.shader",
+      "sha256": "d673a7ef7894206e6c5ab50819bc251d9cf84398ecd8d982a8924ecf1ae6fb31"
+    },
+    {
+      "path": "Assets/Shader/Hidden_lilToonTwoPassTransparentOutline.shader",
+      "sha256": "6ecd1d08f7ff2dda9ccf640c4b587d15b0dfd68cadfd06b1cdde41c799cc3afc"
     },
     {
       "path": "Assets/Shader/Hidden_ltspass_opaque.shader",
-      "sha256": "e3181ddf8e3e23a893513210161b6652dfe006bdeb99110c954b4f4820b7ad87"
+      "sha256": "36a615c7f6540b5dafb6f1053a2399724d327629664f652f0ede0859e788ed8a"
     },
     {
       "path": "Assets/Shader/Hidden_ltspass_transparent.shader",
-      "sha256": "03657d65203fbd39be0138d50f3b7b63018e9a1c9790c41559069102e1a96975"
+      "sha256": "905d1d5c5e3504fe3eaeec455e3a7e12d985478f5e4900d4bb82dca978f4f625"
     },
     {
       "path": "Assets/Shader/TextMeshPro_Distance Field.shader",
@@ -1830,7 +1842,7 @@
     },
     {
       "path": "Assets/Shader/lilToon.shader",
-      "sha256": "6c854f30f5434d84b811c52b6e3d789ec5e5ad01277cf7cbf4d92d2022efc7c9"
+      "sha256": "3ad85dfb3075d5cd0aa82a48a9ff68abe9f5969da6ee5c1bf23d5886e6e2fb74"
     },
     {
       "path": "Assets/Shader/uWindowCapture_Unlit.shader",
@@ -1846,7 +1858,7 @@
     },
     {
       "path": "Assets/ShojiLinux/Editor/Shoji34Build.cs",
-      "sha256": "a955526a99e939acd2300115b36a57be5ca81ed04d0c7ac387a18943e426d2ed"
+      "sha256": "900b5fb2d739125400bfccf11c6dd2e35f35fb0096b8daa4027151ee62aed8e6"
     },
     {
       "path": "Assets/ShojiLinux/GtkX11Helper.cs",
@@ -1887,6 +1899,10 @@
     {
       "path": "Assets/ShojiLinux/KWinManager.cs",
       "sha256": "8714cd455f76ba41e05d6f8b5a3613fe99e1f02878ce665f8eb44d4f40b73dcc"
+    },
+    {
+      "path": "Assets/ShojiLinux/LinuxModelShaders.cs",
+      "sha256": "bf655461c53b9a6b8e973c7efeb3390337be43626e1a60c590b5558e4c7de2ec"
     },
     {
       "path": "Assets/ShojiLinux/LinuxWindowDragHandle.cs",

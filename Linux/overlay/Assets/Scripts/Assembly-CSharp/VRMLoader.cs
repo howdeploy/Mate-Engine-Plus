@@ -256,6 +256,7 @@ public class VRMLoader : MonoBehaviour
 		}
 		else
 		{
+			LinuxModelShaders.Restore(gameObject, assetBundle);
 			GameObject loadedModel = UnityEngine.Object.Instantiate(gameObject);
 			FinalizeLoadedModel(loadedModel, path, assetBundle);
 		}
@@ -329,6 +330,38 @@ public class VRMLoader : MonoBehaviour
 		}
 		StartCoroutine(ReleaseRamAndUnloadAssetsCo());
 		SettingsHandlerUtility.ReloadAllSettingsHandlers();
+		if (bundle != null) PrepareBundleSpringBones(loadedModel);
+	}
+
+	private static void PrepareBundleSpringBones(GameObject model)
+	{
+		var springs = model.GetComponentsInChildren<VRMSpringBone>(true);
+		var roots = springs.SelectMany(spring => (spring.RootBones ?? new List<Transform>())
+			.Where(root => root != null).Select(root => (spring, root)))
+			.OrderBy(entry => entry.root.GetComponentsInParent<Transform>(true).Length).ToArray();
+		var owned = new HashSet<Transform>();
+		var accepted = springs.ToDictionary(spring => spring, spring => new List<Transform>());
+		int removed = 0;
+		foreach (var entry in roots)
+		{
+			// VRM0 recursively simulates every descendant of each root. A
+			// nested/duplicate root gives the same bones two physics writers.
+			bool overlap = false;
+			for (var ancestor = entry.root; ancestor != null; ancestor = ancestor.parent)
+				if (owned.Contains(ancestor)) { overlap = true; break; }
+			if (overlap) { removed++; continue; }
+			owned.Add(entry.root);
+			accepted[entry.spring].Add(entry.root);
+		}
+		foreach (var spring in springs)
+		{
+			spring.RootBones = accepted[spring];
+			// Instantiate runs Awake before FinalizeLoadedModel changes the
+			// parent, rotation and scale. Discard those old world-space tails
+			// and lengths now that the final placement/settings are applied.
+			spring.Setup(force: true);
+		}
+		Debug.Log($"[VRMLoader] Initialized {springs.Length} bundle spring solvers after placement; removed {removed} overlapping roots");
 	}
 
 	public Texture2D MakeReadableCopy(Texture texture)

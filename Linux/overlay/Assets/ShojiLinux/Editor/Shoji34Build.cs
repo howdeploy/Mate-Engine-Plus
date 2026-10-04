@@ -102,16 +102,72 @@ public static class Shoji34Build
     {
         RestoreHumanoidAvatars();
         RestoreDynamicFont();
+        RestoreHideAnimationOrientation();
         PrepareSceneInputAndTransparency();
         BuildContent();
         PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.StandaloneLinux64, false);
         PlayerSettings.SetGraphicsAPIs(BuildTarget.StandaloneLinux64, new[] { GraphicsDeviceType.Vulkan, GraphicsDeviceType.OpenGLCore });
+        PrepareModelShaders();
         var playerPath = Environment.GetEnvironmentVariable("MATEENGINE_BUILD_OUTPUT")
             ?? Path.Combine(Root, "builds/linux-3.4/MateEngineX.x86_64");
         var report = BuildPipeline.BuildPlayer(EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray(),
             playerPath, BuildTarget.StandaloneLinux64, BuildOptions.None);
         if (report.summary.result != BuildResult.Succeeded) throw new Exception("Linux player build failed: " + report.summary.result);
         Debug.Log($"Shoji34 player build succeeded: {report.summary.totalSize} bytes");
+    }
+
+    static void RestoreHideAnimationOrientation()
+    {
+        const string path = "Assets/AnimationClip/PET_HIDE_SHOW_LOOP_LEFT.anim";
+        var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
+        if (clip == null) throw new Exception("Left-edge hide animation is missing: " + path);
+        // The original player mirrors the left clip's humanoid muscle curves;
+        // the exported curves match the right clip but lost this settings flag.
+        var serialized = new SerializedObject(clip);
+        serialized.FindProperty("m_AnimationClipSettings.m_Mirror").boolValue = true;
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+        AssetDatabase.SaveAssets();
+        Debug.Log("Shoji34 hiding: restored the original left clip's mirror flag");
+    }
+
+    static void PrepareModelShaders()
+    {
+        const string path = "Assets/ShojiLinux/Resources/LinuxModelShaders.asset";
+        var shaders = AssetDatabase.FindAssets("t:Shader", new[] { "Assets/Shader" })
+            .Select(guid => AssetDatabase.LoadAssetAtPath<Shader>(AssetDatabase.GUIDToAssetPath(guid)))
+            .Where(shader => shader != null && (shader.name == "VRM/MToon" || shader.name == "VRM10/MToon10" ||
+                shader.name == "lilToon" || shader.name.StartsWith("Hidden/lilToon", StringComparison.Ordinal) ||
+                shader.name.StartsWith("Hidden/ShojiLinux/ltspass_", StringComparison.Ordinal)))
+            .OrderBy(shader => shader.name, StringComparer.Ordinal).ToArray();
+        if (shaders.GroupBy(shader => shader.name).Any(group => group.Count() != 1))
+            throw new Exception("Ambiguous source shader names in the Linux model library");
+        var library = AssetDatabase.LoadAssetAtPath<LinuxModelShaders>(path);
+        if (library == null)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            library = ScriptableObject.CreateInstance<LinuxModelShaders>();
+            AssetDatabase.CreateAsset(library, path);
+        }
+        library.shaders = shaders;
+        EditorUtility.SetDirty(library);
+
+        // Bundled models are not known at build time: keep their lighting and
+        // shadow variants, including passes referenced through lilToon's UsePass.
+        var graphics = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/GraphicsSettings.asset")[0]);
+        var included = graphics.FindProperty("m_AlwaysIncludedShaders");
+        foreach (var shader in shaders)
+        {
+            bool present = false;
+            for (int i = 0; i < included.arraySize; i++)
+                present |= included.GetArrayElementAtIndex(i).objectReferenceValue == shader;
+            if (present) continue;
+            int index = included.arraySize;
+            included.InsertArrayElementAtIndex(index);
+            included.GetArrayElementAtIndex(index).objectReferenceValue = shader;
+        }
+        graphics.ApplyModifiedPropertiesWithoutUndo();
+        AssetDatabase.SaveAssets();
+        Debug.Log($"Shoji34 model shader library: {shaders.Length} source shaders with runtime variants");
     }
 
     public static void RestoreDynamicFont()

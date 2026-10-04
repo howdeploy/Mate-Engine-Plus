@@ -118,7 +118,9 @@ The builder repairs Humanoid tables for the built-in scene/catalog avatars,
 creates a dynamic Cyrillic font fallback from the local source font, restores
 transparent clears/UI raycasts and the calibrated ledge-acquisition settings,
 and rebuilds Linux language bundles with the original Addressables keys.
-It retains the X3.4 animation/controller data supplied by your export.
+It restores the left hide clip's original humanoid mirror flag and builds a
+strongly referenced Linux shader library for bundled models. The other X3.4
+animation/controller data is retained from your export.
 
 ## 4. Build and finalize
 
@@ -137,7 +139,8 @@ The default output is `Linux/builds/linux-3.4/`. Finalization compiles the bridg
 against that player's actual assemblies, inserts and counts **47 call sites**,
 retains the original assembly and patch log in a separate build artifact
 directory, and prepares `launch.sh`. It refuses an already patched build.
-These commands have not been rerun for this source-publication commit.
+The matching working project has been built and finalized locally; the
+fresh-clone preparation recipe remains unverified.
 
 ## Desktop integration and launch
 

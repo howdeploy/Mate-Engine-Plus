@@ -702,10 +702,10 @@ Shader "Hidden/lilToonTransparent"
     SubShader
     {
         Tags {"RenderType" = "TransparentCutout" "Queue" = "AlphaTest+10"}
-        UsePass "Hidden/ltspass_transparent/FORWARD"
-        UsePass "Hidden/ltspass_transparent/FORWARD_ADD"
-        UsePass "Hidden/ltspass_transparent/SHADOW_CASTER"
-        UsePass "Hidden/ltspass_transparent/META"
+        UsePass "Hidden/ShojiLinux/ltspass_transparent/FORWARD"
+        UsePass "Hidden/ShojiLinux/ltspass_transparent/FORWARD_ADD"
+        UsePass "Hidden/ShojiLinux/ltspass_transparent/SHADOW_CASTER"
+        UsePass "Hidden/ShojiLinux/ltspass_transparent/META"
         Pass
         {
             Tags { "LightMode" = "Never" }
@@ -781,4 +781,3 @@ Shader "Hidden/lilToonTransparent"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

@@ -31,7 +31,9 @@ def rewrite(source):
         elif (source.parent / include).is_file():
             include = destination((source.parent / include).resolve())
         return match[1] + include + match[3]
-    return INCLUDE.sub(replace, source.read_text(encoding="utf-8-sig"))
+    body = INCLUDE.sub(replace, source.read_text(encoding="utf-8-sig"))
+    # UsePass is resolved by name; Windows bundles also load these helper shaders.
+    return body.replace('"Hidden/ltspass_', '"Hidden/ShojiLinux/ltspass_')
 
 
 sources = {}
@@ -45,6 +47,25 @@ report = ROOT / "inspection/shader-restoration.json"
 previous = json.loads(report.read_text()) if report.exists() else {}
 restored = previous.get("restored", [])
 missing = []
+# Windows .me bundles can use these variants even though the built-in model
+# does not. Keep their exact transparency/outline mode in the Linux player.
+existing_names = {match[1] for path in (PROJECT / "Assets").rglob("*.shader")
+                  if (match := SHADER.search(path.read_text(encoding="utf-8-sig")))}
+for name in ("Hidden/lilToonTwoPassTransparent", "Hidden/lilToonTwoPassTransparentOutline",
+             "Hidden/lilToonTransparentOutline"):
+    if name in existing_names:
+        continue
+    matches = sources.get(name, [])
+    if not matches or len({p.read_bytes() for p in matches}) != 1:
+        raise RuntimeError(f"Missing or ambiguous model shader source: {name}")
+    source = matches[0]
+    target = PROJECT / "Assets/Shader" / (name.replace("/", "_") + ".shader")
+    target.write_text(rewrite(source), encoding="utf-8")
+    restored.append({"shader": name, "target": str(target.relative_to(PROJECT)),
+                     "source": str(source.relative_to(ROOT)),
+                     "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+                     "analogue": None})
+
 for path in sorted((PROJECT / "Assets").rglob("*.shader")):
     text = path.read_text(encoding="utf-8-sig")
     if "DummyShaderTextExporter" not in text:
