@@ -93,6 +93,17 @@ namespace MateEngine.Shoji
                 snapshot.HasSurfaces && snapshot.MotionSupported;
         }
 
+        // -1: unavailable/stale, 0: active or inhibited, 1: compositor idle.
+        public static int GetScreensaverState(int timeout, bool enabled)
+        {
+            if (!Active) return -1;
+            _ipc.SetScreensaver(timeout, enabled);
+            var snapshot = Snapshot();
+            if (!_ipc.IsFresh(snapshot) || !snapshot.HasIdleState || snapshot.IdleTimeout != timeout ||
+                snapshot.IdleEnabled != enabled || !snapshot.WindowVisible) return -1;
+            return enabled && snapshot.DesktopIdle ? 1 : 0;
+        }
+
         // ---- WindowManager geometry hooks ------------------------------------
 
         // Only what the compositor last reported: window and pointer come from
@@ -397,6 +408,10 @@ namespace MateEngine.Shoji
             {
                 interval = 16;
             }
+            else if (snapshot != null && snapshot.HasIdleState && snapshot.DesktopIdle)
+            {
+                interval = 33; // Resume promptly on input anywhere in the desktop.
+            }
             else if (snapshot != null && snapshot.HasWindow && snapshot.HasPointer)
             {
                 // Hand holding and drag starts need a fresh pointer near the pet.
@@ -463,6 +478,17 @@ namespace MateEngine.Shoji
         static readonly Dictionary<RectTransform, bool> _menuLeftSide = new Dictionary<RectTransform, bool>();
         static readonly Dictionary<RectTransform, List<SettingsMenuPosition.MenuEntry>> _menuGroups =
             new Dictionary<RectTransform, List<SettingsMenuPosition.MenuEntry>>();
+        struct MenuPlacement
+        {
+            public Vector2 DesktopPivot;
+            public Vector3 Scale;
+        }
+        static readonly Dictionary<RectTransform, MenuPlacement> _menuPlacements = new Dictionary<RectTransform, MenuPlacement>();
+        static readonly Vector3[] _menuCorners = new Vector3[4];
+        static MonoBehaviour _menuAnchor;
+        static IntPtr _menuSeatHandle;
+        static RectInt _menuAnchorRect, _menuArea;
+        static Vector2Int _menuWindowSize, _menuScreenSize;
         static float _nextNudge;
 
         // SettingsMenuPosition.Update keeps its original X11 logic unless the
@@ -487,12 +513,44 @@ namespace MateEngine.Shoji
                 if (settings == null || settings.menus == null || !MenuLayoutActive()) return;
                 RectInt window, area;
                 if (!MenuGeometry(out window, out area)) return;
+                var seat = CurrentSeat();
+                MonoBehaviour anchor = seat;
+                IntPtr seatHandle = seat != null ? (IntPtr)SeatHandle.GetValue(seat) : IntPtr.Zero;
+                RectInt anchorRect = default(RectInt);
+                if (seat != null)
+                {
+                    var support = Surface(seatHandle);
+                    if (support != null) anchorRect = support.Rect;
+                }
+                else if (EdgeOwnsMovement())
+                {
+                    anchor = _edgeOwner;
+                    TryGetEdgeMonitor(out anchorRect);
+                }
+                bool anchored = anchor != null;
+                var windowSize = new Vector2Int(window.width, window.height);
+                var screenSize = new Vector2Int(Screen.width, Screen.height);
+                var wm = WindowManager.Instance;
+                if (!anchored || anchor != _menuAnchor || seatHandle != _menuSeatHandle || !anchorRect.Equals(_menuAnchorRect) ||
+                    !area.Equals(_menuArea) || windowSize != _menuWindowSize || screenSize != _menuScreenSize ||
+                    (wm != null && wm.IsDragging && Input.GetMouseButton(0))) _menuPlacements.Clear();
+                _menuAnchor = anchor;
+                _menuSeatHandle = seatHandle;
+                _menuAnchorRect = anchorRect;
+                _menuArea = area;
+                _menuWindowSize = windowSize;
+                _menuScreenSize = screenSize;
 
                 foreach (var group in _menuGroups.Values) group.Clear();
                 foreach (var entry in settings.menus)
                 {
                     RectTransform menu = entry != null ? entry.settingsMenu : null;
-                    if (menu == null || !menu.gameObject.activeInHierarchy) continue;
+                    if (menu == null) continue;
+                    if (!menu.gameObject.activeInHierarchy)
+                    {
+                        if (_menuPlacements.ContainsKey(menu)) _menuPlacements.Clear();
+                        continue;
+                    }
                     // A canvas root is sized by its canvas, and stretched menus
                     // have no single anchor point to move.
                     if (menu.GetComponent<Canvas>() != null || menu.anchorMin != menu.anchorMax) continue;
@@ -522,7 +580,7 @@ namespace MateEngine.Shoji
                     anyOpen = true;
                     needed = Vector2.Max(needed, MinimumPixels(pair.Key, pair.Value));
                 }
-                if (!anyOpen) return;
+                if (!anyOpen) { _menuPlacements.Clear(); return; }
 
                 Rect region;
                 bool fits = false;
@@ -531,7 +589,10 @@ namespace MateEngine.Shoji
                     fits = region.width + 0.5f >= needed.x && region.height + 0.5f >= needed.y;
                     foreach (var pair in _menuGroups)
                     {
-                        if (pair.Value.Count > 0) LayoutGroup(pair.Key, pair.Value, region);
+                        if (pair.Value.Count == 0) continue;
+                        if (anchored && RestoreMenuGroup(pair.Key, pair.Value, window, region)) continue;
+                        LayoutGroup(pair.Key, pair.Value, region, anchored);
+                        if (anchored) RememberMenuGroup(pair.Key, pair.Value, window);
                     }
                 }
                 // Too little of the window is on the screen, possibly none of
@@ -549,7 +610,21 @@ namespace MateEngine.Shoji
             ShojiSnapshot snapshot = Snapshot();
             if (snapshot == null || !snapshot.HasWindow || Screen.width <= 0 || Screen.height <= 0) return false;
             window = snapshot.Window;
-            ShojiOutput output = OutputFor(snapshot, window);
+            RectInt anchor = window;
+            var seat = CurrentSeat();
+            if (seat != null)
+            {
+                var support = Surface((IntPtr)SeatHandle.GetValue(seat));
+                if (support != null) anchor = support.Rect;
+            }
+            else if (EdgeOwnsMovement())
+            {
+                RectInt edge;
+                if (TryGetEdgeMonitor(out edge)) anchor = edge;
+            }
+            // Animated pinning can move the transparent client's centre
+            // across a monitor seam. Its support owns the menu's monitor.
+            ShojiOutput output = OutputFor(snapshot, anchor);
             if (output == null) return false;
             area = output.Usable;
             return true;
@@ -630,7 +705,7 @@ namespace MateEngine.Shoji
         }
 
         // Places one canvas' menus inside the region (Unity screen pixels).
-        static void LayoutGroup(RectTransform parent, List<SettingsMenuPosition.MenuEntry> members, Rect screenRegion)
+        static void LayoutGroup(RectTransform parent, List<SettingsMenuPosition.MenuEntry> members, Rect screenRegion, bool pinned)
         {
             Camera camera;
             if (!CanvasCamera(parent, out camera)) return;
@@ -658,7 +733,10 @@ namespace MateEngine.Shoji
 
             Rect union = useLeft ? left : right;
             if (union.width <= 0 || union.height <= 0) return;
-            float scale = Mathf.Clamp(Mathf.Min(1f, region.width / union.width, region.height / union.height), MenuMinScale, 1f);
+            float scale = Mathf.Min(1f, region.width / union.width, region.height / union.height);
+            // A latched pet cannot be nudged to make room. Fit the menus in
+            // its visible viewport instead of retaining a clipping minimum.
+            if (!pinned) scale = Mathf.Max(MenuMinScale, scale);
             Vector2 center = union.center;
             Vector2 size = union.size * scale;
             float dx = Shift(center.x - size.x / 2, center.x + size.x / 2, region.xMin, region.xMax, false);
@@ -678,11 +756,62 @@ namespace MateEngine.Shoji
             }
         }
 
+        static void RememberMenuGroup(RectTransform parent, List<SettingsMenuPosition.MenuEntry> members, RectInt window)
+        {
+            Camera camera;
+            if (!CanvasCamera(parent, out camera)) return;
+            foreach (var entry in members)
+            {
+                var menu = entry.settingsMenu;
+                Vector2 point = RectTransformUtility.WorldToScreenPoint(camera, menu.position);
+                _menuPlacements[menu] = new MenuPlacement {
+                    DesktopPivot = new Vector2(window.x + point.x * window.width / Screen.width,
+                        window.y + (Screen.height - point.y) * window.height / Screen.height),
+                    Scale = menu.localScale
+                };
+            }
+        }
+
+        static bool RestoreMenuGroup(RectTransform parent, List<SettingsMenuPosition.MenuEntry> members, RectInt window, Rect region)
+        {
+            Camera camera;
+            if (!CanvasCamera(parent, out camera)) return false;
+            foreach (var entry in members) if (!_menuPlacements.ContainsKey(entry.settingsMenu)) return false;
+            foreach (var entry in members)
+            {
+                var menu = entry.settingsMenu;
+                var placement = _menuPlacements[menu];
+                Vector2 point = new Vector2((placement.DesktopPivot.x - window.x) * Screen.width / window.width,
+                    Screen.height - (placement.DesktopPivot.y - window.y) * Screen.height / window.height);
+                Vector2 pivot;
+                if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, point, camera, out pivot)) return false;
+                Vector2 position = pivot - AnchorPoint(menu, parent.rect);
+                if ((menu.anchoredPosition - position).sqrMagnitude > 0.01f) menu.anchoredPosition = position;
+                if ((menu.localScale - placement.Scale).sqrMagnitude > 1e-6f) menu.localScale = placement.Scale;
+                entry.lastApplied = position;
+                // Keep the desktop pivot/scale through small pin corrections.
+                // Reflow only if it leaves the actual viewport, consuming the
+                // existing margin before reflowing to avoid edge oscillation.
+                menu.GetWorldCorners(_menuCorners);
+                foreach (var corner in _menuCorners)
+                {
+                    Vector2 screen = RectTransformUtility.WorldToScreenPoint(camera, corner);
+                    if (!Finite(screen.x) || !Finite(screen.y) ||
+                        screen.x < region.xMin - MenuMarginPx || screen.x > region.xMax + MenuMarginPx ||
+                        screen.y < region.yMin - MenuMarginPx || screen.y > region.yMax + MenuMarginPx) return false;
+                }
+                if (SeatAuditEnabled && (RectTransformUtility.WorldToScreenPoint(camera, menu.position) - point).sqrMagnitude > 0.25f)
+                    throw new InvalidOperationException("[SeatAudit] pinned menu moved from its desktop pivot");
+            }
+            return true;
+        }
+
         // The menus do not fit even at the minimum scale only when most of the
         // window lies outside the usable area: move the window in just far
         // enough that every element of the menus is on screen.
         static void NudgeWindow(RectInt window, RectInt area, Vector2 neededPixels)
         {
+            if (CurrentSeat() != null || EdgeOwnsMovement()) return;
             if (Time.unscaledTime < _nextNudge || !_ipc.Connected) return;
             float kx = Screen.width / (float)window.width;
             float ky = Screen.height / (float)window.height;

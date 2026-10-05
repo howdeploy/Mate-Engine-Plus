@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using UnityEngine;
 
@@ -26,8 +27,6 @@ namespace MateEngine.Shoji
         static readonly FieldInfo SeatBoundsSize = typeof(AvatarWindowHandler).GetField("boundsSizeSnapLocal", SeatFields);
         static readonly FieldInfo SeatNormalizedY = typeof(AvatarWindowHandler).GetField("seatNormY", SeatFields);
         static readonly MethodInfo SeatWorldGuess = typeof(AvatarWindowHandler).GetMethod("SeatWorldGuess", SeatFields);
-        static readonly MethodInfo SeatWorldBounds = typeof(AvatarWindowHandler).GetMethod("GetCombinedWorldBounds", SeatFields);
-        static readonly MethodInfo SeatLocalBounds = typeof(AvatarWindowHandler).GetMethod("WorldBoundsToRootLocal", SeatFields);
         static readonly MethodInfo SeatZoneProjection = typeof(AvatarWindowHandler).GetMethod("ComputeZoneDesktop", SeatFields);
         static AvatarWindowHandler _seatOwner;
         static ShojiSnapshot _seatSnapshot;
@@ -40,11 +39,18 @@ namespace MateEngine.Shoji
         static AvatarWindowHandler _contactOwner;
         static Transform _contactHips;
         static Vector3 _contactHipsLocal;
+        static Vector3 _seatFrontLocal;
+        static bool _hasSeatFront;
         static readonly int SeatPoseParameter = Animator.StringToHash("WindowSitIndex");
         static AvatarWindowHandler _poseOwner;
         static IntPtr _poseHandle;
         static float _poseIndex;
         static float _recalibrateAt = -1f;
+        static AvatarWindowHandler _originalAuditOwner;
+        static IntPtr _originalAuditHandle;
+        static int _originalSeatId, _originalCalibrationEvent, _originalCalibrationFrame;
+        static bool _originalAnchorPending, _originalDepthPending;
+        static float _nextOriginalDepthAudit;
 
         public static bool BeforeSeatingUpdate(MonoBehaviour owner)
         {
@@ -206,6 +212,8 @@ namespace MateEngine.Shoji
                 _poseOwner = handler;
                 _poseHandle = handle;
                 _poseIndex = index;
+                _hasSeatFront = false;
+                _contactSkinBones = null;
                 _recalibrateAt = handle == IntPtr.Zero ? -1f : Time.unscaledTime + 0.35f;
             }
             // The port chooses its random sitting pose one Update after the
@@ -222,10 +230,12 @@ namespace MateEngine.Shoji
                 Time.unscaledTime < _recalibrateAt || snapshot == null || !snapshot.WindowVisible) return;
             var animator = SeatAnimator.GetValue(handler) as Animator;
             if (animator == null || animator.IsInTransition(0)) return;
-            if (TryCalibrateSeat(handler))
+            RefreshSeatDepth(handler);
+            _recalibrateAt = -1f;
+            if (SeatAuditEnabled)
             {
-                SeatSmoothing.SetValue(handler, false);
-                _recalibrateAt = -1f;
+                _originalDepthPending = true;
+                AuditOriginalContact(handler, snapshot);
             }
         }
 
@@ -272,12 +282,22 @@ namespace MateEngine.Shoji
                 var hips = SeatHips.GetValue(handler) as Transform;
                 Camera camera = handler.targetCamera;
                 if (hips == null || camera == null) return;
-                // The support plane is at the pelvis, not a fixed camera
-                // distance. Foreground legs survive; rear geometry is hidden.
+                // Keep the window ledge's existing pelvis depth; the dock
+                // uses the front of the calibrated supporting skin instead.
                 float depth = camera.WorldToScreenPoint(hips.position).z;
+                bool dock = false;
+                if (snapshot.Surfaces != null)
+                    foreach (var surface in snapshot.Surfaces)
+                        if (surface.Id == _seatTargetId) { dock = surface.Dock; break; }
+                bool skinDepth = dock && _hasSeatFront && _contactOwner == handler && _contactHips == hips;
+                if (skinDepth)
+                {
+                    Vector3 local = _seatFrontLocal + handler.transform.InverseTransformPoint(hips.position) - _contactHipsLocal;
+                    depth = camera.WorldToScreenPoint(handler.transform.TransformPoint(local)).z;
+                }
                 handler.autoScaleTargetZ = false;
                 handler.targetQuadZOffset = Mathf.Max(0.001f,
-                    depth - camera.nearClipPlane + 0.01f * Mathf.Abs(handler.transform.lossyScale.y));
+                    depth - camera.nearClipPlane + (skinDepth ? -0.0001f : 0.01f) * Mathf.Abs(handler.transform.lossyScale.y));
             }
             catch (Exception error) { Report(error); }
         }
@@ -302,45 +322,207 @@ namespace MateEngine.Shoji
             if (handler == null || snapshot == null || !snapshot.SeatingSupported || !snapshot.HasWindow) return false;
             try
             {
-                // Anchor the actual seated model. Searching for an arbitrary
-                // local point already aligned with targetY leaves the body
-                // floating: PinToTarget sees no error and never moves it.
-                Vector3 world = (Vector3)SeatWorldGuess.Invoke(handler, null);
-                if (snapshot.MotionSupported) world = SeatSkinContact(handler, world);
-                Vector3 local = handler.transform.worldToLocalMatrix.MultiplyPoint3x4(world);
-                Bounds bounds = (Bounds)SeatLocalBounds.Invoke(handler,
-                    new object[] { (Bounds)SeatWorldBounds.Invoke(handler, null) });
-                SeatLocal.SetValue(handler, local);
-                SeatBoundsMinimum.SetValue(handler, bounds.min);
-                SeatBoundsSize.SetValue(handler, bounds.size);
-                SeatNormalizedY.SetValue(handler, Mathf.Clamp01((local.y - bounds.min.y) / Mathf.Max(0.0001f, bounds.size.y)));
-                SeatCalibrated.SetValue(handler, true);
-                _contactOwner = handler;
-                _contactHips = SeatHips.GetValue(handler) as Transform;
-                if (_contactHips != null) _contactHipsLocal = handler.transform.InverseTransformPoint(_contactHips.position);
-                return true;
+                if (SeatAuditEnabled) BeginOriginalCalibration(handler);
+                RefreshSeatDepth(handler);
             }
-            catch (Exception error) { Report(error); return false; }
+            catch (Exception error) { Report(error); }
+            // Keep the original calibration and its shared Y offset for every pose.
+            return false;
+        }
+
+        static void RefreshSeatDepth(AvatarWindowHandler handler)
+        {
+            Vector3 world = (Vector3)SeatWorldGuess.Invoke(handler, null);
+            var snapshot = Snapshot();
+            if (snapshot != null && snapshot.MotionSupported) SeatSkinContact(handler, world);
+            _contactOwner = handler;
+            _contactHips = SeatHips.GetValue(handler) as Transform;
+            if (_contactHips != null) _contactHipsLocal = handler.transform.InverseTransformPoint(_contactHips.position);
         }
 
         public static bool TrySeatWorldCurrent(MonoBehaviour owner, out Vector3 world)
         {
             world = default(Vector3);
-            var snapshot = Snapshot();
-            var handler = owner as AvatarWindowHandler;
-            if (snapshot == null || !snapshot.MotionSupported || handler == null ||
-                handler != _contactOwner || _contactHips == null || !(bool)SeatCalibrated.GetValue(handler) ||
-                (IntPtr)SeatHandle.GetValue(handler) == IntPtr.Zero) return false;
-            Vector3 local = (Vector3)SeatLocal.GetValue(handler);
-            Vector3 minimum = (Vector3)SeatBoundsMinimum.GetValue(handler);
-            Vector3 size = (Vector3)SeatBoundsSize.GetValue(handler);
-            local.y = minimum.y + Mathf.Clamp((float)SeatNormalizedY.GetValue(handler) +
-                handler.windowSitYOffset, -0.5f, 1.5f) * size.y;
-            // The original point is frozen in root space. Seated idle motion
-            // moves the pelvis relative to that root, making it float/sink.
-            local.y += handler.transform.InverseTransformPoint(_contactHips.position).y - _contactHipsLocal.y;
-            world = handler.transform.TransformPoint(local);
-            return Finite(world.x) && Finite(world.y) && Finite(world.z);
+            return false;
+        }
+
+        static void LogOriginalSeat(string kind, FormattableString fields)
+        {
+            try
+            {
+                Debug.Log(FormattableString.Invariant($"[SeatAudit] {kind} seat={_originalSeatId} frame={Time.frameCount} t={Time.unscaledTime:F6} ") +
+                    fields.ToString(CultureInfo.InvariantCulture));
+            }
+            catch (Exception error) { Report(error); }
+        }
+
+        static string OriginalSeatClip(AvatarWindowHandler handler)
+        {
+            var animator = SeatAnimator.GetValue(handler) as Animator;
+            string name = "none";
+            float weight = -1f;
+            if (animator != null)
+                foreach (var info in animator.GetCurrentAnimatorClipInfo(0))
+                    if (info.clip != null && info.weight > weight)
+                    {
+                        weight = info.weight;
+                        name = info.clip.name;
+                    }
+            return name;
+        }
+
+        static void BeginOriginalCalibration(AvatarWindowHandler handler)
+        {
+            IntPtr handle = (IntPtr)SeatHandle.GetValue(handler);
+            if (handle == IntPtr.Zero) return;
+            if (_originalAuditOwner != handler || _originalAuditHandle != handle)
+            {
+                _originalSeatId++;
+                _originalAuditOwner = handler;
+                _originalAuditHandle = handle;
+                _originalCalibrationEvent = 0;
+                _originalDepthPending = false;
+                _nextOriginalDepthAudit = 0f;
+            }
+            _originalCalibrationEvent++;
+            _originalCalibrationFrame = Time.frameCount;
+            _originalAnchorPending = true;
+        }
+
+        static void EndOriginalSeatAudit(AvatarWindowHandler handler)
+        {
+            if (_originalAuditOwner != handler) return;
+            _originalAuditOwner = null;
+            _originalAuditHandle = IntPtr.Zero;
+            _originalAnchorPending = _originalDepthPending = false;
+        }
+
+        static void AuditOriginalSeat(AvatarWindowHandler handler, ShojiSnapshot snapshot, ShojiSurface support)
+        {
+            if (_originalAuditOwner != handler || _originalAuditHandle != (IntPtr)SeatHandle.GetValue(handler)) return;
+            try
+            {
+                var camera = handler.targetCamera;
+                var animator = SeatAnimator.GetValue(handler) as Animator;
+                string clip = OriginalSeatClip(handler);
+                if (_originalAnchorPending)
+                {
+                    _originalAnchorPending = false;
+                    Vector3 local = (Vector3)SeatLocal.GetValue(handler);
+                    Vector3 size = (Vector3)SeatBoundsSize.GetValue(handler);
+                    Vector3 world = (Vector3)SeatWorldCurrent.Invoke(handler, null);
+                    float yUnit = (camera.WorldToScreenPoint(world + handler.transform.TransformVector(Vector3.up * size.y)).y -
+                        camera.WorldToScreenPoint(world).y) * snapshot.Window.height / camera.pixelHeight;
+                    float pose = animator != null ? animator.GetFloat(SeatPoseParameter) : -1f;
+                    float normalizedY = (float)SeatNormalizedY.GetValue(handler);
+                    bool calibrated = (bool)SeatCalibrated.GetValue(handler);
+                    LogOriginalSeat("original-anchor", $"event={_originalCalibrationEvent} calibFrame={_originalCalibrationFrame} pose={pose} clip=\"{clip}\" calibrated={calibrated} seatLocalY={local.y:F6} seatNormY={normalizedY:F6} boundsY={size.y:F6} yUnitPx={yUnit:F4} windowSitYOffset={handler.windowSitYOffset:F8} window={snapshot.Window} supportId={support.Id} support={support.Rect}");
+                }
+                if (!_originalDepthPending && Time.unscaledTime < _nextOriginalDepthAudit) return;
+                var hips = SeatHips.GetValue(handler) as Transform;
+                if (hips == null) return;
+                _originalDepthPending = false;
+                _nextOriginalDepthAudit = Time.unscaledTime + 1f;
+                // Read after PrepareSeatingOcclusion, with its exact target and predicate.
+                bool dock = false;
+                if (snapshot.Surfaces != null)
+                    foreach (var surface in snapshot.Surfaces)
+                        if (surface.Id == _seatTargetId) { dock = surface.Dock; break; }
+                bool ownerMatch = _contactOwner == handler;
+                bool hipsMatch = _contactHips == hips;
+                bool skinDepth = dock && _hasSeatFront && ownerMatch && hipsMatch;
+                string frontDepth = "na";
+                if (skinDepth)
+                {
+                    Vector3 front = _seatFrontLocal + handler.transform.InverseTransformPoint(hips.position) - _contactHipsLocal;
+                    frontDepth = camera.WorldToScreenPoint(handler.transform.TransformPoint(front)).z.ToString("F8", CultureInfo.InvariantCulture);
+                }
+                float hipsDepth = camera.WorldToScreenPoint(hips.position).z;
+                float scale = Mathf.Abs(handler.transform.lossyScale.y);
+                float near = camera.nearClipPlane;
+                float quad = handler.targetQuadZOffset;
+                LogOriginalSeat("depth", $"clip=\"{clip}\" target={(support.Dock ? "dock" : "window")} supportId={support.Id} depthTarget={_seatTargetId} dock={dock} hasFront={_hasSeatFront} ownerMatch={ownerMatch} hipsMatch={hipsMatch} skinDepth={skinDepth} near={near:F8} hipsDepth={hipsDepth:F8} frontDepth={frontDepth} scaleY={scale:F8} quadZ={quad:F8} planeDepth={near + quad:F8}");
+            }
+            catch (Exception error) { Report(error); }
+        }
+
+        static void AuditOriginalContact(AvatarWindowHandler handler, ShojiSnapshot snapshot)
+        {
+            if (_originalAuditOwner != handler || _originalAuditHandle != (IntPtr)SeatHandle.GetValue(handler)) return;
+            Mesh baked = null;
+            try
+            {
+                var animator = SeatAnimator.GetValue(handler) as Animator;
+                var camera = handler.targetCamera;
+                if (animator == null || !animator.isHuman || camera == null || camera.pixelHeight <= 0) return;
+                var hips = animator.GetBoneTransform(HumanBodyBones.Hips);
+                if (hips == null) return;
+                var contact = new HashSet<Transform>();
+                foreach (var bone in new[] { HumanBodyBones.Hips, HumanBodyBones.Spine,
+                    HumanBodyBones.Chest, HumanBodyBones.UpperChest })
+                {
+                    var transform = animator.GetBoneTransform(bone);
+                    if (transform != null) contact.Add(transform);
+                }
+                float lowest = float.PositiveInfinity;
+                SkinnedMeshRenderer selected = null;
+                BoneWeight selectedWeight = default(BoneWeight);
+                Vector3 selectedWorld = Vector3.zero;
+                int selectedVertex = -1;
+                var minima = new List<string>();
+                baked = new Mesh();
+                foreach (var renderer in handler.GetComponentsInChildren<SkinnedMeshRenderer>(false))
+                {
+                    var source = renderer.sharedMesh;
+                    if (!renderer.enabled || source == null) continue;
+                    try
+                    {
+                        BoneWeight[] weights = source.boneWeights;
+                        if (weights.Length != source.vertexCount) continue;
+                        renderer.BakeMesh(baked, true);
+                        Vector3[] vertices = baked.vertices;
+                        if (vertices.Length != weights.Length) continue;
+                        var bones = renderer.bones;
+                        float minimum = float.PositiveInfinity;
+                        for (int i = 0; i < vertices.Length; i++)
+                        {
+                            if (!IsSeatContactVertex(bones, contact, weights[i])) continue;
+                            Vector3 world = renderer.transform.TransformPoint(vertices[i]);
+                            Vector3 screen = camera.WorldToScreenPoint(world);
+                            if (screen.z <= 0f || !Finite(screen.y) || !Finite(screen.z)) continue;
+                            minimum = Mathf.Min(minimum, screen.y);
+                            if (screen.y >= lowest) continue;
+                            lowest = screen.y;
+                            selected = renderer;
+                            selectedWeight = weights[i];
+                            selectedWorld = world;
+                            selectedVertex = i;
+                        }
+                        if (Finite(minimum)) minima.Add(renderer.name + ":" + minimum.ToString("F3", CultureInfo.InvariantCulture));
+                    }
+                    catch (Exception error) { Report(error); }
+                }
+                if (selected == null)
+                {
+                    LogOriginalSeat("original-contact", $"clip=\"{OriginalSeatClip(handler)}\" contactFound=false");
+                    return;
+                }
+                var indices = new[] { selectedWeight.boneIndex0, selectedWeight.boneIndex1, selectedWeight.boneIndex2, selectedWeight.boneIndex3 };
+                var strengths = new[] { selectedWeight.weight0, selectedWeight.weight1, selectedWeight.weight2, selectedWeight.weight3 };
+                int first = -1, second = -1;
+                for (int i = 0; i < 4; i++)
+                    if (first < 0 || strengths[i] > strengths[first]) { second = first; first = i; }
+                    else if (second < 0 || strengths[i] > strengths[second]) second = i;
+                var selectedBones = selected.bones;
+                string firstName = indices[first] >= 0 && indices[first] < selectedBones.Length && selectedBones[indices[first]] != null ? selectedBones[indices[first]].name : "none";
+                string secondName = indices[second] >= 0 && indices[second] < selectedBones.Length && selectedBones[indices[second]] != null ? selectedBones[indices[second]].name : "none";
+                Vector3 hipsLocal = hips.InverseTransformPoint(selectedWorld);
+                float seatY = SeatScreenPoint(handler).y;
+                float residual = (seatY - lowest) * snapshot.Window.height / camera.pixelHeight;
+                LogOriginalSeat("original-contact", $"clip=\"{OriginalSeatClip(handler)}\" renderer=\"{selected.name}\" mesh=\"{selected.sharedMesh.name}\" vertex={selectedVertex} bones=\"{firstName}:{strengths[first]:F6},{secondName}:{strengths[second]:F6}\" hipsLocal=({hipsLocal.x:F6},{hipsLocal.y:F6},{hipsLocal.z:F6}) perRendererMinY=\"{string.Join(",", minima.ToArray())}\" contactScreenY={lowest:F4} seatScreenY={seatY:F4} residualPx={residual:F4}");
+            }
+            catch (Exception error) { Report(error); }
+            finally { if (baked != null) UnityEngine.Object.Destroy(baked); }
         }
 
         public static bool TrySetSeatingTransient(IntPtr parent)

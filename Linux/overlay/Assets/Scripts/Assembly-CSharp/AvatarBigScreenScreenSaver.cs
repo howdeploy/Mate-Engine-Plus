@@ -69,6 +69,11 @@ public class AvatarBigScreenScreenSaver : MonoBehaviour
 	private void Update()
 	{
 		LoadSettings();
+		if (WindowManager.IsShojiSession)
+		{
+			UpdateWaylandScreensaver();
+			return;
+		}
 		if (MenuActions.IsAnyMenuOpen())
 		{
 			inspectorEvent = "Screensaver blocked by menu";
@@ -223,6 +228,45 @@ public class AvatarBigScreenScreenSaver : MonoBehaviour
 		bool flag2 = flag && !lastGlobalMouseDown;
 		lastGlobalMouseDown = flag;
 		bool flag3 = IsAnyKeyPressed();
-		return flag2 || flag3;
+		return flag2 || flag3 || Vector2.Distance(GetGlobalMousePosition(), lastMousePos) >= minMoveDistance;
+	}
+
+	private void UpdateWaylandScreensaver()
+	{
+		int timeout = TimeoutSteps[Mathf.Clamp(timeoutStep, 0, TimeoutSteps.Length - 1)];
+		bool big = avatarAnimator != null && avatarAnimator.GetBool("isBigScreen");
+		bool active = big && avatarAnimator.GetBool("isBigScreenSaver");
+		bool enabled = avatarAnimator != null && bigScreenHandler != null && enableBigScreenScreenSaver &&
+			!MenuActions.IsAnyMenuOpen() && WindowManager.AllowDesktopActivity &&
+			(active || (!big && IsInAllowedState()));
+		var wm = WindowManager.Instance;
+		int state = wm != null ? wm.GetDesktopIdleState(timeout, enabled) : -1;
+		idleTimer = 0f;
+		inspectorTime = state == 1 ? timeout : 0f;
+		UpdateInspectorTimeoutLabel();
+		inspectorEvent = state < 0 ? "Waiting for Wayland idle monitor" : "Wayland activity/inhibition";
+		if (active && (!enabled || state != 1))
+		{
+			avatarAnimator.SetBool("isBigScreenSaver", false);
+			if (!avatarAnimator.GetBool("isBigScreenAlarm"))
+			{
+				avatarAnimator.SetBool("isBigScreen", false);
+				bigScreenHandler.SendMessage("DeactivateBigScreen");
+			}
+			inspectorEvent = "Screensaver ended by activity or lost idle service";
+		}
+		else if (!active && enabled && state == 1)
+		{
+			avatarAnimator.SetBool("isBigScreen", true);
+			avatarAnimator.SetBool("isBigScreenSaver", true);
+			bigScreenHandler.SendMessage("ActivateBigScreen");
+			inspectorEvent = "Screensaver activated by Wayland idle";
+		}
+	}
+
+	private void OnDisable()
+	{
+		if (WindowManager.IsShojiSession && WindowManager.Instance != null)
+			WindowManager.Instance.GetDesktopIdleState(TimeoutSteps[Mathf.Clamp(timeoutStep, 0, TimeoutSteps.Length - 1)], false);
 	}
 }

@@ -52,6 +52,8 @@ public class WindowManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Vector2Int _initialWindowPos;
     private volatile bool _isDragging;
 
+    public bool IsDragging => _isDragging;
+
     private bool _dontUpdateCursor;
     
     public bool transparentInputEnabled = true;
@@ -72,6 +74,16 @@ public class WindowManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     TDBus.Connection _dBusConnection;
     TDBus.ConnectionInfo _dBusConnectionInfo;
     static Func<bool> _shojiReady, _shojiVisible;
+    static Func<int, bool, int> _shojiScreensaver;
+
+    public static bool IsShojiSession => (Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP") ?? "")
+        .IndexOf("ShojiWM", StringComparison.OrdinalIgnoreCase) >= 0;
+
+    public int GetDesktopIdleState(int timeout, bool enabled)
+    {
+        ResolveShojiCapabilities();
+        return _shojiScreensaver == null ? -1 : _shojiScreensaver(timeout, enabled);
+    }
 
     static void ResolveShojiCapabilities()
     {
@@ -80,6 +92,8 @@ public class WindowManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (type == null) return;
         _shojiReady = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), type.GetMethod("IsWindowIntegrationReady"));
         _shojiVisible = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), type.GetMethod("AllowPointerTracking"));
+        var idle = type.GetMethod("GetScreensaverState");
+        if (idle != null) _shojiScreensaver = (Func<int, bool, int>)Delegate.CreateDelegate(typeof(Func<int, bool, int>), idle);
     }
 
     public static bool AllowDesktopActivity

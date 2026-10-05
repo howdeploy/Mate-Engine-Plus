@@ -8,6 +8,8 @@ namespace MateEngine.Shoji
     {
         static readonly FieldInfo SeatFraction = typeof(AvatarWindowHandler).GetField("snapFraction", SeatFields);
         static readonly FieldInfo SeatCursorY = typeof(AvatarWindowHandler).GetField("_snapCursorY", SeatFields);
+        static readonly FieldInfo SeatVelocityX = typeof(AvatarWindowHandler).GetField("_snapVelX", SeatFields);
+        static readonly FieldInfo SeatVelocityY = typeof(AvatarWindowHandler).GetField("_snapVelY", SeatFields);
         static readonly MethodInfo SeatWorldCurrent = typeof(AvatarWindowHandler).GetMethod("GetSeatWorldCurrent", SeatFields);
         static readonly FieldInfo DragMouseOrigin = typeof(WindowManager).GetField("_initialMousePos", SeatFields);
         static readonly FieldInfo DragWindowOrigin = typeof(WindowManager).GetField("_initialWindowPos", SeatFields);
@@ -16,6 +18,9 @@ namespace MateEngine.Shoji
         static AvatarHideHandler _edgeOwner;
         static string _edgeOutput;
         static ShojiSnapshot _lastSeatMove;
+        static bool _seatSmoothing;
+        static Vector2 _seatSmoothPos;
+        static Vector2Int _seatSmoothSent;
 
         static AvatarWindowHandler CurrentSeat()
         {
@@ -55,12 +60,19 @@ namespace MateEngine.Shoji
             var handler = owner as AvatarHideHandler;
             if (handler == null || snapshot == null || !snapshot.MotionSupported) return false;
             _edgeOwner = handler;
-            if (!snapshot.WindowVisible || snapshot.Moving || CurrentSeat() != null || ActiveBigScreen() != null)
+            if (snapshot.Outputs == null || snapshot.Outputs.Length == 0)
             {
                 ReleaseEdge();
                 return true;
             }
-            if (snapshot.Outputs == null || snapshot.Outputs.Length == 0)
+            // A workspace switch hides the surface, not the edge anchor.
+            // Clearing the pose here strands the normal avatar off-screen.
+            if (!snapshot.WindowVisible)
+            {
+                _ipc.CancelPendingMove();
+                return true;
+            }
+            if (snapshot.Moving || CurrentSeat() != null || ActiveBigScreen() != null)
             {
                 ReleaseEdge();
                 return true;
@@ -147,6 +159,8 @@ namespace MateEngine.Shoji
 
         public static void SeatReleased(MonoBehaviour owner)
         {
+            _seatSmoothing = false;
+            if (SeatAuditEnabled) EndOriginalSeatAudit(owner as AvatarWindowHandler);
             var snapshot = Snapshot();
             var handler = owner as AvatarWindowHandler;
             if (handler == null || snapshot == null || !snapshot.MotionSupported ||
@@ -191,9 +205,14 @@ namespace MateEngine.Shoji
             if (handler == null || snapshot == null || !snapshot.MotionSupported || !snapshot.HasWindow) return false;
             if (!snapshot.WindowVisible || snapshot.Moving) return true;
             var support = Surface((IntPtr)SeatHandle.GetValue(handler));
-            if (support == null || (!support.Visible && !support.Dock)) return true;
+            if (support == null || (!support.Visible && !support.Dock))
+            {
+                _seatSmoothing = false;
+                return true;
+            }
             var camera = handler.targetCamera;
             if (camera == null || camera.pixelWidth <= 0 || camera.pixelHeight <= 0) return false;
+            if (SeatAuditEnabled) AuditOriginalSeat(handler, snapshot, support);
             ReleaseEdge();
             Vector3 point = SeatScreenPoint(handler);
             if (point.z <= 0 || !Finite(point.x) || !Finite(point.y) || !Finite(point.z)) return true;
@@ -211,12 +230,54 @@ namespace MateEngine.Shoji
             Vector2Int desired = new Vector2Int(
                 Mathf.RoundToInt(support.Rect.x + fraction * support.Rect.width - localX),
                 Mathf.RoundToInt(support.Rect.y + handler.seatOffsetPx - localY));
-            // Absolute geometry, once per real WM reply. SmoothDamp fed the
-            // same stale position every Unity frame and competed with drag.
+            if (handler.enableSnapSmoothing && (bool)SeatSmoothing.GetValue(handler))
+            {
+                if (!_seatSmoothing)
+                {
+                    _seatSmoothPos = snapshot.Window.position;
+                    _seatSmoothSent = snapshot.Window.position;
+                    _seatSmoothing = true;
+                }
+                // Integrate from our commanded position; the asynchronous WM
+                // can report the same older position for several Unity frames.
+                float velocityX = (float)SeatVelocityX.GetValue(handler);
+                float velocityY = (float)SeatVelocityY.GetValue(handler);
+                float dt = Time.unscaledDeltaTime;
+                float x = Mathf.SmoothDamp(_seatSmoothPos.x, desired.x, ref velocityX,
+                    handler.snapSmoothingTime, handler.snapSmoothingMaxSpeed, dt);
+                float y = Mathf.SmoothDamp(_seatSmoothPos.y, desired.y, ref velocityY,
+                    handler.snapSmoothingTime, handler.snapSmoothingMaxSpeed, dt);
+                if (controller != null && controller.isDragging && y > desired.y)
+                    y -= Mathf.Min(handler.snapSmoothingMaxSpeed * dt, Mathf.Max(0f, y - desired.y - 1f));
+                var position = new Vector2Int(Mathf.RoundToInt(x), Mathf.RoundToInt(y));
+                if (Mathf.Abs(desired.x - position.x) <= 1 && Mathf.Abs(desired.y - position.y) <= 1)
+                {
+                    position = desired;
+                    x = desired.x;
+                    y = desired.y;
+                    SeatSmoothing.SetValue(handler, false);
+                    velocityX = velocityY = 0f;
+                    _seatSmoothing = false;
+                    if (SeatAuditEnabled) LogOriginalSeat("smooth-settled", $"position={position}");
+                }
+                SeatVelocityX.SetValue(handler, velocityX);
+                SeatVelocityY.SetValue(handler, velocityY);
+                _seatSmoothPos = new Vector2(x, y);
+                if (position != _seatSmoothSent)
+                {
+                    _seatSmoothSent = position;
+                    _ipc.RequestMove(position, support.Id);
+                    if (SeatAuditEnabled) LogOriginalSeat("move", $"mode=smooth from={snapshot.Window.position} to={position} desired={desired} support={support.Rect} smoothing={_seatSmoothing}");
+                }
+                return true;
+            }
+            _seatSmoothing = false;
+            // Settled seats retain absolute geometry, once per real WM reply.
             if (_lastSeatMove != snapshot && desired != snapshot.Window.position)
             {
                 _lastSeatMove = snapshot;
                 _ipc.RequestMove(desired, support.Id);
+                if (SeatAuditEnabled) LogOriginalSeat("move", $"mode=absolute from={snapshot.Window.position} to={desired} desired={desired} support={support.Rect} smoothing={_seatSmoothing}");
             }
             return true;
         }

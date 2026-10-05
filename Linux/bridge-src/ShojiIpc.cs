@@ -36,6 +36,10 @@ namespace MateEngine.Shoji
         public bool MotionSupported;
         public bool WindowVisible = true;
         public bool Covered;
+        public bool HasIdleState, DesktopIdle, IdleEnabled;
+        public int IdleTimeout;
+        public long ReceivedAt;
+        public int ConnectionEpoch;
         public ShojiSurface[] Surfaces;
     }
 
@@ -68,6 +72,7 @@ namespace MateEngine.Shoji
         volatile int _intervalMs = 250;
         volatile bool _unsupported;
         volatile bool _connected;
+        volatile int _connectionEpoch;
 
         bool _moveDirty;
         Vector2Int _move;
@@ -80,6 +85,9 @@ namespace MateEngine.Shoji
         string _seatTarget;
         Vector2Int? _seatProbe;
         long _seatObservedAt = -100000;
+        int _idleTimeout = 30;
+        bool _idleEnabled;
+        long _idleObservedAt = -100000;
 
         Socket _socket;
         volatile bool _readerDied;
@@ -112,6 +120,25 @@ namespace MateEngine.Shoji
         public bool Unsupported { get { return _unsupported; } }
 
         public bool Connected { get { return _connected; } }
+
+        public bool IsFresh(ShojiSnapshot snapshot)
+        {
+            return _connected && snapshot != null && snapshot.ConnectionEpoch == _connectionEpoch &&
+                _clock.ElapsedMilliseconds - snapshot.ReceivedAt < 1500;
+        }
+
+        public void SetScreensaver(int timeout, bool enabled)
+        {
+            bool changed;
+            lock (_moveGate)
+            {
+                changed = _idleTimeout != timeout || _idleEnabled != enabled;
+                _idleTimeout = timeout;
+                _idleEnabled = enabled;
+                _idleObservedAt = _clock.ElapsedMilliseconds;
+            }
+            if (changed) _wake.Set();
+        }
 
         public void Start()
         {
@@ -238,6 +265,7 @@ namespace MateEngine.Shoji
             _inFlight = false;
             _confirmMove = false;
             _unsupported = false;
+            _connectionEpoch++;
             _connected = true;
             lock (_moveGate) { _dragDirty = true; }
             new Thread(() => ReadLoop(socket)) { IsBackground = true, Name = "ShojiBridgeRead" }.Start();
@@ -320,17 +348,22 @@ namespace MateEngine.Shoji
             _inFlight = true;
             string target;
             Vector2Int? probe;
+            int timeout;
+            bool idleEnabled;
             lock (_moveGate)
             {
                 bool fresh = now - _seatObservedAt < 1000;
                 target = fresh ? _seatTarget : null;
                 probe = fresh ? _seatProbe : null;
+                timeout = _idleTimeout;
+                idleEnabled = _idleEnabled && now - _idleObservedAt < 1000;
             }
             string point = probe.HasValue ? "{\"x\":" + probe.Value.x.ToString(CultureInfo.InvariantCulture) +
                 ",\"y\":" + probe.Value.y.ToString(CultureInfo.InvariantCulture) + "}" : "null";
             Send("{\"id\":" + id.ToString(CultureInfo.InvariantCulture) +
                 ",\"method\":\"mateengine.state\",\"params\":{\"seat\":" + JsonString(target) +
-                ",\"probe\":" + point + "}}\n");
+                ",\"probe\":" + point + ",\"screensaver\":{\"timeout\":" + timeout.ToString(CultureInfo.InvariantCulture) +
+                ",\"enabled\":" + (idleEnabled ? "true" : "false") + "}}}\n");
         }
 
         static string JsonString(string value)
@@ -436,7 +469,10 @@ namespace MateEngine.Shoji
                 if (result != null)
                 {
                     _unsupported = false;
-                    _latest = ParseState(result, _latest);
+                    var snapshot = ParseState(result, _latest);
+                    snapshot.ReceivedAt = _clock.ElapsedMilliseconds;
+                    snapshot.ConnectionEpoch = _connectionEpoch;
+                    _latest = snapshot;
                 }
             }
             _inFlight = false;
@@ -451,6 +487,17 @@ namespace MateEngine.Shoji
             snapshot.MotionSupported = seating is double && (double)seating >= 3;
             object windowVisible = Get(result, "windowVisible");
             snapshot.WindowVisible = !(windowVisible is bool) || (bool)windowVisible;
+            var idle = Get(result, "screensaver") as Dictionary<string, object>;
+            double timeout;
+            object idleEnabled = Get(idle, "enabled"), desktopIdle = Get(idle, "idle");
+            if (TryNumber(idle, "timeout", out timeout) && timeout >= 30 && timeout <= 10800 &&
+                timeout == Math.Floor(timeout) && idleEnabled is bool && desktopIdle is bool)
+            {
+                snapshot.HasIdleState = true;
+                snapshot.IdleTimeout = (int)timeout;
+                snapshot.IdleEnabled = (bool)idleEnabled;
+                snapshot.DesktopIdle = (bool)desktopIdle;
+            }
 
             RectInt window;
             if (TryRect(Get(result, "window") as Dictionary<string, object>, out window))

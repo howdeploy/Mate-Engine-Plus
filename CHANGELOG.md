@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-10-05 — Stable window seating and anchored menus
+
+- Restore the original X3.4 seat calibration and shared vertical offset for
+  upright, prone and side-lying poses. Stop moving the window with animated
+  pelvis/skin motion or recalibrating its height after a pose transition.
+- Restore snap smoothing using the bridge's commanded position instead of
+  stale compositor replies. Retain the original upward correction while dragging.
+- Preserve the tested dock occlusion depth independently of the height anchor.
+  Add opt-in calibration, contact, depth and movement diagnostics.
+- Keep seated/hidden menus anchored to their supporting monitor and prevent
+  menu recovery from moving an already anchored avatar window.
+- Include the current ShojiWM compositor-idle screensaver integration and
+  activity dismissal, with stale/disconnected idle-service handling.
+
+The bridge compiled without errors or warnings. Compiled hook signatures and
+protected seating/depth methods were compared with the previous local build.
+After installation and restart, the user confirmed correct seating on their
+windows with a manually adjusted Y offset. This publishes source only; personal
+offsets, profiles, models, music and DLC are excluded. A fresh-clone build and
+other model/compositor combinations have not been verified.
+
 ## 2026-10-05 — Mate Signal Plus source publication
 
 - Publish the complete 1.4.1 client mod under `Minecraft/MateSignalPlus/`,

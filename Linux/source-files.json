@@ -866,7 +866,7 @@
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenScreenSaver.cs",
-      "sha256": "e1594174bad4f8531318ad11ae5bc37354073110aef0990912592d1f3a7a9833"
+      "sha256": "3020b8de99cdad05c7e32b4a5579ec69a4b6f0ce93e57224170de0d86df8bd9d"
     },
     {
       "path": "Assets/Scripts/Assembly-CSharp/AvatarBigScreenTimer.cs",
@@ -2386,7 +2386,7 @@
     },
     {
       "path": "Assets/ShojiLinux/WindowManager.cs",
-      "sha256": "fc3cf62d27f437ae5bf96a80f7d77e5d62d77283c333cb7a37c8aafc2eeef9cd"
+      "sha256": "9aafb3ec01dbbc893a77366f4166b879a0b9cf0a502e91aa0a29b4f95d9f8a09"
     },
     {
       "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/ACES.hlsl",

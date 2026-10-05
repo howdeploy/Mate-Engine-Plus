@@ -1,4 +1,4 @@
-# Source publication status — 2026-10-04
+# Source publication status — 2026-10-05
 
 The current local Linux X3.4 player was built from source with Unity
 6000.2.6f2 and finalized with 47 bridge hooks. The user verified transparency,
@@ -21,6 +21,13 @@ including the outer right-edge fix delivered as a bridge-only update. This is
 local verification with the user's models, not a guarantee for every bundle or
 an independently reproduced fresh-clone build.
 
+Build 23 restores the original X3.4 fixed seat anchor and shared Y offset for
+all poses, with snap smoothing driven by the bridge's own commanded position.
+Dock depth and stable anchored menus are retained. The bridge compiled without
+errors or warnings; compiled hook signatures and protected methods matched the
+previous build. The user confirmed correct seating on their windows after
+adjusting Y locally. No personal offset is imposed as a project default.
+
 ## Implemented integration
 
 | Area | Source |
@@ -38,6 +45,7 @@ an independently reproduced fresh-clone build.
 | GTK dialogs, tray, PulseAudio, Linux desktop ambient sampling | Linux platform/application sources |
 | Steam ownership, Workshop and purchased DLC | retained Steam source and Steamworks.NET |
 | Current dance metadata for Quickshell | `ShojiMedia.cs`, KISA Stack music integration |
+| ShojiWM compositor-idle Big Screen screensaver and activity dismissal | bridge IPC, `WindowManager.cs`, `AvatarBigScreenScreenSaver.cs` |
 | Discord failed-connect file-descriptor leak | hash-guarded native pipe patcher |
 
 ## Remaining limits
@@ -45,8 +53,9 @@ an independently reproduced fresh-clone build.
 - Pose-specific contact can still differ by model/animation; no claim of perfect
   contact for every VRM. Shadow click-through remains conservative during fast
   movement/dance or stale GPU readback.
-- Global keyboard activity for alarm/screensaver still polls X11; this does not
-  cover every native Wayland application.
+- The ShojiWM screensaver requires the matching compositor-idle IPC integration.
+  Alarm input and the fallback outside ShojiWM still use X11 polling, which does
+  not cover every native Wayland application.
 - Current WM routing selects the first MateEngine window. Multiple simultaneous
   instances are not a supported/verified scenario.
 - Full integration targets the pinned ShojiWM/KISA Stack configuration. Other
