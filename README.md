@@ -18,7 +18,9 @@ and workspaces, window ledges and the bottom dock.</td></tr></table>
 
 **Source-first publication.** The current X3.4 application source and our
 integration fixes are in [Linux/](Linux/). A clean downloadable installer is a
-separate future stage. This repository does not contain the author's private
+separate future stage. The complete Minecraft client mod source and build files
+are in [Minecraft/MateSignalPlus/](Minecraft/MateSignalPlus/).
+This repository does not contain the author's private
 models, music, DLC, Workshop downloads, profiles or extracted Steam resources.
 
 ## Stack
@@ -71,6 +73,11 @@ Fabric Loader 0.19.2+ and Fabric API 0.160.7+26.3 or a compatible newer 26.3
 build. Mod Menu 21 is optional; `/matesignal config` also opens the settings.
 Install the mod on the client only. An updated Mate Engine Plus is required
 for its companion dialogue; see the compatibility details below.
+
+**Mod source for review and builds:** [Mate Signal Plus](Minecraft/MateSignalPlus/).
+It includes all Java sources, Russian/English resources, Gradle Wrapper, build
+configuration, the original license and attribution. The mod builds independently
+of Unity; its README documents the protocol, limitations and release correspondence.
 
 Improvements include corrected drowning events, removal of the duplicate
 crafting probability filter, more reliable event handling, localized mob/biome
@@ -165,9 +172,9 @@ Startup logs confirm the ShojiWM connection and Minecraft UDP listener on port
 avatar list and saved favorites remained unchanged. Visual placement and gameplay
 verification remain pending. This local build is not a published release.
 
-The companion mod is maintained separately; its public download is being
-prepared. This repository currently publishes the application source, not the
-Minecraft mod JAR.
+The companion mod is a separate build under [Minecraft/MateSignalPlus/](Minecraft/MateSignalPlus/).
+This repository publishes both the application and mod source; generated mod
+JARs and local player binaries are not committed.
 
 ## Build from source
 

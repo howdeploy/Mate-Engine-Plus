@@ -1,0 +1,39 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.17.12'
+}
+
+version = project.mod_version
+group = 'me.shiny.matesignal'
+
+repositories {
+    maven { url = 'https://maven.terraformersmc.com/releases/' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 25
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+jar {
+    from('LICENSE.md')
+    from('NOTICE.md')
+}

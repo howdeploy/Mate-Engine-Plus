@@ -18,6 +18,13 @@
 
 ## Licenses
 
+The [Mate Signal Plus client mod](../Minecraft/MateSignalPlus/) retains its
+original [MateEngine Pro License v2.0](../Minecraft/MateSignalPlus/LICENSE.md).
+Its [NOTICE.md](../Minecraft/MateSignalPlus/NOTICE.md) credits Shiny / Johnson
+Jason and the VeridonNetzwerk Fabric adaptation reference. The mod's original
+`pack.png` and Gradle wrapper are included with their existing attribution;
+this component is separate from the Unity X3.4 overlay and its input assets.
+
 The inherited root [LICENSE](../LICENSE) is MateEngine Pro License v2.0 with
 its original third-party and asset notices. X3.4-derived application code and
 the corresponding derivative integration retain

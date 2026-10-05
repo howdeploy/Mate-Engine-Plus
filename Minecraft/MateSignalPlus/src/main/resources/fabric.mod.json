@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "matesignal",
+  "version": "${version}",
+  "name": "Mate Signal Plus",
+  "description": "An improved fork of the discontinued MateSignal mod, updated for Minecraft 26.3 on Fabric. Connects in-game events to Mate Engine Plus and compatible MateEngine builds. Original mod: https://www.curseforge.com/minecraft/mc-mods/matesignal",
+  "authors": ["howdeploy"],
+  "contributors": ["Shiny (Johnson Jason) — original MateSignal author", "VeridonNetzwerk (Fabric API migration reference)"],
+  "contact": {
+    "homepage": "https://github.com/howdeploy/Mate-Engine-Plus#minecraft-integration"
+  },
+  "license": "LicenseRef-MateEngine-Pro-2.0",
+  "icon": "pack.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["me.shiny.matesignal.MateSignal"],
+    "modmenu": ["me.shiny.matesignal.ModMenuCompat"]
+  },
+  "mixins": ["matesignal.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.2",
+    "fabric-api": ">=0.160.7",
+    "minecraft": "26.3",
+    "java": ">=25"
+  },
+  "suggests": { "modmenu": ">=21.0.0-beta.1" }
+}

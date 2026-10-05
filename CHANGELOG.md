@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-05 — Mate Signal Plus source publication
+
+- Publish the complete 1.4.1 client mod under `Minecraft/MateSignalPlus/`,
+  including Java sources, RU/EN resources, Gradle Wrapper and pinned build files.
+- Preserve the original MateSignal license, icon, author credits and Fabric
+  reference provenance. Exclude build outputs, caches and player settings.
+- Link the mod from the main Minecraft integration section and document how
+  the published source corresponds to the prepared 1.4.1 release archive.
+- Publish source only; no new build, installation or gameplay/UI verification.
+
 ## 2026-10-05 — Minecraft project page links
 
 - Publish the accumulated Minecraft integration source and corrected Mate
