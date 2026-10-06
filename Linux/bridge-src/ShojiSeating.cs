@@ -65,6 +65,12 @@ namespace MateEngine.Shoji
                     throw new InvalidOperationException("AvatarWindowHandler fields do not match the reviewed build");
 
                 IntPtr handle = (IntPtr)SeatHandle.GetValue(handler);
+                if (ActiveBigScreen() != null)
+                {
+                    if (handle != IntPtr.Zero) handler.ForceExitWindowSitting();
+                    _ipc.SetSeating(null, null);
+                    return true;
+                }
                 lock (_surfaceHandles) _surfaceKeys.TryGetValue(handle, out _seatTargetId);
                 var controller = SeatController.GetValue(handler) as AvatarAnimatorController;
                 bool dragging = controller != null && controller.isDragging && Input.GetMouseButton(0) && !_releaseForced;

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-06 — Stable portrait camera
+
+- Respect explicit portrait zoom instead of resizing the view when hands move.
+  Keep hand fitting in automatic mode and smooth camera position and zoom in
+  LateUpdate, after animation updates.
+- Use consistent framing and interpolate from the actual camera state during
+  entry and exit. Keep transitions in one coroutine chain so interrupted
+  screensaver entry cannot leave another camera transition running.
+- Release the previous window seat on portrait entry and suspend seating while
+  portrait mode owns the window position. Preserve ordinary seating calibration,
+  the shared Y offset, smoothing and dock depth.
+
+Built locally with Unity 6000.2.6f2 as build 24 and finalized with all 47 bridge
+hooks. Compiled seating code was compared with the previous build; the user
+confirmed that the portrait regression is fixed after installation and restart.
+This publishes source only, without personal profiles or resources.
+
 ## 2026-10-05 — Stable window seating and anchored menus
 
 - Restore the original X3.4 seat calibration and shared vertical offset for

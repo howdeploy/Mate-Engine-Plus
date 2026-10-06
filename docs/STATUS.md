@@ -1,4 +1,4 @@
-# Source publication status — 2026-10-05
+# Source publication status — 2026-10-06
 
 The current local Linux X3.4 player was built from source with Unity
 6000.2.6f2 and finalized with 47 bridge hooks. The user verified transparency,
@@ -27,6 +27,14 @@ Dock depth and stable anchored menus are retained. The bridge compiled without
 errors or warnings; compiled hook signatures and protected methods matched the
 previous build. The user confirmed correct seating on their windows after
 adjusting Y locally. No personal offset is imposed as a project default.
+
+Build 24 stabilizes the portrait camera, respects explicit zoom, and releases
+window seating while portrait mode owns placement. Camera transitions start
+from the current frame and share one coroutine chain. The user confirmed the
+portrait fix after the local build and restart. Static IL comparison preserved
+the original seating handler and the bridge's calibration, smoothing and depth
+methods. The touch interaction for hair and ears is under investigation; no
+touch-physics change is included in this update.
 
 ## Implemented integration
 
