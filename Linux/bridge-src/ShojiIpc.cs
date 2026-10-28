@@ -35,6 +35,7 @@ namespace MateEngine.Shoji
         public bool SeatingSupported;
         public bool MotionSupported;
         public bool WindowVisible = true;
+        public bool SessionLocked;
         public bool Covered;
         public bool HasIdleState, DesktopIdle, IdleEnabled;
         public int IdleTimeout;
@@ -482,6 +483,7 @@ namespace MateEngine.Shoji
         static ShojiSnapshot ParseState(Dictionary<string, object> result, ShojiSnapshot previous)
         {
             var snapshot = new ShojiSnapshot();
+            snapshot.SessionLocked = Get(result, "sessionLocked") is bool && (bool)Get(result, "sessionLocked");
             object seating = Get(result, "seatingVersion");
             snapshot.SeatingSupported = seating is double && (double)seating >= 2;
             snapshot.MotionSupported = seating is double && (double)seating >= 3;

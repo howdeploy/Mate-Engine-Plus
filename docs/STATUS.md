@@ -56,8 +56,36 @@ touch-physics change is included in this update.
 | ShojiWM compositor-idle Big Screen screensaver and activity dismissal | bridge IPC, `WindowManager.cs`, `AvatarBigScreenScreenSaver.cs` |
 | Discord failed-connect file-descriptor leak | hash-guarded native pipe patcher |
 
+## Source publication: 2026-10-28
+
+The public source now includes the local voice socket/client and commands for
+dances, portrait, seating, edge hiding, movement and graceful quit; corrected
+animation entry and seat calibration; old-bundle release before dance loading;
+queue/filter/favorite refresh fixes; a stable hand anchor and spring-motion
+filtering; monitor-aware radial-menu positioning; and optional wardrobe
+visibility/collider dependencies. The latter require model-specific rules and
+include no model or outfit assets.
+
+The Shoji bridge also reads the actual session lock state. The user accepted
+the earlier local wallpaper/MateEngine screensaver behavior after compositor
+deadlock correction. Generic public compositor/config builds remain unverified.
+MateSignal's underground biome filter is published as unreleased source;
+the existing 1.4.1 binary artifacts were not rebuilt.
+
+These changes were source-reviewed for publication. No fresh build, tests,
+installation, player restart or graphical verification were performed here.
+The Unity source hash inventory was refreshed; private probe/shader assets,
+player binaries, profiles, models and Steam/Workshop resources are excluded.
+
 ## Remaining limits
 
+- Native ShojiWM lock-scene support was built and installed locally on 2026-10-28.
+  The bridge reads
+  `sessionLocked` from the compositor and keeps an enabled Big Screen screensaver
+  active beneath Quickshell's password UI. The compositor and managed rebuilds
+  completed. The user subsequently accepted the earlier local wallpaper/screensaver
+  behavior; the generic public stack still needs lock/unlock verification. This is not a
+  standalone authentication or session-lock implementation.
 - Pose-specific contact can still differ by model/animation; no claim of perfect
   contact for every VRM. Shadow click-through remains conservative during fast
   movement/dance or stale GPU readback.

@@ -84,6 +84,8 @@ public class AvatarHideHandler : MonoBehaviour
 
 	private Transform rightHand;
 
+	private Transform clingHandAtSnap;
+
 	private Transform anchorRoot;
 
 	private Vector3 localAnchorOffset;
@@ -95,6 +97,8 @@ public class AvatarHideHandler : MonoBehaviour
 	public bool IsAnchored => snappedSide != Side.None;
 
 	private int cursorOffsetY;
+
+	private int unsnapCursorX;
 
 	private float velX;
 
@@ -171,6 +175,7 @@ public class AvatarHideHandler : MonoBehaviour
 		unsnapCooldownUntil = -1f;
 		SetTopMost(on: false);
 		hasLock = false;
+		clingHandAtSnap = null;
 	}
 
 	private void Update()
@@ -184,6 +189,7 @@ public class AvatarHideHandler : MonoBehaviour
 			dragBaseW = Math.Max(1, lpRect.Right - lpRect.Left);
 			dragBaseH = Math.Max(1, lpRect.Bottom - lpRect.Top);
 			cursorOffsetY = lpPoint.y - lpRect.Top;
+			unsnapCursorX = lpPoint.x;
 			smoothingActive = false;
 			velX = 0f;
 			velY = 0f;
@@ -242,10 +248,10 @@ public class AvatarHideHandler : MonoBehaviour
 			}
 			else if (Time.unscaledTime >= snappedAt + unsnapGraceTime)
 			{
-				RECT snappedMonitorRect = GetSnappedMonitorRect();
-				int baseDesiredEdgeX = GetBaseDesiredEdgeX(snappedMonitorRect, snappedSide);
 				int num5 = Math.Max(1, unsnapThresholdPx);
-				if (Mathf.Abs(lpPoint2.x - baseDesiredEdgeX) > num5)
+				int inwardDistance = snappedSide == Side.Left
+					? lpPoint2.x - unsnapCursorX : unsnapCursorX - lpPoint2.x;
+				if (inwardDistance > num5)
 				{
 					Unsnap();
 				}
@@ -303,6 +309,7 @@ public class AvatarHideHandler : MonoBehaviour
 		{
 			return currentLeft;
 		}
+		lockedAnchorDeskX = GetBaseDesiredEdgeX(GetSnappedMonitorRect(), snappedSide);
 		return currentLeft + (lockedAnchorDeskX - x);
 	}
 
@@ -424,7 +431,9 @@ public class AvatarHideHandler : MonoBehaviour
 	private bool TryGetAnchorDesktopX(out int x)
 	{
 		x = 0;
-		if (snappedSide != Side.None && GetClingHand(snappedSide, out x) != null) return true;
+		// Keep one hand through the hide animation; comparing both hands every
+		// frame can switch the anchor as they cross and jump the entire window.
+		if (snappedSide != Side.None && TryGetWorldDesktopX(clingHandAtSnap, out x)) return true;
 		if (anchorRoot == null)
 		{
 			return false;
@@ -465,6 +474,44 @@ public class AvatarHideHandler : MonoBehaviour
 		return true;
 	}
 
+	public bool HideFromBridge(RectInt monitor)
+	{
+		if (unityHWND == IntPtr.Zero || animator == null || controller == null ||
+			controller.isDragging || monitor.width <= 0 || monitor.height <= 0 ||
+			!GetWindowRect(unityHWND, out var window)) return false;
+		IntPtr hmon = IntPtr.Zero;
+		foreach (var candidate in GetAllMonitors())
+			if (candidate.rect.Left == monitor.xMin && candidate.rect.Top == monitor.yMin &&
+				candidate.rect.Right == monitor.xMax && candidate.rect.Bottom == monitor.yMax)
+				{ hmon = candidate.hmon; break; }
+		if (hmon == IntPtr.Zero) return false;
+		GetAllowedEdgesForMonitor(hmon, out var allowLeft, out var allowRight);
+		if (!allowLeft && !allowRight) return false;
+		var mon = new RECT { Left = monitor.xMin, Top = monitor.yMin,
+			Right = monitor.xMax, Bottom = monitor.yMax };
+		int centerX = window.Left + (window.Right - window.Left) / 2;
+		bool left = allowLeft && (!allowRight || Math.Abs(centerX - mon.Left) <= Math.Abs(mon.Right - centerX));
+		string state = animator.GetLayerName(0) + (left ? ".Hide Left" : ".Hide Right");
+		int stateHash = Animator.StringToHash(state);
+		if (!animator.HasState(0, stateHash)) return false;
+		// The normal graph enters the hide pose only from Drag, not from idle or seating.
+		SetHide(left, !left);
+		animator.Play(stateHash, 0, 0f);
+		animator.Update(0f);
+		if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash != stateHash)
+		{
+			SetHide(left: false, right: false);
+			return false;
+		}
+		SnapTo(left ? Side.Left : Side.Right,
+			new POINT { x = left ? mon.Left : mon.Right - 1, y = window.Top + (window.Bottom - window.Top) / 2 },
+			hmon, mon);
+		UnityEngine.Debug.Assert(!IsAnchored || animator.GetCurrentAnimatorStateInfo(0).fullPathHash == stateHash,
+			"An edge anchor must use the native hide pose");
+		UnityEngine.Debug.Log("[VoiceHide] state=" + state + " anchored=" + IsAnchored);
+		return IsAnchored;
+	}
+
 	private void SnapTo(Side side, POINT cp, IntPtr hmon, RECT mon)
 	{
 		if (GetWindowRect(unityHWND, out var lpRect))
@@ -480,12 +527,14 @@ public class AvatarHideHandler : MonoBehaviour
 				dragBaseH = num2;
 			}
 			cursorOffsetY = cp.y - lpRect.Top;
+			unsnapCursorX = cp.x;
 			snappedSide = side;
 			snappedHmon = hmon;
 			SetHide(side == Side.Left, side == Side.Right);
 			int baseDesiredEdgeX = GetBaseDesiredEdgeX(mon, side);
 			int handDeskX;
 			Transform clingHand = GetClingHand(side, out handDeskX);
+			clingHandAtSnap = clingHand;
 			int num3;
 			if (clingHand != null && anchorRoot != null)
 			{
@@ -524,6 +573,7 @@ public class AvatarHideHandler : MonoBehaviour
 		velY = 0f;
 		SetTopMost(on: false);
 		hasLock = false;
+		clingHandAtSnap = null;
 		if (controller != null && controller.isDragging)
 		{
 			unsnapCooldownUntil = Time.unscaledTime + Mathf.Max(0f, unsnapCooldownSeconds);

@@ -10,9 +10,14 @@ Start with [the build guide](../docs/BUILD.md) and [status](../docs/STATUS.md).
 | `tools/` | Data/shader restoration, isolated project preparation, build finalization and launcher |
 | `package-overlay/` | Addressables Localization friend-assembly repair |
 | `licenses/` | Applicable code/dependency notices |
+| `tests/` | Prepared local voice-client checks; not run as part of source preparation |
 | `source-files.json` | SHA256 inventory of exported Unity source files |
 
 `project/`, `steam-source/`, `recovered/`, `inspection/`, `builds/`, user profiles
 and dependency downloads are ignored local inputs/outputs. None is a published
 resource pack. This directory is separate from the historical 3.2 project at
 the repository root.
+
+Local voice-control APIs and their build/verification boundary are documented
+in [VOICE-CONTROL.md](../docs/VOICE-CONTROL.md). A local managed rebuild was
+installed on 2026-10-26; the source publication is not a downloadable release.

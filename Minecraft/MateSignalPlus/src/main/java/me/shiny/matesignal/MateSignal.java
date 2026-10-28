@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.slf4j.LoggerFactory;
 
@@ -184,9 +185,12 @@ public final class MateSignal implements ClientModInitializer {
         if (!level.hasChunkAt(sample)) return;
         String movement = UdpSender.movement(Minecraft.getInstance());
         String dimension = level.dimension().identifier().toString();
+        boolean surfaceDimension = dimension.equals("minecraft:overworld") || dimension.equals("minecraft:the_end");
+        int surface = surfaceDimension
+                ? level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, sample.getX(), sample.getZ())
+                : level.getMinY();
         boolean below = false;
-        if (!movement.equals("ground") && (dimension.equals("minecraft:overworld") || dimension.equals("minecraft:the_end"))) {
-            int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, sample.getX(), sample.getZ());
+        if (!movement.equals("ground") && surfaceDimension) {
             // Do not sample through cave ceilings or the Nether roof, or into the End void.
             if (surface > level.getMinY() && player.getY() >= surface + 2) {
                 sample = new BlockPos(sample.getX(), surface - 1, sample.getZ());
@@ -196,6 +200,20 @@ public final class MateSignal implements ClientModInitializer {
         var key = level.getBiome(sample).unwrapKey();
         if (key.isEmpty()) return;
         String id = key.get().identifier().toString();
+        boolean caveBiome = switch (id) {
+            case "minecraft:lush_caves", "minecraft:dripstone_caves", "minecraft:deep_dark",
+                    "minecraft:sulfur_caves" -> true;
+            default -> false;
+        };
+        // Ordinary caves can retain a surface biome ID. Sky light ignores torches and time of day.
+        // ponytail: depth/sky heuristic also quiets deep enclosed builds; unknown modded biomes stay eligible.
+        if (dimension.equals("minecraft:overworld") && !below && id.startsWith("minecraft:") && !caveBiome
+                && surface - player.getY() >= 12 && level.getBrightness(LightLayer.SKY, sample) == 0
+                && !level.canSeeSkyFromBelowWater(sample)) {
+            // Drop pending surface chatter without consuming the biome or its cooldown.
+            observedBiome = null;
+            return;
+        }
         if (!id.equals(observedBiome)) {
             observedBiome = id;
             biomeSince = now;

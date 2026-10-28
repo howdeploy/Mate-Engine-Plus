@@ -23,9 +23,10 @@ count = 0
 for name in filter(None, paths):
     path = PurePosixPath(name)
     count += 1
-    if name not in allowed_roots and not name.startswith(('Linux/', 'docs/')):
+    if name not in allowed_roots and not name.startswith(('Linux/', 'docs/', 'Minecraft/MateSignalPlus/')):
         findings.append((name, 'outside publication allowlist'))
-    if path.suffix not in allowed_suffixes and name != '.gitignore':
+    java_source = name.startswith('Minecraft/MateSignalPlus/src/') and path.suffix == '.java'
+    if path.suffix not in allowed_suffixes and name != '.gitignore' and not java_source:
         findings.append((name, 'resource/binary extension'))
     if set(path.parts) & private_dirs or any('dlc' in part.lower() for part in path.parts):
         findings.append((name, 'private/resource directory'))

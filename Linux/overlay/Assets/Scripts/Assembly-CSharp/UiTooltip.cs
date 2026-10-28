@@ -325,12 +325,16 @@ public class UiTooltip : MonoBehaviour, IPointerEnterHandler, IEventSystemHandle
 		finally { positioning = false; }
 	}
 
-	private Rect VisibleScreenRect()
+	internal static Rect VisibleScreenRect(Vector2? anchor = null)
 	{
 		Rect safe = new Rect(8, 8, Mathf.Max(1, Screen.width - 16), Mathf.Max(1, Screen.height - 16));
 		var wm = WindowManager.Instance;
 		if (wm == null || !wm.GetWindowRect(wm.UnityWindow, out var window) || window.width <= 0 || window.height <= 0) return safe;
-		var monitor = wm.GetMonitorRectFromPoint(wm.GetMousePosition());
+		Vector2Int point = anchor.HasValue
+			? new Vector2Int(window.xMin + Mathf.RoundToInt(anchor.Value.x * window.width / Screen.width),
+				window.yMax - Mathf.RoundToInt(anchor.Value.y * window.height / Screen.height))
+			: wm.GetMousePosition();
+		var monitor = wm.GetMonitorRectFromPoint(point);
 		if (monitor.width <= 0) monitor = wm.GetMonitorRectFromWindow(wm.UnityWindow);
 		if (monitor.width <= 0) return safe;
 		float sx = (float)Screen.width / window.width, sy = (float)Screen.height / window.height;

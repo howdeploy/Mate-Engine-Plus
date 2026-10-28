@@ -93,6 +93,12 @@ namespace MateEngine.Shoji
                 snapshot.HasSurfaces && snapshot.MotionSupported;
         }
 
+        public static bool IsSessionLocked()
+        {
+            var snapshot = Snapshot();
+            return _ipc != null && _ipc.IsFresh(snapshot) && snapshot.SessionLocked;
+        }
+
         // -1: unavailable/stale, 0: active or inhibited, 1: compositor idle.
         public static int GetScreensaverState(int timeout, bool enabled)
         {
@@ -375,6 +381,8 @@ namespace MateEngine.Shoji
             if (!Active) return false;
             var windowManager = owner as WindowManager;
             bool release = false;
+            try { UpdateVoiceControl(windowManager); }
+            catch (Exception e) { Report(e); }
             try
             {
                 UpdatePolling(dragging);

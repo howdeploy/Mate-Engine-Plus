@@ -42,28 +42,42 @@ public class AvatarGravityController : MonoBehaviour
 
 	private AvatarHideHandler hideHandler;
 
-	private AvatarAnimatorController avatarController;
+	private AvatarWindowHandler windowHandler;
+
+	private bool auditMotion;
+
+	private float nextAuditAt;
+
+	private int auditMoves;
+
+	private int auditImpulses;
+
+	private float auditMaxForce;
 
 	private void Start()
 	{
 		unityHWND = WindowManager.Instance.UnityWindow;
 		hideHandler = GetComponent<AvatarHideHandler>();
-		avatarController = GetComponent<AvatarAnimatorController>();
+		windowHandler = GetComponent<AvatarWindowHandler>();
 		previousWindowPos = GetWindowPosition();
 		springBones.AddRange(GetComponentsInChildren<VRMSpringBone>(includeInactive: true));
 		springBoneJoints.AddRange(GetComponentsInChildren<VRM10SpringBoneJoint>(includeInactive: true));
 		vrm10Instance = GetComponentInParent<Vrm10Instance>();
+		auditMotion = Environment.GetEnvironmentVariable("MATEENGINE_SPRING_AUDIT") == "1";
 	}
 
 	private void Update()
 	{
 		Vector2Int windowPosition = GetWindowPosition();
 		Vector2Int vector2Int = windowPosition - previousWindowPos;
-		// The hide loop moves the window to keep its animated hand at the
-		// edge. Those corrections are not user drag impulses for the hair.
-		bool restingAtEdge = hideHandler != null && hideHandler.IsAnchored &&
-			(avatarController == null || !avatarController.isDragging);
-		if (!restingAtEdge && vector2Int != Vector2Int.zero)
+		// Both ledge pinning and hiding compensate for animated bones by
+		// moving the client. A one-pixel correction used to create the same
+		// force as a large drag; the animator's drag flag also lingers on release.
+		bool anchored = (hideHandler != null && hideHandler.IsAnchored) ||
+			(windowHandler != null && windowHandler.IsAnchored);
+		var wm = WindowManager.Instance;
+		bool userDragging = wm != null && wm.IsDragging && Input.GetMouseButton(0);
+		if (WindowManager.AllowDesktopActivity && (!anchored || userDragging) && vector2Int != Vector2Int.zero)
 		{
 			Vector3 vector = new Vector3(-vector2Int.x, vector2Int.y, 0f).normalized * impactMultiplier;
 			currentForce = vector;
@@ -92,6 +106,22 @@ public class AvatarGravityController : MonoBehaviour
 			}
 		}
 		previousWindowPos = windowPosition;
+		if (auditMotion)
+		{
+			if (vector2Int != Vector2Int.zero) auditMoves++;
+			if (currentForce != Vector3.zero) auditImpulses++;
+			auditMaxForce = Mathf.Max(auditMaxForce, currentForce.magnitude);
+			if (Time.unscaledTime >= nextAuditAt)
+			{
+				UnityEngine.Debug.Log($"[SpringMotionAudit] edge={hideHandler != null && hideHandler.IsAnchored} " +
+					$"seat={windowHandler != null && windowHandler.IsAnchored} userDrag={userDragging} " +
+					$"visible={WindowManager.AllowDesktopActivity} windowMoves={auditMoves} " +
+					$"impulseFrames={auditImpulses} maxForce={auditMaxForce:F4} vrm0={springBones.Count}");
+				nextAuditAt = Time.unscaledTime + 2f;
+				auditMoves = auditImpulses = 0;
+				auditMaxForce = 0f;
+			}
+		}
 	}
 
 	private void OnDrawGizmos()
@@ -106,7 +136,7 @@ public class AvatarGravityController : MonoBehaviour
 
 	private Vector2Int GetWindowPosition()
 	{
-		GetWindowRect(unityHWND, out var lpRect);
+		if (!GetWindowRect(unityHWND, out var lpRect)) return previousWindowPos;
 		return new Vector2Int(lpRect.left, lpRect.top);
 	}
 

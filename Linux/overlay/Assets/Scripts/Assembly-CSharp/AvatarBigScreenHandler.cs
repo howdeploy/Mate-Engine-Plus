@@ -137,6 +137,14 @@ public class AvatarBigScreenHandler : MonoBehaviour
 		}
 	}
 
+	public bool SetPortraitFromBridge(bool enabled)
+	{
+		if (isBigScreenActive == enabled) return true;
+		if (isFading || isInDesktopTransition) return false;
+		ToggleBigScreenFromUI();
+		return true;
+	}
+
 	private void Start()
 	{
 		unityHWND = WindowManager.Instance.UnityWindow;

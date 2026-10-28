@@ -191,6 +191,10 @@ public class AvatarWindowHandler : MonoBehaviour
 	private bool wasDragging;
 
 	private IntPtr snappedHWND = IntPtr.Zero;
+	private IntPtr commandSeat = IntPtr.Zero;
+	private float commandSeatFraction;
+
+	public bool IsAnchored => snappedHWND != IntPtr.Zero;
 
 	private IntPtr unityHWND = IntPtr.Zero;
 
@@ -835,13 +839,33 @@ public class AvatarWindowHandler : MonoBehaviour
 		return pvAttribute != 0;
 	}
 
+	public bool SeatFromBridge(IntPtr window, float fraction)
+	{
+		if (!isActiveAndEnabled || animator == null || !animator.isActiveAndEnabled || controller == null || targetCamera == null ||
+			window == IntPtr.Zero || window == unityHWND || float.IsNaN(fraction) || float.IsInfinity(fraction) ||
+			fraction < 0f || fraction > 1f || !SaveLoadHandler.Instance.data.enableWindowSitting ||
+			controller.isDragging || IsSitBlocked()) return false;
+		int poseState = Animator.StringToHash(animator.GetLayerName(0) + ".WindowSit");
+		if (!animator.HasState(0, poseState)) return false;
+		UpdateCachedWindows();
+		if (!cachedWindows.Exists(entry => entry.hwnd == window)) return false;
+		commandSeat = window;
+		commandSeatFraction = fraction;
+		try
+		{
+			TrySnap();
+			return snappedHWND == window && animator.GetCurrentAnimatorStateInfo(0).fullPathHash == poseState;
+		}
+		finally { commandSeat = IntPtr.Zero; }
+	}
+
 	private void TrySnap()
 	{
-		if (Time.unscaledTime < _unsnapCooldownUntil || IsSitBlocked())
+		if ((commandSeat == IntPtr.Zero && Time.unscaledTime < _unsnapCooldownUntil) || IsSitBlocked())
 		{
 			return;
 		}
-		if (useGuardZone && _guardZoneActive && ComputeZoneDesktop(out var px, out var py))
+		if (commandSeat == IntPtr.Zero && useGuardZone && _guardZoneActive && ComputeZoneDesktop(out var px, out var py))
 		{
 			float num = px - _guardCenterDesktop.x;
 			float num2 = py - _guardCenterDesktop.y;
@@ -851,11 +875,15 @@ public class AvatarWindowHandler : MonoBehaviour
 			}
 			_guardZoneActive = false;
 		}
-		if (!ComputeZoneDesktop(out var px2, out var py2))
+		float px2, py2;
+		if (commandSeat != IntPtr.Zero)
 		{
-			return;
+			var requested = cachedWindows.Find(entry => entry.hwnd == commandSeat);
+			px2 = Mathf.Lerp(requested.rect.Left, requested.rect.Right, commandSeatFraction);
+			py2 = requested.rect.Top;
 		}
-		if (_recentUnsnap)
+		else if (!ComputeZoneDesktop(out px2, out py2)) return;
+		if (commandSeat == IntPtr.Zero && _recentUnsnap)
 		{
 			int num3 = Mathf.Max(unsnapVerticalBand, ScaledProbeRadiusI());
 			if (Mathf.Abs(py2 - (float)_lastSnapTopY) < (float)num3)
@@ -868,6 +896,7 @@ public class AvatarWindowHandler : MonoBehaviour
 		for (int i = 0; i < cachedWindows.Count; i++)
 		{
 			WindowEntry windowEntry = cachedWindows[i];
+			if (commandSeat != IntPtr.Zero && windowEntry.hwnd != commandSeat) continue;
 			if (windowEntry.hwnd == unityHWND)
 			{
 				continue;
@@ -892,6 +921,8 @@ public class AvatarWindowHandler : MonoBehaviour
 		}
 		if (candidate >= 0)
 		{
+			bool reuseSeat = commandSeat != IntPtr.Zero && snappedHWND != IntPtr.Zero && seatCalibrated &&
+				!animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).IsName("WindowSit");
 			WindowEntry windowEntry = cachedWindows[candidate];
 			int left = windowEntry.rect.Left;
 			int right = windowEntry.rect.Right;
@@ -901,15 +932,37 @@ public class AvatarWindowHandler : MonoBehaviour
 			_guardZoneActive = false;
 			animator.SetBool("isWindowSit", value: true);
 			animator.SetBool("isTaskbarSit", windowEntry.isTaskbar);
+			if (commandSeat != IntPtr.Zero && !reuseSeat)
+			{
+				// The normal graph enters WindowSit only from Drag; voice seating must enter it explicitly.
+				animator.SetFloat(windowSitIndexParam, UnityEngine.Random.Range(0, Mathf.Max(1, totalWindowSitAnimations)));
+				animator.Play(Animator.StringToHash(animator.GetLayerName(0) + ".WindowSit"), 0, 0f);
+				wasSitting = true;
+			}
 			animator.Update(0f);
-			CalibrateSeatAnchorToDesktopY((float)top + seatOffsetPx);
+			float calibrationY = top + seatOffsetPx;
+			if (commandSeat != IntPtr.Zero && !reuseSeat)
+			{
+				// Manual snapping starts with the probe at the ledge; voice may start anywhere.
+				if (!ComputeDesktopFromWorld(GetProbeWorld(), out var probeX, out var probeY))
+				{
+					ClearSnapAndHide();
+					return;
+				}
+				calibrationY = probeY + seatOffsetPx;
+			}
+			if (!reuseSeat) CalibrateSeatAnchorToDesktopY(calibrationY);
 			_postSettleFrames = 1;
-			_postSettleRecalib = true;
+			// The WM move is asynchronous; the old two-frame recalibration can run mid-move.
+			_postSettleRecalib = commandSeat == IntPtr.Zero;
+			if (commandSeat != IntPtr.Zero)
+				UnityEngine.Debug.Log(FormattableString.Invariant($"[VoiceSeat] reusedAnchor={reuseSeat} targetTop={top} calibrationY={calibrationY:F3} seatLocalY={seatLocalAtSnap.y:F6} seatNormY={seatNormY:F6} seatOffsetPx={seatOffsetPx:F3} windowSitYOffset={windowSitYOffset:F6} pose={animator.GetFloat(windowSitIndexParam):F3}"));
 			if (ComputeSeatDesktop(out var px3, out var _))
 			{
 				float num5 = Mathf.Max(1, right - left);
 				snapFraction = Mathf.Clamp01((px3 - (float)left) / num5);
 			}
+			if (commandSeat != IntPtr.Zero) snapFraction = commandSeatFraction;
 			_lastSnapTopY = top;
 			_recentUnsnap = false;
 			SetTopMost(en: true);

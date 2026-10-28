@@ -184,6 +184,10 @@ namespace CustomDancePlayer
 
 		private List<int> filteredQueue;
 
+		private bool HasEmptyQueue => filteredQueue != null && filteredQueue.Count == 0;
+
+		public event Action ListRebuilt;
+
 		private bool holdDuringTransition;
 
 		private bool pendingStop;
@@ -462,11 +466,15 @@ namespace CustomDancePlayer
 
 		private void OnPlayClicked()
 		{
+			int idx = ResolvePlayableIndex();
+			if (idx < 0)
+			{
+				return;
+			}
 			SetWaiting(v: true);
 			SetDancing(v: false);
 			if (enableSync && isLeader)
 			{
-				int idx = ResolvePlayableIndex();
 				DanceEntry e = ((idx >= 0 && idx < entries.Count) ? entries[idx] : null);
 				double atUtc = UtcNow() + leadSeconds;
 				guardActive = true;
@@ -482,6 +490,44 @@ namespace CustomDancePlayer
 			{
 				TryPlayCurrentOrFirst();
 			}
+		}
+
+		public string[] GetDanceNamesForBridge()
+		{
+			return entries.Select(entry => entry.id).ToArray();
+		}
+
+		public void ExecuteDanceFromBridge(string action, string name)
+		{
+			if (action == "dance.stop") { OnStopClicked(); return; }
+			if (entries.Count == 0) throw new InvalidOperationException("No dances are loaded");
+			if (action == "dance.next" || action == "dance.previous")
+			{
+				if (NextIndexForManual(action == "dance.next") < 0) throw new InvalidOperationException("Dance queue is empty");
+				if (action == "dance.next") OnNextClicked(); else OnPrevClicked();
+				return;
+			}
+			if (action != "dance.play") throw new ArgumentException("Unknown dance action");
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				if (ResolvePlayableIndex() < 0) throw new InvalidOperationException("Dance queue is empty");
+				OnPlayClicked();
+				return;
+			}
+			string key = DanceNameForBridge(name);
+			var matches = Enumerable.Range(0, entries.Count).Where(index =>
+				string.Equals(entries[index].stableId, name, StringComparison.OrdinalIgnoreCase) ||
+				DanceNameForBridge(entries[index].id) == key ||
+				DanceNameForBridge(Path.GetFileNameWithoutExtension(entries[index].id)) == key).ToArray();
+			if (key.Length == 0 || matches.Length != 1)
+				throw new ArgumentException(matches.Length > 1 ? "Dance name is ambiguous" : "Dance name was not found");
+			OnListItemClicked(matches[0]);
+		}
+
+		private static string DanceNameForBridge(string name)
+		{
+			return System.Text.RegularExpressions.Regex.Replace((name ?? "").ToLowerInvariant().Replace('ё', 'е'),
+				@"[^\p{L}\p{Nd}]+", " ").Trim();
 		}
 
 		private void OnListItemClicked(int idx)
@@ -510,9 +556,13 @@ namespace CustomDancePlayer
 
 		private void OnNextClicked()
 		{
+			int target = NextIndexForManual(forward: true);
+			if (target < 0)
+			{
+				return;
+			}
 			SetWaiting(v: true);
 			SetDancing(v: false);
-			int target = NextIndexForManual(forward: true);
 			if (enableSync && isLeader)
 			{
 				DanceEntry e = ((target >= 0 && target < entries.Count) ? entries[target] : null);
@@ -534,9 +584,13 @@ namespace CustomDancePlayer
 
 		private void OnPrevClicked()
 		{
+			int target = NextIndexForManual(forward: false);
+			if (target < 0)
+			{
+				return;
+			}
 			SetWaiting(v: true);
 			SetDancing(v: false);
-			int target = NextIndexForManual(forward: false);
 			if (enableSync && isLeader)
 			{
 				DanceEntry e = ((target >= 0 && target < entries.Count) ? entries[target] : null);
@@ -577,7 +631,11 @@ namespace CustomDancePlayer
 
 		private int ResolvePlayableIndex()
 		{
-			if (filteredQueue != null && filteredQueue.Count > 0)
+			if (entries.Count == 0 || HasEmptyQueue)
+			{
+				return -1;
+			}
+			if (filteredQueue != null)
 			{
 				if (currentIndex >= 0 && filteredQueue.Contains(currentIndex))
 				{
@@ -585,7 +643,7 @@ namespace CustomDancePlayer
 				}
 				return filteredQueue[0];
 			}
-			if (currentIndex >= 0)
+			if (currentIndex >= 0 && currentIndex < entries.Count)
 			{
 				return currentIndex;
 			}
@@ -950,6 +1008,23 @@ namespace CustomDancePlayer
 			{
 				uiPool[num2].go.SetActive(value: false);
 			}
+			ListRebuilt?.Invoke();
+		}
+
+		public bool TryGetListEntry(Transform item, out int index, out string title)
+		{
+			for (int i = 0; i < entries.Count && i < uiPool.Count; i++)
+			{
+				if (uiPool[i].go && uiPool[i].go.transform == item)
+				{
+					index = i;
+					title = entries[i].id;
+					return true;
+				}
+			}
+			index = -1;
+			title = null;
+			return false;
 		}
 
 		private T FindChildByName<T>(Transform root, string name) where T : Component
@@ -971,9 +1046,9 @@ namespace CustomDancePlayer
 
 		private void PlayPrev()
 		{
-			if (entries.Count != 0)
+			if (entries.Count != 0 && !HasEmptyQueue)
 			{
-				if (filteredQueue == null || filteredQueue.Count == 0)
+				if (filteredQueue == null)
 				{
 					currentIndex = ((currentIndex <= 0) ? (entries.Count - 1) : (currentIndex - 1));
 				}
@@ -988,9 +1063,9 @@ namespace CustomDancePlayer
 
 		private void PlayNext()
 		{
-			if (entries.Count != 0)
+			if (entries.Count != 0 && !HasEmptyQueue)
 			{
-				if (filteredQueue == null || filteredQueue.Count == 0)
+				if (filteredQueue == null)
 				{
 					currentIndex = (currentIndex + 1) % entries.Count;
 				}
@@ -1081,14 +1156,40 @@ namespace CustomDancePlayer
 			}
 			DanceEntry danceEntry = loadedEntry;
 			DanceEntry danceEntry2 = entries[index];
+			if (danceEntry != null && danceEntry != danceEntry2)
+			{
+				// Dance packages can share Unity bundle identities; release the old one before loading.
+				if (audioSource != null)
+				{
+					audioSource.Stop();
+					audioSource.clip = null;
+				}
+				if (overrideController != null && placeholderClipCached != null)
+				{
+					overrideController[placeholderClipName] = placeholderClipCached;
+				}
+				loadedEntry = null;
+				isPlaying = false;
+				currentTotalSeconds = 0f;
+				UpdatePlayingNowLabel(null);
+				UpdateAuthorLabel(null);
+				UpdateTimeLabels(0f, 0f);
+				UnloadEntry(danceEntry);
+				StartCoroutine(UnloadUnusedAssetsRoutine());
+			}
+			UnityEngine.Debug.Assert(loadedEntry == null || loadedEntry == danceEntry2,
+				"Previous dance must be released before loading another bundle");
 			if (danceEntry2.bundle == null)
 			{
 				string path = (string.IsNullOrEmpty(danceEntry2.bundlePath) ? danceEntry2.path : danceEntry2.bundlePath);
 				danceEntry2.bundle = AssetBundle.LoadFromFile(path);
 				if (danceEntry2.bundle == null)
 				{
+					UnityEngine.Debug.LogError("[AvatarDanceHandler] Cannot load dance bundle: " + path);
+					SetWaiting(v: false);
 					UnfreezeAnimator();
 					holdDuringTransition = false;
+					playRoutine = null;
 					yield break;
 				}
 			}
@@ -1117,11 +1218,6 @@ namespace CustomDancePlayer
 				yield break;
 			}
 			overrideController[placeholderClipName] = ((danceEntry2.clip != null) ? danceEntry2.clip : placeholderClipCached);
-			if (danceEntry != null && danceEntry != danceEntry2)
-			{
-				UnloadEntry(danceEntry);
-				StartCoroutine(UnloadUnusedAssetsRoutine());
-			}
 			if (audioSource == null)
 			{
 				EnsureAudioSource();
@@ -1370,7 +1466,7 @@ namespace CustomDancePlayer
 
 		private void TryAutoNext()
 		{
-			if (!autoNextScheduled)
+			if (!autoNextScheduled && !pendingStop)
 			{
 				autoNextScheduled = true;
 				StartCoroutine(AutoNextCo());
@@ -1384,6 +1480,10 @@ namespace CustomDancePlayer
 			if (num >= 0)
 			{
 				PlayIndex(num);
+			}
+			else
+			{
+				StopPlay();
 			}
 			autoNextScheduled = false;
 		}
@@ -1417,7 +1517,8 @@ namespace CustomDancePlayer
 
 		public void SetQueueByIndices(List<int> indices)
 		{
-			if (indices == null || indices.Count == 0)
+			// Null means the full library; an empty list means no matching tracks.
+			if (indices == null)
 			{
 				filteredQueue = null;
 				return;
@@ -1432,7 +1533,7 @@ namespace CustomDancePlayer
 					list.Add(num);
 				}
 			}
-			filteredQueue = ((list.Count > 0) ? list : null);
+			filteredQueue = list;
 		}
 
 		public int FindIndexByTitle(string title)
@@ -1552,16 +1653,24 @@ namespace CustomDancePlayer
 						{
 							autoNextScheduled = true;
 							double atUtc = UtcNow() + leadSeconds;
-							guardActive = true;
-							guardUntilUtc = atUtc;
-							EnforceHold();
 							int target = NextIndexForAuto();
-							DanceEntry e = ((target >= 0 && target < entries.Count) ? entries[target] : null);
-							ScheduleLocal(delegate
+							if (target < 0)
 							{
-								TryPlayByStableIdOrFallback((e != null) ? e.stableId : null, target, (e != null) ? e.id : null);
-							}, atUtc);
-							Broadcast("PlayByStableId", (e != null) ? e.stableId : null, target, (e != null) ? e.id : null, atUtc);
+								ScheduleLocal(TryStopPlay, atUtc);
+								Broadcast("StopPlay", null, -1, null, atUtc);
+							}
+							else
+							{
+								guardActive = true;
+								guardUntilUtc = atUtc;
+								EnforceHold();
+								DanceEntry e = entries[target];
+								ScheduleLocal(delegate
+								{
+									TryPlayByStableIdOrFallback(e.stableId, target, e.id);
+								}, atUtc);
+								Broadcast("PlayByStableId", e.stableId, target, e.id, atUtc);
+							}
 						}
 						else if (num > 0.5f)
 						{
@@ -1580,11 +1689,11 @@ namespace CustomDancePlayer
 		private int NextFromFiltered(bool forward)
 		{
 			int num = currentIndex;
-			if (entries.Count == 0)
+			if (entries.Count == 0 || HasEmptyQueue)
 			{
 				return -1;
 			}
-			if (filteredQueue == null || filteredQueue.Count == 0)
+			if (filteredQueue == null)
 			{
 				if (num < 0)
 				{
@@ -1651,15 +1760,10 @@ namespace CustomDancePlayer
 
 		private void TryPlayCurrentOrFirst()
 		{
-			if (filteredQueue != null && filteredQueue.Count > 0)
+			int index = ResolvePlayableIndex();
+			if (index >= 0)
 			{
-				int index = ((currentIndex >= 0 && filteredQueue.Contains(currentIndex)) ? currentIndex : filteredQueue[0]);
 				PlayIndex(index);
-			}
-			else
-			{
-				int index2 = ((currentIndex >= 0) ? currentIndex : 0);
-				PlayIndex(index2);
 			}
 		}
 
@@ -1944,7 +2048,7 @@ namespace CustomDancePlayer
 			{
 				return -1;
 			}
-			List<int> list = ((filteredQueue != null && filteredQueue.Count > 0) ? filteredQueue : Enumerable.Range(0, entries.Count).ToList());
+			List<int> list = filteredQueue ?? Enumerable.Range(0, entries.Count).ToList();
 			if (list.Count == 0)
 			{
 				return -1;
@@ -1964,11 +2068,11 @@ namespace CustomDancePlayer
 
 		private int NextIndexSequential(bool forward)
 		{
-			if (entries.Count == 0)
+			if (entries.Count == 0 || HasEmptyQueue)
 			{
 				return -1;
 			}
-			if (filteredQueue == null || filteredQueue.Count == 0)
+			if (filteredQueue == null)
 			{
 				if (currentIndex < 0)
 				{
@@ -2011,7 +2115,12 @@ namespace CustomDancePlayer
 
 		private int NextIndexForAuto()
 		{
-			if (loopOn && currentIndex >= 0)
+			if (entries.Count == 0 || HasEmptyQueue)
+			{
+				return -1;
+			}
+			if (loopOn && currentIndex >= 0 && currentIndex < entries.Count
+				&& (filteredQueue == null || filteredQueue.Contains(currentIndex)))
 			{
 				return currentIndex;
 			}

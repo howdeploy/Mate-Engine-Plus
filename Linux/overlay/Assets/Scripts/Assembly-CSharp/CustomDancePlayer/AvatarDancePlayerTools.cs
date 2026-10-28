@@ -37,6 +37,8 @@ namespace CustomDancePlayer
 
 		private readonly Dictionary<Transform, string> titleNorm = new Dictionary<Transform, string>();
 
+		private readonly Dictionary<Transform, int> entryIndices = new Dictionary<Transform, int>();
+
 		private readonly HashSet<Transform> wired = new HashSet<Transform>();
 
 		private readonly HashSet<string> favorites = new HashSet<string>(StringComparer.Ordinal);
@@ -56,18 +58,29 @@ namespace CustomDancePlayer
 				contentRoot = handler.contentObject;
 			}
 			LoadFavorites();
+			if (handler)
+			{
+				handler.ListRebuilt += RefreshList;
+			}
 		}
 
 		private void OnEnable()
 		{
 			HookInputs(on: true);
-			ReindexAndWire();
-			ApplyFilter("");
+			RefreshList();
 		}
 
 		private void OnDisable()
 		{
 			HookInputs(on: false);
+		}
+
+		private void OnDestroy()
+		{
+			if (handler)
+			{
+				handler.ListRebuilt -= RefreshList;
+			}
 		}
 
 		private void Update()
@@ -78,8 +91,7 @@ namespace CustomDancePlayer
 			}
 			if ((bool)contentRoot && contentRoot.childCount != lastChildCount)
 			{
-				ReindexAndWire();
-				ApplyFilter(lastQuery);
+				RefreshList();
 			}
 		}
 
@@ -176,10 +188,21 @@ namespace CustomDancePlayer
 			ApplyFilter(lastQuery);
 		}
 
+		private void RefreshList()
+		{
+			if (!contentRoot && handler)
+			{
+				contentRoot = handler.contentObject;
+			}
+			ReindexAndWire();
+			ApplyFilter(lastQuery);
+		}
+
 		private void ReindexAndWire()
 		{
 			titleRaw.Clear();
 			titleNorm.Clear();
+			entryIndices.Clear();
 			if (!contentRoot)
 			{
 				return;
@@ -188,33 +211,52 @@ namespace CustomDancePlayer
 			for (int i = 0; i < contentRoot.childCount; i++)
 			{
 				Transform t = contentRoot.GetChild(i);
-				string raw = ExtractTitle(t);
+				string raw;
+				if (handler)
+				{
+					if (!handler.TryGetListEntry(t, out int index, out raw))
+					{
+						continue;
+					}
+					entryIndices[t] = index;
+				}
+				else
+				{
+					raw = ExtractTitle(t);
+				}
 				string value = Normalize(raw);
 				titleRaw[t] = raw;
 				titleNorm[t] = value;
-				if (wired.Contains(t))
-				{
-					continue;
-				}
 				Toggle toggle = FindToggleByExactName(t, "Favorite");
 				if ((bool)toggle)
 				{
-					bool flag = favorites.Contains(raw);
-					if (toggle.isOn != flag)
+					toggle.SetIsOnWithoutNotify(favorites.Contains(raw));
+					if (wired.Add(t))
 					{
-						toggle.isOn = flag;
+						// Rows are reused for different tracks after a library refresh.
+						toggle.onValueChanged.AddListener(delegate(bool v)
+						{
+							OnItemFavoriteChanged(t, v);
+						});
 					}
-					toggle.onValueChanged.AddListener(delegate(bool v)
-					{
-						OnItemFavoriteChanged(t, raw, v);
-					});
 				}
-				wired.Add(t);
 			}
 		}
 
-		private void OnItemFavoriteChanged(Transform item, string rawTitle, bool isOn)
+		private void OnItemFavoriteChanged(Transform item, bool isOn)
 		{
+			string rawTitle;
+			if (handler)
+			{
+				if (!handler.TryGetListEntry(item, out _, out rawTitle))
+				{
+					return;
+				}
+			}
+			else if (!titleRaw.TryGetValue(item, out rawTitle))
+			{
+				return;
+			}
 			if (!string.IsNullOrEmpty(rawTitle))
 			{
 				if (isOn)
@@ -226,10 +268,7 @@ namespace CustomDancePlayer
 					favorites.Remove(rawTitle);
 				}
 				SaveFavorites();
-				if ((bool)showFavoriteToggle && showFavoriteToggle.isOn)
-				{
-					ApplyFilter(lastQuery);
-				}
+				RefreshList();
 			}
 		}
 
@@ -247,7 +286,8 @@ namespace CustomDancePlayer
 				Transform child = contentRoot.GetChild(i);
 				if (!titleRaw.TryGetValue(child, out var value))
 				{
-					value = ExtractTitle(child);
+					child.gameObject.SetActive(false);
+					continue;
 				}
 				if (!titleNorm.TryGetValue(child, out var value2))
 				{
@@ -267,17 +307,9 @@ namespace CustomDancePlayer
 				for (int j = 0; j < contentRoot.childCount; j++)
 				{
 					Transform child2 = contentRoot.GetChild(j);
-					if (child2.gameObject.activeSelf)
+					if (child2.gameObject.activeSelf && entryIndices.TryGetValue(child2, out int index))
 					{
-						if (!titleRaw.TryGetValue(child2, out var value3))
-						{
-							value3 = ExtractTitle(child2);
-						}
-						int num = handler.FindIndexByTitle(value3);
-						if (num >= 0)
-						{
-							list.Add(num);
-						}
+						list.Add(index);
 					}
 				}
 				handler.SetQueueByIndices(list);

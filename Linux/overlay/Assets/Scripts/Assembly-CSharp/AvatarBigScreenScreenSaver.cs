@@ -237,8 +237,8 @@ public class AvatarBigScreenScreenSaver : MonoBehaviour
 		bool big = avatarAnimator != null && avatarAnimator.GetBool("isBigScreen");
 		bool active = big && avatarAnimator.GetBool("isBigScreenSaver");
 		bool enabled = avatarAnimator != null && bigScreenHandler != null && enableBigScreenScreenSaver &&
-			!MenuActions.IsAnyMenuOpen() && WindowManager.AllowDesktopActivity &&
-			(active || (!big && IsInAllowedState()));
+			(WindowManager.IsSessionLocked || (!MenuActions.IsAnyMenuOpen() && WindowManager.AllowDesktopActivity &&
+			(active || (!big && IsInAllowedState()))));
 		var wm = WindowManager.Instance;
 		int state = wm != null ? wm.GetDesktopIdleState(timeout, enabled) : -1;
 		idleTimer = 0f;

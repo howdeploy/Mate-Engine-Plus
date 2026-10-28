@@ -74,6 +74,7 @@ public class WindowManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     TDBus.Connection _dBusConnection;
     TDBus.ConnectionInfo _dBusConnectionInfo;
     static Func<bool> _shojiReady, _shojiVisible;
+    static Func<bool> _shojiLocked;
     static Func<int, bool, int> _shojiScreensaver;
 
     public static bool IsShojiSession => (Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP") ?? "")
@@ -94,6 +95,13 @@ public class WindowManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _shojiVisible = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), type.GetMethod("AllowPointerTracking"));
         var idle = type.GetMethod("GetScreensaverState");
         if (idle != null) _shojiScreensaver = (Func<int, bool, int>)Delegate.CreateDelegate(typeof(Func<int, bool, int>), idle);
+        var locked = type.GetMethod("IsSessionLocked");
+        if (locked != null) _shojiLocked = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), locked);
+    }
+
+    public static bool IsSessionLocked
+    {
+        get { ResolveShojiCapabilities(); return _shojiLocked != null && _shojiLocked(); }
     }
 
     public static bool AllowDesktopActivity

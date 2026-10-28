@@ -11,6 +11,7 @@ public class MEClothes : MonoBehaviour
 		public string tag;
 
 		public GameObject[] gameObjects;
+
 	}
 
 	[Tooltip("Used only to keep the script in builds. This instance will be ignored at runtime.")]
@@ -18,6 +19,7 @@ public class MEClothes : MonoBehaviour
 
 	[Header("Outfit Entries (Max 8)")]
 	public OutfitEntry[] entries = new OutfitEntry[8];
+
 
 	public void ActivateOutfit(int index)
 	{
@@ -63,6 +65,8 @@ public class MEClothes : MonoBehaviour
 				gameObject2.SetActive(!flag);
 			}
 		}
+		var dependencies = GetComponent<KisaWardrobeDependencies>();
+		if (dependencies != null) dependencies.RefreshVisibility();
 	}
 
 	private bool IsAnyActive(GameObject[] targets)

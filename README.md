@@ -23,6 +23,13 @@ are in [Minecraft/MateSignalPlus/](Minecraft/MateSignalPlus/).
 This repository does not contain the author's private
 models, music, DLC, Workshop downloads, profiles or extracted Steam resources.
 
+**October 28 source update:** local voice commands, corrected sitting/edge-hide
+animation entry, dance bundle and filtered-queue fixes, anchored spring-motion
+filtering, monitor-aware menus, optional wardrobe dependencies, and the
+lock/screensaver bridge are now included. See [current status](docs/STATUS.md)
+and [voice setup](docs/VOICE-CONTROL.md). This publication does not rebuild the
+player or the released MateSignal artifacts.
+
 ## Stack
 
 | Application | Desktop | Shell | Platform |

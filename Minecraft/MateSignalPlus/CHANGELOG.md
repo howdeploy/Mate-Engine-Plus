@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased — Underground biome announcements
+
+- Suppress vanilla surface-biome comments in deep, sky-shielded Overworld
+  areas, including underground flight. Use depth below the local surface
+  instead of an absolute Y cutoff, preserving high-altitude cave handling.
+- Retain lush, dripstone, deep dark and sulfur cave reactions, surface flight,
+  ordinary open-ocean diving, other dimensions and unknown modded biomes.
+- Clear suppressed pending candidates without consuming the biome cooldown;
+  require two seconds of surface observation again after leaving a cave.
+- Keep settings, protocol and the published 1.4.1 artifacts unchanged.
+
+Source publication only. No new build, tests, installation or restart performed.
+
 ## 1.4.1+mc26.3 — Structure coverage — 2026-10-05
 
 - Expand Structures from 8 to 24 individually configurable clue categories:

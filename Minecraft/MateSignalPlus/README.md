@@ -268,6 +268,19 @@ on demand. Rapid biome crossings shorter than two seconds are intentionally
 quiet. During cooldown, the latest stable biome can still be announced if the
 player remains there; intermediate crossed biomes are not queued.
 
+Unreleased source fix: vanilla surface-biome announcements are suppressed in
+the Overworld when the player is at least 12 blocks below the local heightmap
+surface, has zero sky light, and cannot see the sky using Minecraft's
+water-aware sky check. Torches and nighttime do not affect this sky-light
+measurement; ordinary open-ocean diving is not treated as underground travel.
+Lush caves, dripstone caves, the deep dark and sulfur caves remain eligible.
+Unknown modded biomes, the Nether and the End retain their existing behavior.
+This is a depth/sky heuristic: deep enclosed player-built interiors can also
+be quiet. Suppressed candidates do not consume the 60-second cooldown; on
+returning to the surface, the current biome must be stable for two seconds
+again. No companion update or configuration migration is required. This fix
+has not been built or verified in gameplay yet.
+
 The updated Mate Engine Plus receiver provides four complete ground/inside and
 four flight phrases per vanilla biome, specific mob encounters and rewritten
 event dialogue in Russian and English. It selects phrases locally without an

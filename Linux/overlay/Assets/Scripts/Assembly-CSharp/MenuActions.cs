@@ -3,6 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using Xamin;
 
+[DefaultExecutionOrder(100)]
 public class MenuActions : MonoBehaviour
 {
 	[Header("Menus")]
@@ -43,6 +44,10 @@ public class MenuActions : MonoBehaviour
 
 	private RectTransform radialRect;
 
+	private float radialSize;
+
+	private readonly Vector3[] radialCorners = new Vector3[4];
+
 	private Camera mainCam;
 
 	private Transform modelRoot;
@@ -79,6 +84,7 @@ public class MenuActions : MonoBehaviour
 		{
 			radialMenu = radialMenuObject.GetComponent<CircleSelector>();
 			radialRect = radialMenuObject.GetComponent<RectTransform>();
+			if (radialMenu != null) radialSize = radialMenu.Size;
 		}
 		modelRoot = GameObject.Find("Model")?.transform;
 		mainCam = Camera.main;
@@ -107,6 +113,51 @@ public class MenuActions : MonoBehaviour
 		entryOpenPrevFrame = AnyEntryOpenLocal();
 	}
 
+	private void LateUpdate()
+	{
+		if (radialMenu == null || radialRect == null || mainCam == null || !IsRadialOpen()) return;
+		if (followBone && currentAnimator != null)
+		{
+			Transform target = currentAnimator.GetBoneTransform(targetBone);
+			if (target != null)
+				screenPosition = Vector3.Lerp(screenPosition, mainCam.WorldToScreenPoint(target.position), 1f - followSmoothness);
+		}
+		PlaceRadialMenu();
+	}
+
+	private void PlaceRadialMenu()
+	{
+		var parent = radialRect.parent as RectTransform;
+		if (parent == null || mainCam == null || radialSize <= 0f) return;
+		Vector2 desired = followBone ? (Vector2)screenPosition : RectTransformUtility.WorldToScreenPoint(mainCam, radialRect.position);
+		Rect safe = UiTooltip.VisibleScreenRect(desired);
+		if (safe.width <= 0f || safe.height <= 0f) return;
+		if (!RectTransformUtility.ScreenPointToWorldPointInRectangle(parent, desired, mainCam, out var world)) return;
+		radialRect.position = world;
+		// Use the full-open size, not the animated scale (which starts at zero).
+		radialRect.GetLocalCorners(radialCorners);
+		Vector2 minimum = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+		Vector2 maximum = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+		for (int i = 0; i < radialCorners.Length; i++)
+		{
+			Vector3 corner = parent.TransformPoint(radialRect.localPosition +
+				radialRect.localRotation * (radialCorners[i] * radialSize));
+			Vector2 point = RectTransformUtility.WorldToScreenPoint(mainCam, corner);
+			minimum = Vector2.Min(minimum, point);
+			maximum = Vector2.Max(maximum, point);
+		}
+		Vector2 size = maximum - minimum;
+		float fit = Mathf.Min(1f, Mathf.Min(safe.width / Mathf.Max(1f, size.x), safe.height / Mathf.Max(1f, size.y)));
+		radialMenu.Size = radialSize * fit;
+		minimum = desired + (minimum - desired) * fit;
+		maximum = desired + (maximum - desired) * fit;
+		Vector2 correction = new Vector2(
+			minimum.x < safe.xMin ? safe.xMin - minimum.x : maximum.x > safe.xMax ? safe.xMax - maximum.x : 0f,
+			minimum.y < safe.yMin ? safe.yMin - minimum.y : maximum.y > safe.yMax ? safe.yMax - maximum.y : 0f);
+		if (RectTransformUtility.ScreenPointToWorldPointInRectangle(parent, desired + correction, mainCam, out world))
+			radialRect.position = world;
+	}
+
 	private void HandleRadialMenu()
 	{
 		if (radialMenu == null)
@@ -115,20 +166,7 @@ public class MenuActions : MonoBehaviour
 		}
 		if (!Input.GetKeyDown(radialMenuKey))
 		{
-			if (!followBone || !IsRadialOpen() || !(radialRect != null) || !(currentAnimator != null))
-			{
-				return;
-			}
-			Transform boneTransform = currentAnimator.GetBoneTransform(targetBone);
-			if (boneTransform != null)
-			{
-				Vector3 b = mainCam.WorldToScreenPoint(boneTransform.position);
-				screenPosition = Vector3.Lerp(screenPosition, b, 1f - followSmoothness);
-				if (RectTransformUtility.ScreenPointToWorldPointInRectangle(radialRect.parent as RectTransform, screenPosition, mainCam, out var worldPoint))
-				{
-					radialRect.position = worldPoint;
-				}
-			}
+			return;
 		}
 		else
 		{
@@ -168,6 +206,7 @@ public class MenuActions : MonoBehaviour
 				}
 				if (radialMenu.Open())
 				{
+					PlaceRadialMenu();
 					PlayMenuOpenSound();
 				}
 			}
