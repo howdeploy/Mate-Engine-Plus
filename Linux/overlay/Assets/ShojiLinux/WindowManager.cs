@@ -1842,6 +1842,8 @@ public class WindowManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         imageBytes = GetImageData(xImagePtr, width, height).Data;
+        if (_windowManagerImplementation is HyprlandManager hyprland)
+            hyprland.SetInputMask(imageBytes, width, height);
 
         if (!_useShm && xImagePtr != IntPtr.Zero)
         {

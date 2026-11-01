@@ -378,8 +378,18 @@ namespace MateEngine.Shoji
         // Assembly-CSharp never reference Assembly-CSharp itself.)
         public static bool Tick(MonoBehaviour owner, bool dragging)
         {
-            if (!Active) return false;
             var windowManager = owner as WindowManager;
+            // Input shaping is also used outside a ShojiWM session.
+            try
+            {
+                UpdateShadow(windowManager);
+            }
+            catch (Exception e)
+            {
+                _shadow = null;
+                Report(e);
+            }
+            if (!Active) return false;
             bool release = false;
             try { UpdateVoiceControl(windowManager); }
             catch (Exception e) { Report(e); }
@@ -396,15 +406,6 @@ namespace MateEngine.Shoji
             catch (Exception e) { Report(e); }
             try { UpdateMedia(); }
             catch (Exception e) { Report(e); }
-            try
-            {
-                UpdateShadow(windowManager);
-            }
-            catch (Exception e)
-            {
-                _shadow = null;
-                Report(e);
-            }
             return release;
         }
 
@@ -1506,7 +1507,6 @@ namespace MateEngine.Shoji
         // the window pixmap just before GenerateRectangles; no Unity API here.
         public static void FilterInputPixels(byte[] pixels, int width, int height)
         {
-            if (!_active) return;
             ShadowSpec spec = _shadow;
             Coverage coverage = _coverage;
             if (spec == null || coverage == null || pixels == null) return;

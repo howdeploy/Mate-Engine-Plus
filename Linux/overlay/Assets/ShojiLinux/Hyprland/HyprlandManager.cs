@@ -20,7 +20,7 @@ namespace APIs.Hyprland
         const int _LayerOverlay = 3;
 
         Vector2Int _LastCursorPosition = Vector2Int.zero;
-        bool _CursorOver = false;
+        readonly HyprlandInputMask _InputMask = new HyprlandInputMask();
 
         Stopwatch _ImidiateStopWatch;
         TimeSpan _ImidiateStopWatchRuntime = TimeSpan.FromSeconds(1);
@@ -43,6 +43,9 @@ namespace APIs.Hyprland
                 //ShowError(value.ToString());
             }
         }
+
+        public void SetInputMask(byte[] pixels, int width, int height) =>
+            _InputMask.Update(pixels, width, height);
 
         HyprlandClient _Window = null;
 
@@ -181,6 +184,8 @@ namespace APIs.Hyprland
                 await _HyprlandDispatcher.SetFloatingAsync(_Window.address);
             // disable the focus by default
             await _HyprlandDispatcher.SetPropAsync(_Window.address, "no_focus", true);
+            _CurrentFocusState = false;
+            await _HyprlandDispatcher.SetPropAsync(_Window.address, "no_follow_mouse", true);
             // remove all window decorations
             await _HyprlandDispatcher.SetPropAsync(_Window.address, "decorate", false);
             // disable the window background blur
@@ -233,22 +238,18 @@ namespace APIs.Hyprland
                     }
                     else
                     {
-                        // update tracking variables
-                        if (c % 50 == 0 || _ImidiateStopWatch.IsRunning || _MouseOverWindow)
-                            _LastCursorPosition = await _HyprlandDispatcher.GetCursorPositionAsync();
-                        if (c == 250 || _ImidiateStopWatch.IsRunning || _MouseOverWindow)
-                        {
+                        _LastCursorPosition = await _HyprlandDispatcher.GetCursorPositionAsync();
+                        if (c % 16 == 0 || _ImidiateStopWatch.IsRunning || _MouseOverWindow)
                             await UpdateWindowsAsync();
-                            await UpdateFocusableAsync();
-                            c = 0;
-                        }
+                        await UpdateFocusableAsync();
                     }
                 }
                 catch (Exception ex)
                 {
                     ShowError(ex.ToString());
                 }
-                await Task.Delay(1);
+                try { await Task.Delay(16, cancellationToken); }
+                catch (OperationCanceledException) { break; }
                 // stop high polling rates after _ImidiateStopWatchRuntime elapsed
                 if (_ImidiateStopWatch.IsRunning && _ImidiateStopWatch.Elapsed >= _ImidiateStopWatchRuntime)
                     _ImidiateStopWatch.Stop();
@@ -424,62 +425,16 @@ namespace APIs.Hyprland
         }
 
         async Task UpdateFocusableAsync()
-        {   
-            // check if user is on an inactive workspace
-            if(_Window.workspace.id != _CurrentWorkspace)
-            {
-                _MouseOverWindow = false;
-                _CursorOver = false;
-                return;
-            }
-            var isBigScreen = AvatarBigScreenHandler.ActiveHandlers.FirstOrDefault()?.IsBigScreenActive ?? false;
-            // if the window is being dragged, in bigscreen or a menu is open the window is always focusable
-            var forceFocus = MenuActions.IsAnyMenuOpen() || IsDragging || isBigScreen;
-            if (forceFocus)
-            {
-                await SetFocusableAsync(true);
-                _MouseOverWindow = true;
-            }
-            else
-            {
-                // check if the mouse is over the window before making more complicated checks
-                var windowRect = new Rect(_Window.atVector.x, _Window.atVector.y, _Window.sizeVector.x, _Window.sizeVector.y);
-                //ShowError($"windowRect: {windowRect}");
-                //ShowError($"cursorPos: {_LastCursorPosition}");
-                _MouseOverWindow = windowRect.Contains(_LastCursorPosition);
-                //ShowError($"MoveOverWindow: {_MouseOverWindow}");
-                if (_MouseOverWindow)
-                {
-                    // check if the mouse is roughly over the avatar
-                    var correction = SaveLoadHandler.Instance.data.avatarSize - 0.10F;
-                    var avatarScale = SaveLoadHandler.Instance.data.avatarSize - (0.28F * correction);
-                    var avatarHeight = _Window.sizeVector.y * avatarScale;
-                    var avatarWidth = avatarHeight / 4.5625F;
-                    var verticalOffset = _Window.sizeVector.y - avatarHeight;
-                    var horizontalOffset = (_Window.sizeVector.x - avatarWidth) / 2;
-
-                    var avatarRectX = _Window.atVector.x + horizontalOffset;
-                    var avatarRectY = _Window.atVector.y + verticalOffset;
-                    var avatarRectWidth =  _Window.sizeVector.x - horizontalOffset * 2;
-                    var avatarRectHeight = _Window.sizeVector.y - verticalOffset;
-
-                    var monitor = _Monitors[_Window.monitor];
-                    if(avatarRectX < monitor.position.x)
-                        avatarRectX = monitor.position.x;
-                    if(avatarRectX + avatarWidth > monitor.position.x + monitor.width)
-                        avatarRectX = (monitor.width + monitor.position.x) - avatarWidth;
-
-                    var avatarRect = new Rect(avatarRectX, avatarRectY,avatarRectWidth, avatarRectHeight);
-                    //ShowError($"avatarRect: {avatarRect}");
-                    var cursorOver = avatarRect.Contains(_LastCursorPosition);
-                    if (_CursorOver != cursorOver)
-                    {
-                        await SetFocusableAsync(cursorOver);
-                        _CursorOver = cursorOver;
-                    }
-                }
-                //ShowError($"CursorOver: {_CursorOver}");
-            }
+        {
+            var window = _Window;
+            if (window == null) return;
+            bool activeWorkspace = window.pinned || window.workspace.id == _CurrentWorkspace;
+            var local = _LastCursorPosition - window.atVector;
+            _MouseOverWindow = activeWorkspace && new RectInt(Vector2Int.zero, window.sizeVector).Contains(local);
+            // Hyprland focus hit-testing does not follow the X11 ShapeInput region.
+            // Keep the drag grab, but let transparent menu/window pixels pass through.
+            bool focusable = activeWorkspace && (IsDragging || _InputMask.Contains(local, window.sizeVector));
+            await SetFocusableAsync(focusable);
         }
 
         HyprlandMonitor[] _Monitors;
@@ -496,9 +451,8 @@ namespace APIs.Hyprland
         {
             if(focusable != _CurrentFocusState)
             {
-                _CurrentFocusState = focusable;
-                // ShowError(focusable);
                 await _HyprlandDispatcher.SetPropAsync(_Window.address, "no_focus", !focusable);
+                _CurrentFocusState = focusable;
             }
         }
 
