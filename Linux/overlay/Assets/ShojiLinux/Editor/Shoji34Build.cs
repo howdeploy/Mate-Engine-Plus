@@ -100,6 +100,7 @@ public static class Shoji34Build
 
     public static void BuildAll()
     {
+        ValidateInputMask();
         RestoreHumanoidAvatars();
         RestoreDynamicFont();
         RestoreHideAnimationOrientation();
@@ -114,6 +115,42 @@ public static class Shoji34Build
             playerPath, BuildTarget.StandaloneLinux64, BuildOptions.None);
         if (report.summary.result != BuildResult.Succeeded) throw new Exception("Linux player build failed: " + report.summary.result);
         Debug.Log($"Shoji34 player build succeeded: {report.summary.totalSize} bytes");
+    }
+
+    public static void ValidateInputMask()
+    {
+        var mask = new APIs.Hyprland.HyprlandInputMask();
+        var size = new Vector2Int(4, 4);
+        void Check(bool condition, string name)
+        {
+            if (!condition) throw new Exception("Hyprland input mask: " + name);
+        }
+
+        Check(mask.Contains(Vector2Int.zero, size), "focus fallback before the first image");
+        Check(!mask.Contains(new Vector2Int(-1, 0), size), "unavailable mask outside window");
+        Check(!mask.Contains(Vector2Int.zero, Vector2Int.zero), "unavailable mask with zero window size");
+        var pixels = new byte[16];
+        pixels[3] = 255;
+        pixels[7] = 10;
+        pixels[15] = 11;
+        mask.Update(pixels, 2, 2);
+        Check(mask.Contains(Vector2Int.zero, size), "opaque top-left pixel");
+        Check(!mask.Contains(new Vector2Int(2, 0), size), "same alpha threshold as ShapeInput");
+        Check(!mask.Contains(new Vector2Int(0, 2), size), "transparent lower row");
+        Check(mask.Contains(new Vector2Int(3, 3), size), "opaque lower row");
+        Check(mask.Contains(new Vector2Int(7, 1), new Vector2Int(8, 2)), "non-uniform window scaling");
+        Check(!mask.Contains(new Vector2Int(-1, 0), size), "left window boundary");
+        Check(!mask.Contains(new Vector2Int(0, -1), size), "top window boundary");
+        Check(!mask.Contains(new Vector2Int(4, 0), size), "right window boundary");
+        Check(!mask.Contains(new Vector2Int(0, 4), size), "bottom window boundary");
+        Check(!mask.Contains(Vector2Int.zero, Vector2Int.zero), "zero window size");
+        mask.Update(new byte[16], 2, 2);
+        Check(!mask.Contains(Vector2Int.zero, size), "valid transparent image does not use focus fallback");
+        mask.Update(null, 0, 0);
+        Check(mask.Contains(Vector2Int.zero, size), "focus fallback after image becomes unavailable");
+        Check(!mask.Contains(new Vector2Int(4, 0), size), "unavailable mask at right window boundary");
+        Check(!mask.Contains(new Vector2Int(0, 4), size), "unavailable mask at bottom window boundary");
+        Debug.Log("Hyprland input mask checks passed");
     }
 
     static void RestoreHideAnimationOrientation()

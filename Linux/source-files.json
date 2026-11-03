@@ -1898,7 +1898,7 @@
     },
     {
       "path": "Assets/ShojiLinux/Editor/Shoji34Build.cs",
-      "sha256": "900b5fb2d739125400bfccf11c6dd2e35f35fb0096b8daa4027151ee62aed8e6"
+      "sha256": "0089b7b8f9fce3190a2e83fc3d9ceeccbdc8ae489dc99aa1dd0f2f4f50cdb504"
     },
     {
       "path": "Assets/ShojiLinux/GtkX11Helper.cs",
@@ -1917,8 +1917,12 @@
       "sha256": "50738ba4ed50ed854e05d0dfbe3208efb1d3588652fd6483186938bd33762d29"
     },
     {
+      "path": "Assets/ShojiLinux/Hyprland/HyprlandInputMask.cs",
+      "sha256": "1587c927e9b0edc63faae2fd0c0566c820f0a75d9853ae369ad8fe4eae243d85"
+    },
+    {
       "path": "Assets/ShojiLinux/Hyprland/HyprlandManager.cs",
-      "sha256": "92c169817d3a82f033df1a3cd2c566cf0d8f005daa7eb1efa0b138c32eea5ab5"
+      "sha256": "f0fcd652e29190b58c1a467b464e706e23e1d3ab5d09833d72eaf758ff72a109"
     },
     {
       "path": "Assets/ShojiLinux/Hyprland/HyprlandModels.cs",
@@ -2390,7 +2394,7 @@
     },
     {
       "path": "Assets/ShojiLinux/WindowManager.cs",
-      "sha256": "192f45cfe32fde3c46d6aba161cda0ef330a5ea11cde67537e22b2e10ce749fe"
+      "sha256": "87c7beb7f6842b13eeca115ad1b9d5ebd7be2d83c51ec9066774d675292c11eb"
     },
     {
       "path": "Assets/ShojiShaderSources/PostProcessing/PostProcessing/Shaders/ACES.hlsl",
