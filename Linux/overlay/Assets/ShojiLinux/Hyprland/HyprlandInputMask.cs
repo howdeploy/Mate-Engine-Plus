@@ -22,8 +22,10 @@ namespace APIs.Hyprland
         {
             lock (sync)
             {
-                if (pixels == null || width <= 0 || height <= 0 || windowSize.x <= 0 || windowSize.y <= 0 ||
+                if (windowSize.x <= 0 || windowSize.y <= 0 ||
                     local.x < 0 || local.y < 0 || local.x >= windowSize.x || local.y >= windowSize.y) return false;
+                // Without a shaping frame, X11 accepts input across the whole window.
+                if (pixels == null || width <= 0 || height <= 0) return true;
                 int x = (int)((long)local.x * width / windowSize.x);
                 int y = (int)((long)local.y * height / windowSize.y);
                 return pixels[(y * width + x) * 4 + 3] > 10;

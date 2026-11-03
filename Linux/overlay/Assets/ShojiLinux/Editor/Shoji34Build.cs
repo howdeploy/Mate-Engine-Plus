@@ -117,7 +117,7 @@ public static class Shoji34Build
         Debug.Log($"Shoji34 player build succeeded: {report.summary.totalSize} bytes");
     }
 
-    static void ValidateInputMask()
+    public static void ValidateInputMask()
     {
         var mask = new APIs.Hyprland.HyprlandInputMask();
         var size = new Vector2Int(4, 4);
@@ -126,7 +126,9 @@ public static class Shoji34Build
             if (!condition) throw new Exception("Hyprland input mask: " + name);
         }
 
-        Check(!mask.Contains(Vector2Int.zero, size), "no focus before the first image");
+        Check(mask.Contains(Vector2Int.zero, size), "focus fallback before the first image");
+        Check(!mask.Contains(new Vector2Int(-1, 0), size), "unavailable mask outside window");
+        Check(!mask.Contains(Vector2Int.zero, Vector2Int.zero), "unavailable mask with zero window size");
         var pixels = new byte[16];
         pixels[3] = 255;
         pixels[7] = 10;
@@ -143,9 +145,11 @@ public static class Shoji34Build
         Check(!mask.Contains(new Vector2Int(0, 4), size), "bottom window boundary");
         Check(!mask.Contains(Vector2Int.zero, Vector2Int.zero), "zero window size");
         mask.Update(new byte[16], 2, 2);
-        Check(!mask.Contains(Vector2Int.zero, size), "new image replaces old hit regions");
+        Check(!mask.Contains(Vector2Int.zero, size), "valid transparent image does not use focus fallback");
         mask.Update(null, 0, 0);
-        Check(!mask.Contains(Vector2Int.zero, size), "unavailable image");
+        Check(mask.Contains(Vector2Int.zero, size), "focus fallback after image becomes unavailable");
+        Check(!mask.Contains(new Vector2Int(4, 0), size), "unavailable mask at right window boundary");
+        Check(!mask.Contains(new Vector2Int(0, 4), size), "unavailable mask at bottom window boundary");
         Debug.Log("Hyprland input mask checks passed");
     }
 

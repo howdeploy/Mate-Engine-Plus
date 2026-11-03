@@ -1898,7 +1898,7 @@
     },
     {
       "path": "Assets/ShojiLinux/Editor/Shoji34Build.cs",
-      "sha256": "fe3b4e1e53e504bdb26396be8133056c1a2d1333eb9e7862bc8934946030b063"
+      "sha256": "0089b7b8f9fce3190a2e83fc3d9ceeccbdc8ae489dc99aa1dd0f2f4f50cdb504"
     },
     {
       "path": "Assets/ShojiLinux/GtkX11Helper.cs",
@@ -1918,7 +1918,7 @@
     },
     {
       "path": "Assets/ShojiLinux/Hyprland/HyprlandInputMask.cs",
-      "sha256": "14b337a60654d40b6e13da2c056eada00471d3b8ee442902b0da389f0fcaff40"
+      "sha256": "1587c927e9b0edc63faae2fd0c0566c820f0a75d9853ae369ad8fe4eae243d85"
     },
     {
       "path": "Assets/ShojiLinux/Hyprland/HyprlandManager.cs",
