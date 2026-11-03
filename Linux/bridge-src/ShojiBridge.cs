@@ -11,14 +11,11 @@ using Debug = UnityEngine.Debug;
 
 namespace MateEngine.Shoji
 {
-    // Entry points called from Assembly-CSharp (inserted by the patcher).
-    // Under ShojiWM the X11 view of MateEngine (xwayland-satellite) has no
-    // real window position, no pointer outside its own surfaces and drops
-    // move requests; these hooks answer from the compositor instead.
-    // Outside a ShojiWM session, or with MATEENGINE_SHOJI_BRIDGE=0, every hook
-    // reports "not handled" and the original code runs unchanged.
+    // Compositor hooks handle ShojiWM; shadow filtering also runs on native Hyprland.
+    // MATEENGINE_SHOJI_BRIDGE=0 disables both paths.
     public static partial class ShojiBridge
     {
+        static readonly bool _enabled = Environment.GetEnvironmentVariable("MATEENGINE_SHOJI_BRIDGE") != "0";
         static bool _initialized;
         static bool _active;
         static ShojiIpc _ipc;
@@ -44,7 +41,7 @@ namespace MateEngine.Shoji
             _mainThread = Thread.CurrentThread.ManagedThreadId;
             try
             {
-                if (Environment.GetEnvironmentVariable("MATEENGINE_SHOJI_BRIDGE") == "0") return;
+                if (!_enabled) return;
                 string desktop = Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP") ?? "";
                 if (desktop.IndexOf("ShojiWM", StringComparison.OrdinalIgnoreCase) < 0) return;
                 string path = ShojiIpc.DefaultSocketPath();
@@ -378,6 +375,7 @@ namespace MateEngine.Shoji
         // Assembly-CSharp never reference Assembly-CSharp itself.)
         public static bool Tick(MonoBehaviour owner, bool dragging)
         {
+            if (!_enabled) return false;
             var windowManager = owner as WindowManager;
             // Input shaping is also used outside a ShojiWM session.
             try
@@ -1507,6 +1505,7 @@ namespace MateEngine.Shoji
         // the window pixmap just before GenerateRectangles; no Unity API here.
         public static void FilterInputPixels(byte[] pixels, int width, int height)
         {
+            if (!_enabled) return;
             ShadowSpec spec = _shadow;
             Coverage coverage = _coverage;
             if (spec == null || coverage == null || pixels == null) return;
